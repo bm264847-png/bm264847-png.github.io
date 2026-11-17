@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="tr" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turkey Trainings — Türkiye'de Pilot Eğitimi, Mesleki Programlar ve Üniversite Yerleştirme</title>
+<meta name="description" content="Türkiye&#x27;de eğitim, sertifikasyon ve üniversite yerleştirme — grubunuza göre tasarlanır. Pilot lisansları, 10 alanda 73 mesleki program ve 150+ partner üniversiteye yerleştirme.">
+<meta name="theme-color" content="#071426">
+<!-- alt:start --><link rel="alternate" hreflang="en" href="/"><link rel="alternate" hreflang="tr" href="/tr/"><link rel="alternate" hreflang="fr" href="/fr/"><link rel="alternate" hreflang="ar" href="/ar/"><!-- alt:end -->
+<link rel="preload" href="/assets/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/ibm-plex-mono-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/styles.css">
+<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__tt)document.documentElement.classList.add('loader-gone')},9000);</script>
+<script type="importmap">{"imports":{"three":"/vendor/three.module.min.js"}}</script>
+<script>window.__i18n={"Filing flight plan": "Uçuş planı dosyalanıyor", "Checking weather": "Hava durumu kontrol ediliyor", "Awaiting clearance": "Kalkış izni bekleniyor", "Cleared for departure": "Kalkışa izin verildi", "Menu": "Menü", "Close": "Kapat", "NIGERIA": "NİJERYA", "GHANA": "GANA", "AZERBAIJAN": "AZERBAYCAN", "ITALY": "İTALYA", "HEAD OFFICE": "GENEL MERKEZ", "ISTANBUL": "İSTANBUL", "AQUACULTURE PROGRAMME": "SU ÜRÜNLERİ PROGRAMI"}</script>
+</head>
+<body>
+
+<a class="skip" href="#main">İçeriğe geç</a>
+
+<!-- ═══ LOADER ═══════════════════════════════════════════════════════════ -->
+<div id="loader" class="loader" aria-hidden="true">
+  <svg class="loader__ring" viewBox="0 0 400 400">
+    <circle class="loader__c loader__c--1" cx="200" cy="200" r="196"/>
+    <circle class="loader__c loader__c--2" cx="200" cy="200" r="164"/>
+    <circle class="loader__c loader__c--3" cx="200" cy="200" r="132"/>
+    <g class="loader__ticks"></g>
+    <circle class="loader__prog" cx="200" cy="200" r="164" pathLength="100"/>
+    <path class="loader__needle" d="M200 44 L206 74 L194 74 Z"/>
+  </svg>
+  <div class="loader__read">
+    <span class="loader__num mono" id="loaderNum">000</span>
+    <span class="loader__lab mono" id="loaderLab">Uçuş planı dosyalanıyor</span>
+  </div>
+  <ul class="loader__list mono">
+    <li>Rota</li><li>Hava durumu</li><li>İzin</li>
+  </ul>
+</div>
+
+<canvas id="scene" class="scene" aria-hidden="true"></canvas>
+<div id="labels" class="labels" aria-hidden="true"></div>
+
+<!-- ═══ FIXED FURNITURE ══════════════════════════════════════════════════ -->
+<div class="cursor" aria-hidden="true"><i class="cursor__ring"></i><i class="cursor__dot"></i><span class="cursor__text mono"></span></div>
+
+<aside class="hud mono" aria-hidden="true">
+  <div class="hud__row"><span>ALT</span><b id="hudAlt">38,000</b><span id="hudAltU">FT</span></div>
+  <div class="hud__row"><span>GS</span><b id="hudGs">000</b><span>KT</span></div>
+</aside>
+
+<nav class="rail" aria-label="Bölümler"></nav>
+
+<a class="wa" href="https://wa.me/905389867594" target="_blank" rel="noopener" aria-label="Bize WhatsApp&#x27;tan yazın" data-magnetic>
+  <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.800 2 6.800L3 29l6.700-1.900c1.900 1 4 1.500 6.300 1.500 7.200 0 13-5.700 13-12.800S23.200 3 16 3zm0 23.300c-2 0-3.900-.5-5.500-1.500l-.4-.2-4 1.100 1.100-3.800-.3-.4c-1.100-1.700-1.700-3.700-1.700-5.700C5.200 10 10 5.300 16 5.300S26.800 10 26.800 15.800 22 26.300 16 26.300zm5.900-7.800c-.3-.2-1.900-.9-2.200-1-.3-.1-.5-.2-.7.2-.2.300-.8 1-1 1.200-.2.200-.4.200-.7.100-.3-.2-1.400-.5-2.600-1.600-1-.9-1.600-1.900-1.800-2.200-.2-.3 0-.5.100-.7l.500-.6c.200-.2.200-.3.300-.5.100-.2.100-.4 0-.6-.100-.2-.700-1.700-1-2.300-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.100-.9.400-.3.300-1.200 1.100-1.200 2.800 0 1.600 1.200 3.200 1.400 3.400.2.200 2.300 3.600 5.700 5 .8.300 1.400.5 1.900.7.8.200 1.500.200 2.100.100.6-.1 1.900-.8 2.200-1.500.3-.7.300-1.400.2-1.500-.1-.2-.3-.2-.6-.4z"/></svg>
+</a>
+
+<!-- ═══ HEADER ═══════════════════════════════════════════════════════════ -->
+<header class="top" id="top">
+  <div class="ticker mono" aria-label="Son gelişmeler">
+    <div class="ticker__track">
+      <span>Amiral gemisi bölüm · kayıtlar açık — Türkiye ve İtalya'da pilot eğitimi ve havacılık kursları</span><i></i>
+      <span>Yeni tamamlandı — Global Leadership Conference 2026 · İstanbul · 4–8 Ağustos</span><i></i>
+      <span>10 alanda 73 program</span><i></i>
+      <span>Türkiye'de 150+ partner üniversite</span><i></i>
+      <span>Ankara ve Abuja'da ofisler</span><i></i>
+    </div>
+  </div>
+  <div class="bar">
+    <a class="brand" href="#departure" aria-label="Turkey Trainings — ana sayfa">
+      <svg viewBox="0 0 96 74" class="brand__mark" aria-hidden="true"><path class="brand__t" d="M12 6 H42 a16 16 0 0 1 16 16 V52 a16 16 0 0 1 -16 16 H34 V28 H12 Z"/><path class="brand__r" d="M64 6 H94 L79 34 Z"/></svg>
+      <span class="brand__name"><b>Turkey</b><span>Trainings</span></span>
+    </a>
+    <nav class="links" aria-label="Ana menü">
+      <a class="roll" href="#study"><span data-t="Türkiye&#x27;de eğitim">Türkiye'de eğitim</span></a>
+      <a class="roll" href="#programmes"><span data-t="Mesleki Eğitimler">Mesleki Eğitimler</span></a>
+      <a class="roll" href="#aviation"><span data-t="Havacılık">Havacılık</span></a>
+      <a class="roll" href="#origin"><span data-t="Hakkımızda">Hakkımızda</span></a>
+      <a class="roll" href="#films"><span data-t="Filmler">Filmler</span></a>
+      <a class="roll" href="#arrival"><span data-t="İletişim">İletişim</span></a>
+    </nav>
+    <div class="bar__end">
+      <!-- lang:start --><div class="lang"><button class="lang__btn mono" type="button" aria-expanded="false" aria-controls="langList" aria-label="Dil: Türkçe"><span>TR</span><i aria-hidden="true"></i></button><ul class="lang__list" id="langList"><li><a href="/" lang="en" hreflang="en"><b>EN</b><span>English</span></a></li><li><a href="/tr/" lang="tr" hreflang="tr" aria-current="true"><b>TR</b><span>Türkçe</span></a></li><li><a href="/fr/" lang="fr" hreflang="fr"><b>FR</b><span>Français</span></a></li><li><a href="/ar/" lang="ar" hreflang="ar"><b>AR</b><span>العربية</span></a></li></ul></div><!-- lang:end -->
+      <a class="btn btn--red btn--sm" href="/tr/apply/" data-magnetic><span class="btn__l">Hemen başvur</span><span class="btn__i" aria-hidden="true"></span></a>
+      <button class="menu-btn mono" type="button" aria-expanded="false" aria-controls="menu"><span class="menu-btn__lines" aria-hidden="true"><i></i><i></i></span><span class="menu-btn__t">Menü</span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ MENU OVERLAY ═════════════════════════════════════════════════════ -->
+<div class="menu" id="menu" hidden>
+  <div class="menu__bg"></div>
+  <div class="menu__in">
+    <nav class="menu__nav" aria-label="Tüm sayfalar">
+      <a href="#study" data-close><i class="mono">01</i><span>Türkiye'de eğitim</span></a>
+      <a href="#programmes" data-close><i class="mono">02</i><span>Mesleki Eğitimler</span></a>
+      <a href="#aviation" data-close><i class="mono">03</i><span>Havacılık ve Uzay</span></a>
+      <a href="#ground" data-close><i class="mono">04</i><span>Sahada</span></a>
+      <a href="#films" data-close><i class="mono">05</i><span>Filmler</span></a>
+      <a href="#crew" data-close><i class="mono">06</i><span>Ekip</span></a>
+      <a href="#arrival" data-close><i class="mono">07</i><span>İletişim</span></a>
+    </nav>
+    <div class="menu__side">
+      <p class="label">Dil</p>
+      <!-- lang2:start --><p class="langrow"><a href="/" lang="en" hreflang="en">English</a><a href="/tr/" lang="tr" hreflang="tr" aria-current="true">Türkçe</a><a href="/fr/" lang="fr" hreflang="fr">Français</a><a href="/ar/" lang="ar" hreflang="ar">العربية</a></p><!-- lang2:end -->
+      <p class="label">Diğer sayfalar</p>
+      <ul class="menu__more">
+        <li><a class="roll" href="/tr/universities/"><span data-t="Partner üniversiteler">Partner üniversiteler</span></a></li>
+        <li><a class="roll" href="/tr/open-trainings/"><span data-t="Açık eğitimler">Açık eğitimler</span></a></li>
+        <li><a class="roll" href="/lecturers/"><span data-t="Eğitmenler">Eğitmenler</span></a></li>
+        <li><a class="roll" href="/tr/partnership/"><span data-t="İş ortaklığı">İş ortaklığı</span></a></li>
+        <li><a class="roll" href="/blog/"><span data-t="Blog">Blog</span></a></li>
+      </ul>
+      <p class="label">Bize ulaşın</p>
+      <ul class="menu__more">
+        <li><a class="roll" href="https://wa.me/905389867594" target="_blank" rel="noopener"><span data-t="WhatsApp +90 538 986 7594">WhatsApp +90 538 986 7594</span></a></li>
+        <li><a class="roll" href="mailto:turkeytrainingstr@gmail.com"><span data-t="turkeytrainingstr@gmail.com">turkeytrainingstr@gmail.com</span></a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ═══ 01 DEPARTURE ═════════════════════════════════════════════════════ -->
+<section id="departure" class="hero" data-chapter="Kalkış">
+  <div class="hero__globe" aria-hidden="true"></div>
+  <div class="hero__top">
+    <div class="hero__copy">
+      <p class="label" data-decode>01 — Kalkış</p>
+      <h1 class="display hero__title" data-chars>
+        <span class="ln">Sizinle birlikte</span>
+        <span class="ln">yol alan <em>eğitim.</em></span>
+      </h1>
+      <p class="hero__lede" data-rise>Türkiye'de eğitim, sertifikasyon ve üniversite yerleştirme — kendi ülkenizden kampüse kadar, grubunuza göre tasarlanır.</p>
+    </div>
+    <dl class="hero__meta mono" data-rise>
+      <div><dt>Varış noktası</dt><dd>Ankara, Türkiye</dd></div>
+      <div><dt>Konum</dt><dd>39°55′N 32°51′E</dd></div>
+      <div><dt>Kuruluş</dt><dd>Nisan 2019</dd></div>
+    </dl>
+  </div>
+
+  <div class="doors">
+    <a class="door door--study" href="#study" data-cursor="Keşfet">
+      <img class="door__img" src="/assets/img/svc-study.jpg" alt="" loading="eager">
+      <span class="door__n mono">A</span>
+      <span class="door__who mono">Öğrenciler ve kurumlar için</span>
+      <span class="door__t">Türkiye'de eğitim</span>
+      <span class="door__d">Üniversite yerleştirme, burslar, vize desteği ve eksiksiz rehberlik.</span>
+      <span class="door__go" aria-hidden="true"></span>
+    </a>
+    <a class="door door--train" href="#programmes" data-cursor="Keşfet">
+      <img class="door__img" src="/assets/img/svc-inperson.jpg" alt="" loading="eager">
+      <span class="door__n mono">B</span>
+      <span class="door__who mono">Profesyoneller ve ekipler için</span>
+      <span class="door__t">Mesleki Eğitimler</span>
+      <span class="door__d">Kısa kurslar, sertifikalı programlar ve kurum içi eğitim — Türkiye'de ya da kendi kapınızda.</span>
+      <span class="door__go" aria-hidden="true"></span>
+    </a>
+  </div>
+</section>
+
+<div class="band band--dawn" aria-hidden="true"></div>
+
+<!-- ═══ 02 ORIGIN ════════════════════════════════════════════════════════ -->
+<section id="origin" class="sec sec--paper origin" data-chapter="Başlangıç">
+  <div class="origin__l">
+    <p class="label" data-decode>02 — Her şeyin başladığı yer</p>
+    <h2 class="display origin__h" data-chars data-fill>
+      <span class="ln ln--mute">Her şey</span>
+      <span class="ln ln--mute">47 kişiyle başladı.</span>
+      <span class="ln">Ankara,</span>
+      <span class="ln">Nisan 2019.</span>
+    </h2>
+  </div>
+  <div class="origin__r">
+    <p class="lead" data-lines>Nisan 2019'da Nijerya'dan 47 genç profesyonel, Ankara'da Tarımsal Girişimcilik Programımızı tamamladı. Bu grup, yolculuğumuzu başlatan dönüm noktası oldu — o günden bu yana Afrika, Asya ve Avrupa'dan 500'ü aşkın katılımcı onları izledi.</p>
+    <figure class="ph origin__ph" data-unmask>
+      <img src="/assets/img/story-ceremony.jpg" alt="Sertifika töreni — katılımcılar Ankara&#x27;daki Tarımsal Girişimcilik programının sonunda sertifikalarını alıyor" loading="lazy" width="1366" height="768">
+      <figcaption class="mono">Sertifika töreni · Tarımsal Girişimcilik programı · Ankara</figcaption>
+    </figure>
+    <ul class="stats">
+      <li><hr data-draw><b class="stat__n" data-count="500" data-suffix="+">500+</b><span>Dünya genelinde mezun</span></li>
+      <li><hr data-draw><b class="stat__n" data-count="20" data-suffix="+">20+</b><span>Temsil edilen ülke</span></li>
+      <li><hr data-draw><b class="stat__n" data-count="150" data-suffix="+">150+</b><span>Türkiye'de partner üniversite</span></li>
+    </ul>
+    <a class="btn btn--line" href="/tr/about/" data-magnetic><span class="btn__l">Hikâyemizi okuyun</span><span class="btn__i" aria-hidden="true"></span></a>
+  </div>
+</section>
+
+<!-- ═══ 03 STUDY ═════════════════════════════════════════════════════════ -->
+<!-- deck:start -->
+<section id="deck" class="sec sec--paper deckwrap" data-chapter="Uçuş güvertesi">
+  <div class="deck" data-theme="night">
+    <div class="deck__wipe" aria-hidden="true"></div>
+    <div class="deck__main">
+      <p class="label deck__eyebrow"><i class="tri"></i><span>Uçuş güvertesi</span><em><span class="h-fine">Rotayı değiştirmek için ambleme tıklayın</span><span class="h-touch">Rotayı değiştirmek için ambleme dokunun</span></em></p>
+      <button class="deck__emblem" type="button" aria-label="Rotayı değiştir: sonraki varış noktasını göster" data-cursor="Rotayı değiştir">
+        <svg viewBox="0 0 96 74" aria-hidden="true"><path class="deck__svg-t" d="M12 6 H42 a16 16 0 0 1 16 16 V52 a16 16 0 0 1 -16 16 H34 V28 H12 Z"/><path class="deck__svg-r" d="M64 6 H94 L79 34 Z"/></svg>
+        <canvas aria-hidden="true"></canvas>
+      </button>
+      <div class="deck__say" aria-live="polite">
+        <p class="deck__count"><b id="deckNo">01</b><span>/ 06</span><em id="deckLabel">Türkiye'de eğitim</em></p>
+        <h2 class="deck__h"><span id="deckH">Geleceğiniz Türkiye'de başlıyor.</span></h2>
+        <p class="deck__lede" id="deckLede">Öğrencilere ve kurumlara Türkiye'de eğitimin her adımında rehberlik ediyoruz — 150+ partner üniversite ve dürüst, içeriden destekle.</p>
+        <a class="btn btn--deck" id="deckGo" href="/tr/study/" data-magnetic><span class="btn__l">Eğitimle başlayın</span><span class="btn__i"></span></a>
+      </div>
+    </div>
+    <div class="deck__pv">
+      <p class="label deck__pv-k"><i class="tri"></i><span id="pvField">Liderlik ve Yönetim</span></p>
+      <div class="deck__pv-img"><img id="pvImg" src="/assets/live/cat/cat-leadership.jpg" alt="" loading="lazy" decoding="async"></div>
+      <div class="deck__pv-in">
+        <h3 class="deck__pv-t" id="pvTitle">10 Günlük Mini MBA</h3>
+        <p class="deck__pv-f" id="pvFacts">10 gün · Ankara / İstanbul · Sertifika</p>
+        <p class="deck__pv-d" id="pvDesc">Modern yönetime yoğun bir bakış: strateji, finansçı olmayan yöneticiler için finans, pazarlama, operasyon, insan liderliği ve değişim. Gerçek vaka çalışmaları ve final grup sunumu üzerine kuruludur.</p>
+        <p class="deck__pv-a"><a class="roll roll--u" id="pvGo" href="/tr/training-programs/#leadership"><span data-t="Program ayrıntıları">Program ayrıntıları</span></a><a class="roll roll--u" href="/tr/apply/training/"><span data-t="Bu programı talep et">Bu programı talep et</span></a></p>
+      </div>
+    </div>
+    <div class="deck__side">
+      <p class="label deck__side-k"><span>73 programın tümü</span><em><span class="h-fine">Önizlemek için üzerine gelin</span><span class="h-touch">Önizlemek için dokunun, açmak için tekrar dokunun</span></em></p>
+      <div class="deck__scroll" tabindex="-1">
+        <ul class="deck__list">
+          <li><a class="deck__it" href="/tr/training-programs/#leadership" data-fid="leadership" data-field="Liderlik ve Yönetim" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="10 gün · Ankara / İstanbul · Sertifika" data-desc="Modern yönetime yoğun bir bakış: strateji, finansçı olmayan yöneticiler için finans, pazarlama, operasyon, insan liderliği ve değişim. Gerçek vaka çalışmaları ve final grup sunumu üzerine kuruludur."><i></i><span>10 Günlük Mini MBA</span></a></li>
+          <li><a class="deck__it" href="/programs/leadership/" data-fid="leadership" data-field="Liderlik ve Yönetim" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="5–10 gün · Sertifika" data-desc="Yeni ve gelişmekte olan yöneticiler için temel liderlik becerileri — liderlik tarzları, yetki devri, motivasyon, geri bildirim, zor görüşmeler ve birinci sınıf bir ekip kurmak."><i></i><span>Yönetim ve Liderlik 1</span></a></li>
+          <li><a class="deck__it" href="/programs/leadership/" data-fid="leadership" data-field="Liderlik ve Yönetim" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="5–10 gün · Üst düzey" data-desc="Üst düzey yöneticiler için ileri liderlik — stratejik düşünme, kurum kültürü, performans sistemleri, yöneticileri yönetmek ve değişim sürecinde liderlik."><i></i><span>Yönetim ve Liderlik 2</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#leadership" data-fid="leadership" data-field="Liderlik ve Yönetim" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="10 gün · Araçlar ve şablonlar" data-desc="Projeleri güvenle planlayın, yürütün ve kapatın: kapsam ve paydaş yönetimi, iş kırılımı, zaman planlaması ve kritik yol, bütçeler, risk kayıtları ve proje raporlaması."><i></i><span>Proje Yönetiminde Ustalık</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#leadership" data-fid="leadership" data-field="Liderlik ve Yönetim" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="5–10 gün" data-desc="Rakamları değiştiren pratik yönetim becerileri — hedef belirleme, KPI&#x27;lar, verimlilik, müşteri odaklılık, problem çözme ve hesap verebilirlik."><i></i><span>İş Başarısı için Etkili Yönetim</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#leadership" data-fid="leadership" data-field="Liderlik ve Yönetim" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="10 gün · Danışmanlık mevcut" data-desc="AB destekli projeleri tasarlayın, yazın ve yönetin. Program mantığı ve çağrılar, ihtiyaç analizi, mantıksal çerçeve, bütçeleme, ortak konsorsiyumları, raporlama ve denetime hazırlık — uzman danışmanlarımızın desteğiyle."><i></i><span>AB Proje Yönetimi</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#leadership" data-fid="leadership" data-field="Liderlik ve Yönetim" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="5–10 gün · Kamu ve özel sektör" data-desc="Etik ilkeleri günlük uygulamaya dönüştürün: davranış kuralları, çıkar çatışması, ihbar kanalları, etik risk haritalaması ve insanların güvendiği bir kültür oluşturmak."><i></i><span>Etiğin Uygulanması</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#government" data-fid="government" data-field="Kamu ve Devlet Sektörü" data-img="/assets/live/cat/cat-government.jpg" data-facts="10 gün · Kurum ziyaretleri" data-desc="Türkiye, dünyanın en çok kullanılan ulusal e-devlet kapılarından birini nasıl kurdu — mimari, kimlik, birlikte çalışabilirlik, ortak kayıt sistemleri ve vatandaşın benimsemesi. Kurum ziyaretlerini içerir."><i></i><span>E-Devlet</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#government" data-fid="government" data-field="Kamu ve Devlet Sektörü" data-img="/assets/live/cat/cat-government.jpg" data-facts="10 gün" data-desc="Bir kamu kurumunda dijital dönüşüme liderlik edin: hizmet tasarımı, iş akışlarının dijitalleştirilmesi, veri yönetişimi, siber güvenliğin temelleri, değişim yönetimi ve etkinin ölçülmesi."><i></i><span>Kamu Hizmetinde Dijital Devlet</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#government" data-fid="government" data-field="Kamu ve Devlet Sektörü" data-img="/assets/live/cat/cat-government.jpg" data-facts="5–10 gün · Hâkimler ve savcılar" data-desc="Adil, tutarlı ve kanıta dayalı yargı uygulamasını güçlendirin — gerekçelendirme ve karar yazımı, delil değerlendirme, yargı etiği, dava yönetimi ve mahkeme verimliliği."><i></i><span>Yargısal Karar Verme</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#government" data-fid="government" data-field="Kamu ve Devlet Sektörü" data-img="/assets/live/cat/cat-government.jpg" data-facts="5–10 gün" data-desc="Kamu kurumları için uygulanabilir dürüstlük sistemleri: yolsuzluk riski değerlendirmesi, şeffaflık ve satın alma kontrolleri, iç denetim, bildirim mekanizmaları ve kurumsal dürüstlük planları."><i></i><span>Yolsuzlukla Mücadele ve Dürüstlük Yönetimi</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#energy" data-fid="energy" data-field="Enerji, Limanlar ve Denizcilik" data-img="/assets/live/cat/cat-energy.jpg" data-facts="10 gün · Yönetici düzeyi" data-desc="Karmaşık enerji lojistiği sistemlerine liderlik edin — tedarik zinciri stratejisi, belirsizlik altında karar verme, yüklenici yönetimi, operasyonel dayanıklılık ve sürekli iyileştirme."><i></i><span>Petrol ve Gaz Lojistiğinde Stratejik Liderlik ve Operasyonel Mükemmellik</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#energy" data-fid="energy" data-field="Enerji, Limanlar ve Denizcilik" data-img="/assets/live/cat/cat-energy.jpg" data-facts="10 gün · Liman ziyaretleri" data-desc="Modern liman ve terminal uygulamaları — terminal operasyonları, mevzuat gereklilikleri, denizcilikte risk yönetimi, İSG-Çevre sistemleri, acil durum müdahalesi ve olay incelemesi."><i></i><span>Limanlar ve Deniz Terminallerinin Yönetimi, Operasyonları ve Emniyetinde İleri İlkeler</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#energy" data-fid="energy" data-field="Enerji, Limanlar ve Denizcilik" data-img="/assets/live/cat/cat-energy.jpg" data-facts="10 gün · Teknik" data-desc="Varlık kritikliği ve FMECA, önleyici ve kestirimci bakım stratejisi, duruş ve revizyon planlaması, kritik yol çizelgeleme, yedek parça ve bakım KPI&#x27;ları."><i></i><span>Petrol ve Gaz Limanları ile Terminallerinde Bakım Planlaması ve İş Kontrolü</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#energy" data-fid="energy" data-field="Enerji, Limanlar ve Denizcilik" data-img="/assets/live/cat/cat-energy.jpg" data-facts="5 hafta · Tuzla, İstanbul · Tersane uygulaması" data-desc="Türkiye&#x27;nin gemi inşa başkentinde beş hafta: gemi tasarımının temelleri, tekne yapıları, stabilite, üretim ve donatım süreçleri, kalite ve emniyet — Tuzla&#x27;da tersane uygulamasıyla."><i></i><span>Gemi İnşaatı ve Gemi Mühendisliği — 1 Aylık Yoğun Program</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#energy" data-fid="energy" data-field="Enerji, Limanlar ve Denizcilik" data-img="/assets/live/cat/cat-energy.jpg" data-facts="12 hafta · Tuzla, İstanbul · Uzun süreli staj" data-desc="Gemi mühendisliği teorisini uzun süreli tersane stajıyla birleştiren on iki haftalık ileri program — tasarım, yapısal analiz, gemi sistemleri, proje ve üretim yönetimi."><i></i><span>Gemi İnşaatı ve Gemi Mühendisliği — 3 Aylık İleri Program</span></a></li>
+          <li><a class="deck__it" href="/programs/agribusiness/" data-fid="agriculture" data-field="Tarım ve Tarımsal İşletmecilik" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="10–14 gün · Saha ziyaretleri" data-desc="Toprak sağlığı, su ve sulama verimliliği, ürün planlaması ve münavebe, iklim dostu uygulamalar, makineleşme ve çiftlik ekonomisi — çalışan çiftliklere ve araştırma istasyonlarına ziyaretlerle."><i></i><span>Sürdürülebilir Tarım ve Çiftlik Yönetimi</span></a></li>
+          <li><a class="deck__it" href="/programs/agribusiness/" data-fid="agriculture" data-field="Tarım ve Tarımsal İşletmecilik" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="10 gün" data-desc="Tarım bilgisini işe dönüştürün — fırsat değerlendirmesi, iş modeli, finansman ve hibeler, kooperatifler, maliyet kontrolü ve pazara erişim."><i></i><span>Tarımsal Girişimcilik</span></a></li>
+          <li><a class="deck__it" href="/programs/agribusiness/" data-fid="agriculture" data-field="Tarım ve Tarımsal İşletmecilik" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="13 modül · Sertifika" data-desc="Çiftlik iş planlaması ve risk yönetiminden hasat sonrası işlemlere, soğuk zincire, gıda işlemeye, ambalajlamaya, markalaşmaya ve ihracat pazarlamasına on üç modül."><i></i><span>Tarımsal İşletmecilik Girişimciliği Sertifikası</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#agriculture" data-fid="agriculture" data-field="Tarım ve Tarımsal İşletmecilik" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="10 gün · İstanbul · Şirket ziyaretleri" data-desc="Tarımı yeniden şekillendiren teknolojileri keşfedin — hassas tarım, sensörler ve veri, sera teknolojisi, tarım girişimleri — sonra bunları kendi koşullarınız için değerlendirin, analiz edin ve pazarlayın."><i></i><span>Tarım Teknolojilerinde İnovasyon ve Pazarlama</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#agriculture" data-fid="agriculture" data-field="Tarım ve Tarımsal İşletmecilik" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="10 gün" data-desc="Tarım piyasaları ve fiyatlandırma, tedarik ve değer zincirleri, destek ve politika tasarımı, çiftlik düzeyinde finansal analiz ve tarım projeleri için yatırım değerlendirmesi."><i></i><span>Tarım Ekonomisi</span></a></li>
+          <li><a class="deck__it" href="/programs/poultry/" data-fid="agriculture" data-field="Tarım ve Tarımsal İşletmecilik" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="10 gün · Çiftlik ziyaretleri" data-desc="Etlik piliç ve yumurta tavuğu üretimi, kümes ve ekipman, yem ve besleme, biyogüvenlik ve sürü sağlığı, kuluçkanın temelleri ve kârlı bir kanatlı işletmesinin ekonomisi."><i></i><span>Kanatlı Hayvancılık Girişimciliği</span></a></li>
+          <li><a class="deck__it" href="/programs/aquaculture/" data-fid="agriculture" data-field="Tarım ve Tarımsal İşletmecilik" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="20 gün · Adana, Türkiye · Kuluçkahane ziyaretleri" data-desc="Yer seçimi ve sistem tasarımından kuluçkahaneye, yemlemeye, su kalitesine, hastalık yönetimine, hasada ve pazarlamaya balık yetiştiriciliği — üniversitelerin su ürünleri uzmanları eşliğinde."><i></i><span>Su Ürünleri Yetiştiriciliği Girişimciliği</span></a></li>
+          <li><a class="deck__it" href="/programs/heliciculture/" data-fid="agriculture" data-field="Tarım ve Tarımsal İşletmecilik" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="7–10 gün · İhracat odaklı" data-desc="Niş ve yüksek katma değerli bir ihracat işi baştan sona anlatılır — türler ve üretim, açık alan ve sera sistemleri, besleme, hasat, işleme ve Avrupa pazarına erişim."><i></i><span>Salyangoz Yetiştiriciliği (Helisikültür) Girişimciliği</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#agriculture" data-fid="agriculture" data-field="Tarım ve Tarımsal İşletmecilik" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="10 gün + saha ziyaretleri · Pzt–Per 09:00–16:00" data-desc="On eğitim günü ve saha ziyaretleri: büyükbaş ve küçükbaş hayvan yetiştiriciliği, ıslah ve genetik, yem ve rasyonlar, sürü sağlığı, süt işleme ve çiftlik işletme yönetimi."><i></i><span>Hayvancılık ve Sürü Yönetimi</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#health" data-fid="health" data-field="Sağlık ve Tıp" data-img="/assets/live/cat/cat-health.jpg" data-facts="Yüksek İhtisas University · Klinik partnerler" data-desc="Yüksek İhtisas Üniversitesi&#x27;nde klinik partnerlerle birlikte verilen uzmanlık düzeyinde tıbbi sertifikasyon — sağlık ekibinizin uzmanlık alanına ve kıdemine göre uyarlanır."><i></i><span>Tıbbi Sertifika Programları</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#health" data-fid="health" data-field="Sağlık ve Tıp" data-img="/assets/live/cat/cat-health.jpg" data-facts="1.000 saat · 13 ders · Başarı sertifikası" data-desc="Toplam 1.000 saat: 13 derste 550 saat teori (250 çevrimdışı, 300 yüz yüze) ve 450 saat uygulama (150 simülasyon/laboratuvar, 300 klinik gözlem) — anatomi, farmakoloji, tıbbi terminoloji, acil sağlık hizmetleri, resüsitasyon, travma, ilk yardım ve mesleki uygulama."><i></i><span>Acil Tıp Teknisyeni (ATT)</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#health" data-fid="health" data-field="Sağlık ve Tıp" data-img="/assets/live/cat/cat-health.jpg" data-facts="1.600 saat · 16 ders" data-desc="Toplam 1.600 saat: 16 derste 600 saat teori (250 çevrimdışı, 350 yüz yüze) ve 1.000 saat uygulama (200 simülasyon/laboratuvar, 800 klinik gözlem). Mezunlar hastanelerde, uzun süreli bakım ve rehabilitasyon merkezlerinde, yetişkin gündüz bakım merkezlerinde ve evde bakımda çalışır."><i></i><span>Hemşire Yardımcısı</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#health" data-fid="health" data-field="Sağlık ve Tıp" data-img="/assets/live/cat/cat-health.jpg" data-facts="1.600 saat · 21 ders" data-desc="Toplam 1.600 saat: doğum öncesi, doğum, doğum sonrası ve yenidoğan bakımını kapsayan 21 derste 500 saat teori (200 çevrimiçi, 300 yüz yüze) ve 1.100 saat uygulama (300 simülasyon/laboratuvar, 800 klinik gözlem)."><i></i><span>Ebelik</span></a></li>
+          <li><a class="deck__it" href="/programs/teachers/" data-fid="education" data-field="Eğitim ve Öğretim" data-img="/assets/live/cat/cat-education.jpg" data-facts="10 gün · Okul ziyaretleri" data-desc="Çağdaş öğretim yaklaşımları — Montessori, Reggio Emilia, orman okulları, sorgulamaya ve projeye dayalı öğrenme, sınıf yönetimi, kapsayıcı eğitim ve ölçme-değerlendirme — okul gözlem ziyaretleriyle."><i></i><span>Öğretmen Eğitimi Programı</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#education" data-fid="education" data-field="Eğitim ve Öğretim" data-img="/assets/live/cat/cat-education.jpg" data-facts="5–10 gün" data-desc="Okul müdürleri, müfettişler ve bakanlık personeli için: öğretim liderliği, okul gelişim planlaması, öğretmen denetimi ve koçluğu, veriye dayalı kararlar ve toplumla iş birliği."><i></i><span>Eğitim Liderliği ve Okul Yönetimi</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#education" data-fid="education" data-field="Eğitim ve Öğretim" data-img="/assets/live/cat/cat-education.jpg" data-facts="5–10 gün · Ev sahibi üniversiteler" data-desc="Üniversiteler ve yüksekokullar için: kalite güvencesi ve akreditasyon, müfredat geliştirme, araştırma yönetimi, uluslararası ortaklıklar ve öğrenci hareketliliği."><i></i><span>Yükseköğretimde Liderlik ve Uluslararasılaşma</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#ict" data-fid="ict" data-field="BİT ve Dijital" data-img="/assets/live/cat/cat-ict.jpg" data-facts="KTÜ, Trabzon · İngilizce eğitim · Uygulamalı laboratuvarlar" data-desc="Trabzon&#x27;da KTÜ ev sahipliğinde — 1955&#x27;te kurulan, yaklaşık 17 fakültesi ve 55.000 öğrencisiyle Türkiye&#x27;nin dördüncü en eski üniversitesi. Uygulamalı bilgisayar laboratuvarlarıyla İngilizce verilir; Tamamlama Sertifikası sunulur."><i></i><span>Karadeniz Teknik Üniversitesi'nde BİT Eğitim Programı</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#ict" data-fid="ict" data-field="BİT ve Dijital" data-img="/assets/live/cat/cat-ict.jpg" data-facts="5–10 gün" data-desc="Kurumsal hedeflerle uyumlu BT stratejisi — yönetişim çerçeveleri, BT hizmet yönetimi, proje portföy yönetimi, bilgi güvenliği, risk ve uyum, tedarikçi yönetimi."><i></i><span>Bilgi Teknolojileri Yönetişimi</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#ict" data-fid="ict" data-field="BİT ve Dijital" data-img="/assets/live/cat/cat-ict.jpg" data-facts="5 gün" data-desc="Kamu ve kurumsal ekipler için uygulamalı güvenlik: tehdit ortamı, erişim kontrolü, oltalama ve sosyal mühendislik, olay müdahalesi, iş sürekliliği ve güvenlik kültürü oluşturmak."><i></i><span>Kurumlar için Siber Güvenlik Farkındalığı</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#tourism" data-fid="tourism" data-field="Turizm ve MICE" data-img="/assets/live/cat/cat-tourism.jpg" data-facts="10 gün · Otel ziyaretleri" data-desc="Turizm sektörünün temelleri — destinasyon ve ürün bilgisi, misafir hizmet standartları, ön büro ve konaklama operasyonları ve turizmin ulusal ekonomideki yeri."><i></i><span>Başlangıç Düzeyi Turizm Kursu</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#tourism" data-fid="tourism" data-field="Turizm ve MICE" data-img="/assets/live/cat/cat-tourism.jpg" data-facts="10 gün · Kongre merkezi ziyaretleri" data-desc="Toplantılar, teşvik gezileri, konferanslar ve fuarlar — teklif hazırlama ve mekân seçimi, etkinlik bütçesi ve lojistiği, sponsorluk, delege yönetimi ve etkinlik sonrası değerlendirme."><i></i><span>M.I.C.E. Yönetim Programı</span></a></li>
+          <li><a class="deck__it" href="/tr/training-programs/#tourism" data-fid="tourism" data-field="Turizm ve MICE" data-img="/assets/live/cat/cat-tourism.jpg" data-facts="10 gün" data-desc="Seyahat acentesi ve tur operasyonları — ürün tasarımı ve fiyatlandırma, dağıtım ve GDS temelleri, sözleşme, kurumsal seyahat politikası, dijital pazarlama ve müşteri deneyimi."><i></i><span>Seyahat Yönetimi Programı</span></a></li>
+          <li><a class="deck__it" href="/programs/gastronomy/" data-fid="gastronomy" data-field="Gastronomi" data-img="/assets/live/cat/cat-gastronomy.jpg" data-facts="6 ay · 960 saat · 4 şef eğitmen · En fazla 20 katılımcı" data-desc="Amiral gemisi gastronomi programımız: 6 ay, 24 hafta, 960 saat — haftada beş gün, günde sekiz saat. Üç ay Türk mutfağı, ardından üç ay dünya mutfağı; dört şef eğitmen tarafından yirmi kişilik bir gruba, her gün yerinde restoran uygulamasıyla verilir."><i></i><span>Uluslararası Michelin Düzeyinde Mutfak Yöneticiliği Programı</span></a></li>
+          <li><a class="deck__it" href="/programs/gastronomy/" data-fid="gastronomy" data-field="Gastronomi" data-img="/assets/live/cat/cat-gastronomy.jpg" data-facts="12 hafta · Türkiye&#x27;nin yöresel mutfakları" data-desc="Türkiye&#x27;nin yöresel mutfaklarında on iki hafta — mutfak organizasyonu ve gıda güvenliği, bıçak becerileri ve mise en place, çorbalar ve soslar, zeytinyağlılar ve mezeler, yahniler ve baklagiller, pilavlar, börek, pide ve lahmacun, kebap ve ızgara, şerbetli ve sütlü tatlılar."><i></i><span>Türk Mutfağı Dönemi</span></a></li>
+          <li><a class="deck__it" href="/programs/gastronomy/" data-fid="gastronomy" data-field="Gastronomi" data-img="/assets/live/cat/cat-gastronomy.jpg" data-facts="12 hafta · Avrupa, Asya, Orta Doğu, Amerika" data-desc="Uluslararası mutfak disiplininde on iki hafta — İtalyan ve Fransız teknikleri, Akdeniz deniz ürünleri ve soğuk başlangıçlar, Asya wok ve erişte çalışmaları, Orta Doğu ve Kuzey Afrika mezeleri ve tajinleri, Amerikan burger ve biftek standartları, ayrıca tabak sunumu ve final menü tasarımı."><i></i><span>Dünya Mutfağı Dönemi</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/lapl-pilot-training/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Teori + uçuş eğitimi" data-desc="Hafif hava araçlarıyla hobi amaçlı uçuş için giriş düzeyi uçuş eğitimi; yer derslerini uygulamalı uçuş eğitimiyle birleştirir."><i></i><span>Hafif Hava Aracı Pilot Lisansı – LAPL</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/ppl-private-pilot-licence/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Teori + uçuş eğitimi" data-desc="Özel pilot adayları için kapsamlı teorik ve uygulamalı pilot eğitimi; ileri yetkilere ilerleme imkânıyla."><i></i><span>Özel Pilot Lisansı – PPL</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aviation-english/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Standart ifadeler, uluslararası telsiz konuşmaları ve pilotlar ile hava trafik hizmetleri arasında açık operasyonel iletişim."><i></i><span>Havacılık İngilizcesi Telsiz Konuşmaları Eğitimi</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aviation-english/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="Yer talebe göre belirlenir · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Havacılık İngilizcesi dil yeterlilik değerlendirmesine odaklı hazırlık — dinleme, konuşma, akıcılık ve havacılık terminolojisi."><i></i><span>Havacılık İngilizcesi Dil Yeterliliği Hazırlığı</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/pilot-hour-building/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Teori + uçuş eğitimi" data-desc="Bir sonraki yetkisi için uçuş süresi ve deneyim biriktirmesi gereken lisanslı pilotlara yönelik yapılandırılmış uçuşlar."><i></i><span>Pilot Saat Biriktirme Programı</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/pilot-hour-building/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Teori + uçuş eğitimi" data-desc="Giriş koşullarını karşılayan ve yetkilerini gece operasyonlarına genişletmek isteyen lisanslı pilotlar için teori ve çift kumandalı gece uçuşu."><i></i><span>Gece Uçuşu Yetkisi Eğitimi</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/pilot-hour-building/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Teori + uçuş eğitimi" data-desc="Değişken hatveli pervane (VP), toplanabilir iniş takımı (RU), EFIS, tek kollu güç kontrolü (SLPC), turboşarjlı motorlar ve SEP/MEP farkları gibi modüller — her biri onaya tabidir."><i></i><span>Hava Aracı Fark Eğitimi</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/pilot-hour-building/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Sınıf + uygulama" data-desc="Modern genel havacılık kokpitlerinde kullanılan GTN650 seyrüsefer, haberleşme ve uçuş planlama işlevleriyle uygulamalı tanışma."><i></i><span>Garmin GTN650 Seyrüsefer ve Telsiz Sistemleri Eğitimi</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/easa-training/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Uçuşa dönen veya aktif pilotlar için seyrüsefer, Avrupa mevzuatındaki gelişmeler, operasyonel değişiklikler, emniyet dersleri ve uçuş usullerine dair güncellemeler."><i></i><span>Pilot Tazeleme ve Mevzuat Güncelleme Eğitimi</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/flight-dispatcher-training/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Bir havayolunun Operasyon Kontrol Merkezi&#x27;nde uçuş planlama, operasyonel kontrol, dispeç usulleri ve karar verme."><i></i><span>Uçuş Dispeçeri ve Havayolu OCC Eğitimi</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/cabin-crew-training/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Sınıf + uygulama" data-desc="Kabin ekibi görevlerine mesleki hazırlık — emniyet farkındalığı, hizmet standartları, iletişim ve uçakta ekip çalışması."><i></i><span>Kabin Ekibi Mesleki Eğitimi</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/airport-ground-operations/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Sınıf + uygulama" data-desc="Emniyetli ve verimli hava tarafı operasyonları — apron emniyeti, uçak yer hizmet süreci, araç hareketleri ve yer ekipleri arasında koordinasyon."><i></i><span>Havalimanı Hava Tarafı ve Yer Operasyonları</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/airport-ground-operations/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Sınıf + uygulama" data-desc="Ramp emniyeti, bagaj ve kargo yükleme ilkeleri, uçak yönlendirme (marshalling) farkındalığı ve yer hizmet koordinasyonu."><i></i><span>Havalimanı Ramp Görevlisi Eğitimi</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/airport-ground-operations/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Check-in ve uçağa alış işlemleri, seyahat belgeleri farkındalığı, özel yardıma ihtiyaç duyan yolcular ve müşteri iletişimi."><i></i><span>Yolcu Hizmetleri ve Check-in Görevlisi Eğitimi</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/airport-ground-operations/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Bölgesel ve genel havacılık meydanlarının yönetimi — organizasyon, emniyet gözetimi, hizmetler, kaynaklar ve paydaş koordinasyonu."><i></i><span>Küçük Havalimanı Operasyon Yönetimi</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aircraft-maintenance-planning/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Part 145, CAMO ve CAO kuruluş ortamlarında bakım görevlerinin, iş paketlerinin ve kayıtların planlanması."><i></i><span>Uçak Bakım Planlaması – Part 145 / CAMO / CAO</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aircraft-maintenance-planning/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Uçak parçaları ve sarf malzemeleri için tedarik, izlenebilirlik, depolama koşulları ve stok kontrolü."><i></i><span>Havacılıkta Satın Alma ve Yedek Parça Depolama</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/flight-dispatcher-training/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Bilgi sistemlerinin havacılık kuruluşlarında operasyonları, bakımı, planlamayı ve veri yönetimini nasıl desteklediği."><i></i><span>Havacılık Kuruluşları için Bilgi Teknolojileri</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aviation-safety-management/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Emniyet yönetimi ilkeleri, tehlike tanımlama, risk değerlendirme, raporlama, emniyet kültürü ve performans izleme."><i></i><span>Emniyet Yönetim Sistemi – SMS ve Risk Değerlendirme</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aviation-safety-management/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Yabancı madde kaynakları, önleme programları, denetimler ve apronları ve hangarları temiz tutan davranışlar."><i></i><span>Yabancı Madde Hasarının Önlenmesi – FOD</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/dangerous-goods-training/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Hava taşımacılığında tehlikeli maddelerin tanınması, sınıflandırılması, belgelendirilmesi ve elleçleme farkındalığı. Temel ve tazeleme formatları onaya tabidir."><i></i><span>Tehlikeli Maddeler Eğitimi – Havacılık</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/human-factors-training/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="İnsan performansı, yorgunluk, iletişim ve hatanın bakım kalitesini nasıl etkilediği — mümkün olan yerlerde tazeleme eğitimiyle."><i></i><span>Uçak Bakımında İnsan Faktörleri – Temel</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/human-factors-training/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Yakıt tankı tutuşma riskleri, kritik tasarım konfigürasyon kontrolü ve bakım önlemleri — mümkün olan yerlerde devam eğitimiyle."><i></i><span>Uçak Yakıt Tankı Emniyeti (Devam Eğitimi dâhil)</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/crew-resource-management/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Ekipler ve operasyon birimleri için iletişim, ekip çalışması, liderlik, durumsal farkındalık, karar verme ve hata yönetimi."><i></i><span>Ekip Kaynak Yönetimi – CRM (Temel / Devam)</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/ewis-training/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Bakım ve mühendislik personeli için personel gruplarına göre yapılandırılmış kablolama farkındalık eğitimi — Grup 1/2, 3, 4, 5 ve 6/7/8."><i></i><span>EWIS – Elektrik Kablolama Ara Bağlantı Sistemi</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/easa-training/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Avrupa havacılık mevzuat sisteminin yapısı, Temel Tüzük ve uygulama kurallarının kuruluşlara nasıl uygulandığı."><i></i><span>EASA Mevzuat Çerçevesi ve Temel Tüzük Eğitimi</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/easa-training/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Denetim ve gözetim faaliyetlerinde görev alan personel için uçuşa elverişlilik ilkeleri ve uluslararası gereklilikler hakkında temel bilgi."><i></i><span>Temel Uçuşa Elverişlilik Denetçisi – Uluslararası Mevzuat ve EASA Gereklilikleri</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/easa-training/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Büyük uçaklar için sertifikasyon şartnamelerine ve bunların tasarımı, modifikasyonu ve sürekli uçuşa elverişliliği nasıl şekillendirdiğine giriş."><i></i><span>CS-25 Büyük Uçak Sertifikasyon Eğitimi</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/en-9100-aerospace-quality/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Havacılık kalite süreçlerinde denetim hazırlığı ve yürütülmesi, kanıt toplama, bulgular, raporlama ve düzeltici faaliyetlerin takibi."><i></i><span>Havacılık Denetçisi – Denetim Yönetimi ve Teknikleri (Tazeleme dâhil)</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/en-9100-aerospace-quality/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="EN 9100 havacılık ve uzay kalite yönetim standardının gereklilikleri ve uygulaması."><i></i><span>Havacılık ve Uzay Kuruluşları için EN 9100 Kalite Yönetim Sistemi</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aviation-english/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Teknik dokümanları, el kitaplarını ve iş kartlarını İngilizce olarak güvenle okumak ve kullanmak."><i></i><span>Havacılık için Teknik İngilizce</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/crew-resource-management/" data-fid="aviation" data-field="Havacılık ve Uzay" data-img="/assets/live/aviation/av-hero.webp" data-facts="İtalya · Onaylandığı yerlerde sınıf içi / çevrimiçi teori" data-desc="Meslektaşlarını eğiten havacılık profesyonelleri için yetişkin eğitimi ilkeleri, ders tasarımı, anlatım ve değerlendirme."><i></i><span>Havacılıkta Öğretim Teknikleri – Eğiticinin Eğitimi</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script type="application/json" id="deckData">[{"route": "/tr/study/", "theme": "night", "label": "Türkiye'de eğitim", "btn": "Eğitimle başlayın", "h": "Geleceğiniz Türkiye'de başlıyor.", "lede": "Öğrencilere ve kurumlara Türkiye'de eğitimin her adımında rehberlik ediyoruz — 150+ partner üniversite ve dürüst, içeriden destekle.", "field": ""}, {"route": "/tr/training-programs/", "theme": "paper", "label": "Eğitim programları", "btn": "Tüm programları görün", "h": "Her hedef için bir program.", "lede": "10 alanda 73 mesleki eğitim programı — Türkiye'de, kendi ülkenizde ya da ekibinize göre kurgulanmış özel bir kombinasyonla verilir.", "field": "*"}, {"route": "/tr/training-programs/aviation-aerospace/", "theme": "sky", "label": "Havacılık ve uzay", "btn": "Havacılığı keşfedin", "h": "Havacılık ve Uzay Eğitimi", "lede": "Pilotlar, havayolları, havalimanları, bakım kuruluşları, havacılık profesyonelleri ve kamu kurumları için Türkiye ve İtalya'da mesleki havacılık eğitimi.", "field": "aviation"}, {"route": "/tr/universities/", "theme": "mist", "label": "Partner üniversiteler", "btn": "Üniversiteleri görün", "h": "Burada okuyor olabilirsiniz.", "lede": "Türkiye genelinde 150'den fazla üniversite ve okulla çalışıyoruz — Ankara ve İstanbul'daki araştırma odaklı kampüslerden her bölgedeki ihtisas üniversitelerine.", "field": ""}, {"route": "/tr/in-house-trainings/", "theme": "red", "label": "Kurum içi eğitimler", "btn": "Eğitimi kurumunuza getirin", "h": "Dünya standartlarında eğitim, kapınıza kadar.", "lede": "Programlarımızı işinizin ihtiyaçlarına uyarlıyor ve dünyanın her yerine getiriyoruz — ofisleriniz, şehriniz, takviminiz.", "field": "*"}, {"route": "/tr/open-trainings/", "theme": "amber", "label": "Açık eğitimler", "btn": "Açık eğitimleri görün", "h": "Kısa kurslar, herkese açık.", "lede": "Türkiye'de yoğun, İngilizce kurslar — resmi bir ön koşul yok, yalnızca öğrenme isteği yeter.", "field": "*"}]</script>
+</section>
+<!-- deck:end -->
+
+<section id="study" class="sec sec--paper route" data-chapter="Eğitim">
+  <div class="route__pin">
+    <div class="route__ghost display" aria-hidden="true">Türkiye'de eğitim</div>
+    <header class="route__head">
+      <p class="label label--amber" data-decode>03 — Türkiye'de eğitim</p>
+      <h2 class="display route__h" data-chars>
+        <span class="ln ln--mute">Kendi ülkenizden</span>
+        <span class="ln">kampüse kadar.</span>
+      </h2>
+    </header>
+    <div class="route__view">
+      <ol class="route__track">
+        <li class="wp wp--intro">
+          <p class="wp__lede">150'den fazla Türk üniversitesiyle iş birliği yapıyor, program seçiminden havalimanına inişe kadar her adımda size rehberlik ediyoruz.</p>
+          <span class="wp__hint mono">Kaydırmaya devam edin <i aria-hidden="true">→</i></span>
+        </li>
+        <li class="wp"><span class="wp__n mono">WPT 01</span><h3 class="wp__t">Uzman danışmanlık</h3><p>Hedeflerinize uygun üniversiteyi, şehri ve programı seçmeniz için birebir rehberlik.</p></li>
+        <li class="wp"><span class="wp__n mono">WPT 02</span><h3 class="wp__t">Başvurular tek yerde</h3><p>İhtiyacınız olan tüm başvuru bilgileri ve evraklar sizin için düzenlenir ve yönetilir.</p></li>
+        <li class="wp"><span class="wp__n mono">WPT 03</span><h3 class="wp__t">Burslarda içeriden bilgi</h3><p>Bursların ve hibelerin nerede olduğunu, onlara ulaşmanız için en iyi şansı nasıl vereceğimizi biliyoruz.</p></li>
+        <li class="wp"><span class="wp__n mono">WPT 04</span><h3 class="wp__t">Vize desteği</h3><p>Öğrenci vizenizde adım adım destek; hiçbir şey şansa bırakılmaz.</p></li>
+        <li class="wp"><span class="wp__n mono">WPT 05</span><h3 class="wp__t">Eksiksiz eğitim planı</h3><p>Başvurudan varışa ve yerleşmeye kadar net, uçtan uca bir plan.</p></li>
+        <li class="wp wp--end">
+          <figure class="ph wp__ph"><img src="/assets/img/svc-study.jpg" alt="Bir Türk üniversitesi kampüsünde uluslararası öğrenciler" loading="lazy" width="1500" height="650"></figure>
+          <div class="wp__cta">
+            <a class="btn btn--amber" href="/tr/study/" data-magnetic><span class="btn__l">Öğrenci yerleştirmeyi keşfedin</span><span class="btn__i" aria-hidden="true"></span></a>
+            <a class="btn btn--line" href="/tr/universities/" data-magnetic><span class="btn__l">Partner üniversiteler</span><span class="btn__i" aria-hidden="true"></span></a>
+            <a class="btn btn--line" href="/tr/for-institutions/" data-magnetic><span class="btn__l">Kurumlar için</span><span class="btn__i" aria-hidden="true"></span></a>
+          </div>
+        </li>
+      </ol>
+      <svg class="route__line" aria-hidden="true" preserveAspectRatio="none"><line class="route__base" x1="0" y1="1" x2="100%" y2="1"/><line class="route__done" x1="0" y1="1" x2="100%" y2="1"/></svg>
+      <span class="route__craft" aria-hidden="true"><svg viewBox="0 0 48 48" width="34" height="34"><path fill="currentColor" d="M44 24 30 19 20 4h-4l5 14-10 1-4-5H4l3 10-3 10h3l4-5 10 1-5 14h4l10-15 14-5z"/></svg></span>
+    </div>
+    <p class="route__note">Lütfen dikkat: kabul hiçbir zaman garanti değildir — öğrencilerin seçtikleri üniversitenin akademik koşullarını karşılaması gerekir. Şansınızı en üst düzeye çıkarırız, ancak nihai karar kuruma aittir.</p>
+  </div>
+</section>
+
+<div class="band band--dusk" aria-hidden="true"></div>
+
+<!-- ═══ 04 AVIATION ══════════════════════════════════════════════════════ -->
+<section id="aviation" class="avi" data-chapter="Amiral gemisi">
+  <div class="avi__pin">
+    <header class="avi__head">
+      <p class="label label--red" data-decode>04 — Amiral gemisi bölüm · kayıtlar açık</p>
+      <h2 class="display avi__h" data-chars>
+        <span class="ln">Pilot eğitimi</span>
+        <span class="ln ln--dim">ve havacılık kursları</span>
+        <span class="ln ln--dim">Türkiye'de.</span>
+      </h2>
+    </header>
+    <p class="avi__lede" data-lines>Uluslararası odaklı uçuş eğitimiyle pilot olun — PPL ve LAPL lisansları, saat biriktirme, havacılık İngilizcesi, havayolu ve havalimanı operasyonları, bakım ve havacılık emniyeti. Bireyler, havayolları, havalimanları ve kurumlar için Türkiye ve İtalya'da verilen uygulamalı eğitim.</p>
+    <div class="avi__stage" aria-hidden="true">
+      <span class="avi__tag avi__tag--1 mono">Türkiye ve İtalya</span>
+      <span class="avi__tag avi__tag--2 mono">32 program · dört eğitim grubu</span>
+      <span class="avi__tag avi__tag--3 mono">Uçuş eğitimi yalnızca yüz yüze</span>
+    </div>
+    <ol class="avi__list">
+      <li><a class="avc" href="/training-programs/aviation-aerospace/ppl-private-pilot-licence/" data-cursor="Aç"><span class="avc__n mono">01</span><h3>Özel Pilot Lisansı <abbr title="Özel Pilot Lisansı">PPL</abbr></h3><p>İlk pilot lisansınıza giden yolda yer dersleri + yüz yüze uçuş eğitimi.</p><i class="avc__bar"></i></a></li>
+      <li><a class="avc" href="/training-programs/aviation-aerospace/lapl-pilot-training/" data-cursor="Aç"><span class="avc__n mono">02</span><h3>Hafif Hava Aracı Pilot Lisansı <abbr title="Hafif Hava Aracı Pilot Lisansı">LAPL</abbr></h3><p>Hafif hava araçlarıyla uçmaya giden, yapılandırılmış ve erişilebilir bir yol.</p><i class="avc__bar"></i></a></li>
+      <li><a class="avc" href="/training-programs/aviation-aerospace/pilot-hour-building/" data-cursor="Aç"><span class="avc__n mono">03</span><h3>Saat Biriktirme ve İleri Uçuş</h3><p>Bir sonraki yetkiniz için uçuş saati, gece uçuşu ve ileri düzey kullanım becerisi kazanın.</p><i class="avc__bar"></i></a></li>
+      <li><a class="avc" href="/training-programs/aviation-aerospace/aviation-english/" data-cursor="Aç"><span class="avc__n mono">04</span><h3>Havacılık İngilizcesi ve Telsiz Konuşmaları</h3><p>Uçuş ekibi için ICAO odaklı havacılık İngilizcesi ve telsiz konuşmaları.</p><i class="avc__bar"></i></a></li>
+    </ol>
+  </div>
+</section>
+
+<section class="avi2" aria-label="Havacılık fotoğrafları ve diğer programlar">
+  <div class="strip" data-strip>
+    <figure class="ph" data-unmask><img src="/assets/img/aviation/av-ppl-2.webp" alt="Çim bir pistte hafif bir eğitim uçağının çevresinde toplanmış öğrenci pilotlar ve bir eğitmen" loading="lazy" width="1600" height="900"></figure>
+    <figure class="ph" data-unmask><img src="/assets/img/aviation/av-hour-building-2.webp" alt="Seyrüsefer eğitim uçuşu sırasında dijital kokpit gösterge paneli ve kumanda levyeleri" loading="lazy" width="1172" height="659"></figure>
+    <figure class="ph" data-unmask><img src="/assets/img/aviation/av-hero.webp" alt="Türkiye&#x27;de apronda bir eğitim uçağı" loading="lazy" width="1600" height="900"></figure>
+  </div>
+  <div class="avi2__row">
+    <p class="avi2__also mono">Havayolu operasyonlarında ayrıca</p>
+    <a class="roll roll--lg" href="/training-programs/aviation-aerospace/flight-dispatcher-training/"><span data-t="Uçuş Dispeçeri ve Havayolu OCC Eğitimi">Uçuş Dispeçeri ve Havayolu OCC Eğitimi</span></a>
+    <a class="roll roll--lg" href="/training-programs/aviation-aerospace/cabin-crew-training/"><span data-t="Kabin Ekibi Mesleki Eğitimi">Kabin Ekibi Mesleki Eğitimi</span></a>
+    <a class="btn btn--red" href="/tr/training-programs/aviation-aerospace/" data-magnetic><span class="btn__l">Tüm havacılık eğitimlerini keşfedin</span><span class="btn__i" aria-hidden="true"></span></a>
+  </div>
+</section>
+
+<div class="band band--dawn band--short" aria-hidden="true"></div>
+
+<!-- ═══ 05 PROGRAMMES ════════════════════════════════════════════════════ -->
+<section id="programmes" class="sec sec--paper prog" data-chapter="Programlar">
+  <header class="prog__head">
+    <div>
+      <p class="label" data-decode>05 — Eğitim programları</p>
+      <h2 class="display prog__h" data-chars data-fill>
+        <span class="ln ln--mute">73 program.</span>
+        <span class="ln">10 alan.</span>
+      </h2>
+    </div>
+    <p class="lead" data-lines>Devletler, kurumlar, şirketler ve bireysel katılımcılar için özel tasarlanmış programlar — Türkiye'de, kendi ülkenizde ya da ekibinize göre kurgulanmış bir kombinasyonla verilir.</p>
+  </header>
+
+  <div class="board">
+    <div class="board__hd mono"><span>Kapı</span><span>Alan</span><span>Programlar</span><span>Durum</span><span aria-hidden="true"></span></div>
+    <a class="row" href="/tr/training-programs/"><span class="row__g" data-flap>01</span><span class="row__f" data-flap>Liderlik ve Yönetim</span><span class="row__c" data-flap>07</span><span class="row__s" data-flap>Talep üzerine</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/tr/training-programs/"><span class="row__g" data-flap>02</span><span class="row__f" data-flap>Kamu ve Devlet Sektörü</span><span class="row__c" data-flap>04</span><span class="row__s" data-flap>Talep üzerine</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/tr/training-programs/"><span class="row__g" data-flap>03</span><span class="row__f" data-flap>Enerji, Limanlar ve Denizcilik</span><span class="row__c" data-flap>05</span><span class="row__s" data-flap>Talep üzerine</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/tr/training-programs/"><span class="row__g" data-flap>04</span><span class="row__f" data-flap>Tarım ve Tarımsal İşletmecilik</span><span class="row__c" data-flap>09</span><span class="row__s" data-flap>Talep üzerine</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/tr/training-programs/"><span class="row__g" data-flap>05</span><span class="row__f" data-flap>Sağlık ve Tıp</span><span class="row__c" data-flap>04</span><span class="row__s" data-flap>Talep üzerine</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/tr/training-programs/"><span class="row__g" data-flap>06</span><span class="row__f" data-flap>Eğitim ve Öğretim</span><span class="row__c" data-flap>03</span><span class="row__s" data-flap>Talep üzerine</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/tr/training-programs/"><span class="row__g" data-flap>07</span><span class="row__f" data-flap>BİT ve Dijital</span><span class="row__c" data-flap>03</span><span class="row__s" data-flap>Talep üzerine</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/tr/training-programs/"><span class="row__g" data-flap>08</span><span class="row__f" data-flap>Turizm ve MICE</span><span class="row__c" data-flap>03</span><span class="row__s" data-flap>Talep üzerine</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/tr/training-programs/"><span class="row__g" data-flap>09</span><span class="row__f" data-flap>Gastronomi</span><span class="row__c" data-flap>03</span><span class="row__s" data-flap>Talep üzerine</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row row--hot" href="/tr/training-programs/aviation-aerospace/"><span class="row__g" data-flap>10</span><span class="row__f" data-flap>Havacılık ve Uzay</span><span class="row__c" data-flap>32</span><span class="row__s" data-flap>Kayıtlar açık</span><i class="row__go" aria-hidden="true"></i></a>
+  </div>
+
+  <div class="ways">
+    <p class="label" data-decode>Bizimle öğrenmenin üç yolu</p>
+    <ul class="ways__grid">
+      <li><a class="way" href="/tr/open-trainings/" data-tilt><span class="way__k mono">Herkese açık</span><h3>Açık Eğitimler</h3><p>Türkiye'de yoğun, İngilizce kısa kurslar — resmi bir ön koşul yok. Dünyanın dört bir yanından meslektaşlarla tanışın.</p><dl class="way__f mono"><div><dt>Süre</dt><dd>10 gün – 2 hafta</dd></div><div><dt>Grup</dt><dd>40–60 katılımcı</dd></div></dl><span class="way__go" aria-hidden="true"></span></a></li>
+      <li><a class="way" href="/tr/training-programs/" data-tilt><span class="way__k mono">Grubunuz için tasarlanır</span><h3>Eğitim Programları</h3><p>Mini MBA ve Liderlikten Tarım, E-Devlet ve Tıbbi sertifikalara — grubunuza özel tasarlanır.</p><dl class="way__f mono"><div><dt>Katalog</dt><dd>73 program</dd></div><div><dt>Alanlar</dt><dd>10</dd></div></dl><span class="way__go" aria-hidden="true"></span></a></li>
+      <li><a class="way" href="/tr/in-house-trainings/" data-tilt><span class="way__k mono">Size getirilir</span><h3>Kurum İçi Eğitimler</h3><p>İşinize uyarlanmış ve her yerde verilen dünya standartlarında programlar — ofisleriniz, şehriniz, takviminiz.</p><dl class="way__f mono"><div><dt>Nerede</dt><dd>Sizin mekânınız</dd></div><div><dt>Ne zaman</dt><dd>Sizin takviminiz</dd></div></dl><span class="way__go" aria-hidden="true"></span></a></li>
+    </ul>
+  </div>
+</section>
+
+<div class="band band--dusk band--short" aria-hidden="true"></div>
+
+<!-- ═══ 06 ON THE GROUND ═════════════════════════════════════════════════ -->
+<section id="ground" class="ground" data-chapter="Sahada">
+  <div class="ground__pin">
+    <div class="ground__map" aria-hidden="true"></div>
+    <div class="ground__copy">
+      <p class="label label--red" data-decode>06 — Yeni tamamlandı</p>
+      <h2 class="display ground__h" data-chars>
+        <span class="ln">Global Leadership</span>
+        <span class="ln ln--dim">Conference 2026</span>
+      </h2>
+      <p class="ground__theme" data-lines>Eğitimde Dijital Dönüşümü Güçlendirmek — Dünyanın Yeni Gelişen Teknolojilerinden ve Ortaklıklardan Yararlanmak.</p>
+      <p class="ground__p" data-lines>Turkey Trainings, İstanbul'daki GLC 2026'da Program Direktörü olarak görev aldı; Nijeryalı kolej yöneticilerinden oluşan bir heyet için program tasarımını, kurumsal oturumları, moderasyonu, akademik kaliteyi ve sertifikasyonu yürüttü.</p>
+      <dl class="facts mono">
+        <div><dt>Ne zaman</dt><dd>4–8 Ağustos 2026</dd></div>
+        <div><dt>Nerede</dt><dd>İstanbul, Türkiye</dd></div>
+        <div><dt>Birlikte</dt><dd>Nijerya Eğitim Kolejleri Rektörler Komitesi</dd></div>
+      </dl>
+      <a class="btn btn--light" href="/tr/contact/" data-magnetic><span class="btn__l">Bir konferans ya da heyet planlayın</span><span class="btn__i" aria-hidden="true"></span></a>
+    </div>
+  </div>
+</section>
+
+<section class="reel" aria-label="Global Leadership Conference 2026&#x27;dan fotoğraflar">
+  <div class="reel__track" data-marquee data-cursor="Sürükle">
+    <figure><img src="/assets/img/glc/glc-1.jpg" alt="İstanbul&#x27;daki Global Leadership Conference 2026&#x27;da delegeler" loading="lazy" width="1600" height="1066"></figure>
+    <figure><img src="/assets/img/glc/glc-11.jpg" alt="GLC 2026 heyetinin toplu fotoğrafı" loading="lazy" width="1600" height="1200"></figure>
+    <figure><img src="/assets/img/glc/glc-8.jpg" alt="Sunum ekranı bulunan bir toplantı salonunda GLC 2026 oturumu" loading="lazy" width="1600" height="1200"></figure>
+    <figure><img src="/assets/img/glc/glc-2.jpg" alt="Bir konferans salonunda sahnedeki GLC 2026 delegeleri" loading="lazy" width="1600" height="1066"></figure>
+    <figure><img src="/assets/img/glc/glc-13.jpg" alt="Bir toplantı odasında GLC 2026 heyeti" loading="lazy" width="1600" height="1200"></figure>
+    <figure><img src="/assets/img/glc/glc-10.jpg" alt="GLC 2026 panel oturumu" loading="lazy" width="1600" height="1200"></figure>
+    <figure><img src="/assets/img/glc/glc-12.jpg" alt="Açık havada bir araya gelmiş GLC 2026 heyeti" loading="lazy" width="1600" height="1200"></figure>
+    <figure><img src="/assets/img/glc/glc-7.jpg" alt="GLC 2026 yuvarlak masa toplantısı" loading="lazy" width="1600" height="1200"></figure>
+    <figure><img src="/assets/img/glc/glc-16.jpg" alt="Toplu fotoğraf için oturmuş GLC 2026 delegeleri" loading="lazy" width="1600" height="1066"></figure>
+  </div>
+  <p class="reel__cap mono"><span>GLC 2026 · İstanbul</span><span>Sürükleyin ya da kaydırmaya devam edin</span></p>
+</section>
+
+<div class="band band--dawn band--short" aria-hidden="true"></div>
+
+<!-- ═══ 07 FILMS ═════════════════════════════════════════════════════════ -->
+<section id="films" class="sec sec--paper films" data-chapter="Filmler">
+  <header class="films__head">
+    <p class="label" data-decode>07 — Bizi iş başında görün</p>
+    <h2 class="display films__h" data-chars data-fill>
+      <span class="ln ln--mute">Gerçekten orada olan</span>
+      <span class="ln">insanlarla çekildi.</span>
+    </h2>
+  </header>
+  <ul class="films__grid">
+    <li><button class="film film--lg" type="button" data-film="https://turkeytrainings.com/assets/video/tt-training.mp4" data-title="Turkey Trainings — program tanıtımı" data-cursor="Oynat"><span class="film__ph" data-unmask><img src="/assets/img/video/tt-training.jpg" alt="" loading="lazy" width="1280" height="720"></span><span class="film__meta"><b>Turkey Trainings — program tanıtımı</b><span class="mono">1 dk 54</span></span><span class="film__d">Kimleri eğitiyoruz, oturumlar nerede yapılıyor ve bir program sahada nasıl görünüyor — sınıf modülleri, uzman eğitmenler, saha ve fabrika ziyaretleri, sertifikasyon.</span></button></li>
+    <li><button class="film" type="button" data-film="https://turkeytrainings.com/assets/video/tt-student-placement.mp4" data-title="Türkiye&#x27;de eğitim — öğrenci yerleştirmemiz nasıl işliyor" data-cursor="Oynat"><span class="film__ph" data-unmask><img src="/assets/img/video/tt-student-placement.jpg" alt="" loading="lazy" width="800" height="450"></span><span class="film__meta"><b>Türkiye'de eğitim — öğrenci yerleştirmemiz nasıl işliyor</b><span class="mono">1 dk 29</span></span></button></li>
+    <li><button class="film" type="button" data-film="https://turkeytrainings.com/assets/video/tt-afgan.mp4" data-title="Bir kanatlı hayvancılık saha ziyaretinden" data-cursor="Oynat"><span class="film__ph" data-unmask><img src="/assets/img/video/tt-afgan.jpg" alt="" loading="lazy" width="800" height="450"></span><span class="film__meta"><b>Bir kanatlı hayvancılık saha ziyaretinden</b><span class="mono">30 sn</span></span></button></li>
+    <li><button class="film" type="button" data-film="https://turkeytrainings.com/assets/video/tt-plustv.mp4" data-title="Nigeria Plus TV — Turkey Trainings tanıtım günü" data-cursor="Oynat"><span class="film__ph" data-unmask><img src="/assets/img/video/tt-plustv.jpg" alt="" loading="lazy" width="1280" height="720"></span><span class="film__meta"><b>Nigeria Plus TV — Turkey Trainings tanıtım günü</b><span class="mono">Yayın</span></span></button></li>
+  </ul>
+  <p class="films__foot"><span class="mono">AFROTURK TV — resmi medya partneri</span><a class="roll" href="/tr/videos/"><span data-t="Tüm video arşivini açın →">Tüm video arşivini açın →</span></a></p>
+</section>
+
+<!-- ═══ 08 CREW ══════════════════════════════════════════════════════════ -->
+<section id="crew" class="sec sec--paper crew" data-chapter="Ekip">
+  <header class="crew__head">
+    <p class="label" data-decode>08 — Turkey Trainings'in arkasındaki insanlar</p>
+    <h2 class="display crew__h" data-chars data-fill>
+      <span class="ln ln--mute">Üç kurucu ortak,</span>
+      <span class="ln">işin bizzat içinde.</span>
+    </h2>
+  </header>
+  <ul class="crew__list">
+    <li class="person"><hr data-draw><img class="person__ph" src="/assets/img/people/sureyya.jpg" alt="Süreyya Ümran Alınak" loading="lazy" width="400" height="400"><div class="person__id"><h3>Süreyya Ümran Alınak</h3><span class="mono">Kurucu Ortak ve CEO</span></div><p>26 yılı aşkın süredir turizm ve etkinlik yönetimi sektöründe binlerce etkinlik yönetti. Turkey Trainings'in vizyonuna, uluslararası ortaklıklarına ve büyümesine liderlik ediyor.</p></li>
+    <li class="person"><hr data-draw><img class="person__ph" src="/assets/img/people/seda.jpg" alt="Seda Diker" loading="lazy" width="400" height="400"><div class="person__id"><h3>Seda Diker</h3><span class="mono">Kurucu Ortak ve Yönetici Ortak</span></div><p>Bilkent Üniversitesi Amerikan Kültürü ve Edebiyatı bölümünden lisans derecesine ve büyük ölçekli AB destekli projelerin yönetiminde yaklaşık 20 yıllık deneyime sahip.</p></li>
+    <li class="person"><hr data-draw><img class="person__ph" src="/assets/img/people/yavuz.jpg" alt="Dr. Yavuz Selim Sılay" loading="lazy" width="400" height="400"><div class="person__id"><h3>Dr. Yavuz Selim Sılay, MD, MBA</h3><span class="mono">Kurucu Ortak ve Eğitim Direktörü</span></div><p>Hekim, yönetici ve eğitimci. Müfredatlarımızı tasarlıyor, akademik partnerlerimizi seçiyor ve amiral gemisi uluslararası programlarımızı yönetiyor.</p></li>
+  </ul>
+  <p class="crew__foot">
+    <a class="btn btn--line" href="/tr/about/" data-magnetic><span class="btn__l">Hakkımızda</span><span class="btn__i" aria-hidden="true"></span></a>
+    <a class="btn btn--line" href="/lecturers/" data-magnetic><span class="btn__l">Eğitmenler ve öğretim görevlileri</span><span class="btn__i" aria-hidden="true"></span></a>
+  </p>
+</section>
+
+<div class="band band--dusk band--short" aria-hidden="true"></div>
+
+<!-- ═══ 09 ARRIVAL ═══════════════════════════════════════════════════════ -->
+<section id="arrival" class="arr" data-chapter="Varış">
+  <div class="arr__radar" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
+  <p class="label label--red" data-decode>09 — Varış</p>
+  <h2 class="display arr__h" data-chars>
+    <span class="ln">Her program</span>
+    <span class="ln">özel olarak</span>
+    <span class="ln ln--dim">grubunuz için tasarlanır.</span>
+  </h2>
+  <p class="arr__p" data-lines>Sabit fiyat yok. Ekibinizin ihtiyaçlarına ve bütçesine en uygun programı tasarlıyoruz.</p>
+  <div class="arr__cta">
+    <a class="btn btn--red btn--xl" href="/tr/apply/" data-magnetic><span class="btn__l">Size özel teklif alın</span><span class="btn__i" aria-hidden="true"></span></a>
+    <a class="btn btn--light btn--xl" href="https://wa.me/905389867594" target="_blank" rel="noopener" data-magnetic><span class="btn__l">WhatsApp'tan yazın</span><span class="btn__i" aria-hidden="true"></span></a>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══ FOOTER ═══════════════════════════════════════════════════════════ -->
+<footer class="foot">
+  <div class="foot__top">
+    <p class="foot__line">Türkiye'de eğitim, sertifikasyon ve üniversite yerleştirme — grubunuza göre tasarlanır.</p>
+    <a class="foot__up mono" href="#departure" data-magnetic><span>Kalkışa dön</span><i aria-hidden="true">↑</i></a>
+  </div>
+  <div class="foot__cols">
+    <div>
+      <p class="label">Türkiye'de eğitim</p>
+      <ul>
+        <li><a class="roll" href="/tr/study/"><span data-t="Genel bakış">Genel bakış</span></a></li>
+        <li><a class="roll" href="/tr/international-students/"><span data-t="Öğrenciler için">Öğrenciler için</span></a></li>
+        <li><a class="roll" href="/tr/universities/"><span data-t="Partner üniversiteler">Partner üniversiteler</span></a></li>
+        <li><a class="roll" href="/tr/for-institutions/"><span data-t="Kurumlar için">Kurumlar için</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="label">Mesleki eğitimler</p>
+      <ul>
+        <li><a class="roll" href="/tr/training/"><span data-t="Genel bakış">Genel bakış</span></a></li>
+        <li><a class="roll" href="/tr/open-trainings/"><span data-t="Açık eğitimler">Açık eğitimler</span></a></li>
+        <li><a class="roll" href="/tr/training-programs/"><span data-t="Eğitim programları">Eğitim programları</span></a></li>
+        <li><a class="roll" href="/tr/training-programs/aviation-aerospace/"><span data-t="Havacılık ve uzay">Havacılık ve uzay</span></a></li>
+        <li><a class="roll" href="/tr/in-house-trainings/"><span data-t="Kurum içi eğitimler">Kurum içi eğitimler</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="label">İletişime geçin</p>
+      <ul>
+        <li><a class="roll" href="/tr/about/"><span data-t="Hakkımızda">Hakkımızda</span></a></li>
+        <li><a class="roll" href="/tr/partnership/"><span data-t="İş ortaklığı">İş ortaklığı</span></a></li>
+        <li><a class="roll" href="/lecturers/"><span data-t="Eğitmenler">Eğitmenler</span></a></li>
+        <li><a class="roll" href="/blog/"><span data-t="Blog">Blog</span></a></li>
+        <li><a class="roll" href="/tr/contact/"><span data-t="İletişim">İletişim</span></a></li>
+        <li><a class="roll" href="/tr/apply/"><span data-t="Başvur">Başvur</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="label">Doğrudan</p>
+      <ul>
+        <li><a class="roll" href="mailto:turkeytrainingstr@gmail.com"><span data-t="turkeytrainingstr@gmail.com">turkeytrainingstr@gmail.com</span></a></li>
+        <li><a class="roll" href="https://wa.me/905389867594" target="_blank" rel="noopener"><span data-t="+90 538 986 7594">+90 538 986 7594</span></a></li>
+        <li><a class="roll" href="tel:+903124180008"><span data-t="+90 312 418 00 08">+90 312 418 00 08</span></a></li>
+        <li><a class="roll" href="https://instagram.com/turkiyetrainings" target="_blank" rel="noopener"><span data-t="@turkiyetrainings">@turkiyetrainings</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot__off">
+    <address><span class="label">Türkiye ofisi</span>Konutkent Mah. 3035 Cad. No:62/B, Suit Tower, Çankaya / Ankara<br><span class="mono">+90 312 418 00 08 · +90 538 986 7594 · +90 850 307 27 37</span></address>
+    <address><span class="label">Nijerya ofisi</span>No 3 Ontario Crescent, Maitama, Abuja FCT, Nigeria<br><span class="mono">+234 805 556 6742 · +234 706 333 6686</span></address>
+  </div>
+  <div class="foot__legal mono"><span>© 2026 Turkey Trainings Limited Company</span><span>Önizleme sürümü · canlı site değildir</span></div>
+  <div class="foot__mark" aria-label="Turkey Trainings">
+    <canvas id="mark" aria-hidden="true"></canvas>
+    <span class="foot__mark-fallback display" aria-hidden="true">Turkey Trainings</span>
+  </div>
+</footer>
+
+<!-- ═══ FILM LIGHTBOX ════════════════════════════════════════════════════ -->
+<dialog class="box" id="box" aria-label="Film">
+  <div class="box__in">
+    <div class="box__bar mono"><span id="boxTitle"></span><button type="button" class="box__x" id="boxX">Kapat <i aria-hidden="true">×</i></button></div>
+    <video id="boxVideo" controls playsinline preload="none"></video>
+  </div>
+</dialog>
+
+<script src="/vendor/gsap.min.js"></script>
+<script src="/vendor/ScrollTrigger.min.js"></script>
+<script src="/vendor/lenis.min.js"></script>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

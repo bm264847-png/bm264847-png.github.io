@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turkey Trainings — Formation de pilote, programmes professionnels et placement universitaire en Turquie</title>
+<meta name="description" content="Formation, certification et placement universitaire en Turquie — conçus autour de votre groupe. Licences de pilote, 73 programmes professionnels dans 10 domaines et placement auprès de plus de 150 universités partenaires.">
+<meta name="theme-color" content="#071426">
+<!-- alt:start --><link rel="alternate" hreflang="en" href="/"><link rel="alternate" hreflang="tr" href="/tr/"><link rel="alternate" hreflang="fr" href="/fr/"><link rel="alternate" hreflang="ar" href="/ar/"><!-- alt:end -->
+<link rel="preload" href="/assets/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/ibm-plex-mono-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/styles.css">
+<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__tt)document.documentElement.classList.add('loader-gone')},9000);</script>
+<script type="importmap">{"imports":{"three":"/vendor/three.module.min.js"}}</script>
+<script>window.__i18n={"Filing flight plan": "Dépôt du plan de vol", "Checking weather": "Vérification de la météo", "Awaiting clearance": "En attente d'autorisation", "Cleared for departure": "Autorisé au décollage", "Close": "Fermer", "TÜRKİYE": "TURQUIE", "UGANDA": "OUGANDA", "AZERBAIJAN": "AZERBAÏDJAN", "ITALY": "ITALIE", "HEAD OFFICE": "SIÈGE", "AQUACULTURE PROGRAMME": "PROGRAMME D'AQUACULTURE"}</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Aller au contenu</a>
+
+<!-- ═══ LOADER ═══════════════════════════════════════════════════════════ -->
+<div id="loader" class="loader" aria-hidden="true">
+  <svg class="loader__ring" viewBox="0 0 400 400">
+    <circle class="loader__c loader__c--1" cx="200" cy="200" r="196"/>
+    <circle class="loader__c loader__c--2" cx="200" cy="200" r="164"/>
+    <circle class="loader__c loader__c--3" cx="200" cy="200" r="132"/>
+    <g class="loader__ticks"></g>
+    <circle class="loader__prog" cx="200" cy="200" r="164" pathLength="100"/>
+    <path class="loader__needle" d="M200 44 L206 74 L194 74 Z"/>
+  </svg>
+  <div class="loader__read">
+    <span class="loader__num mono" id="loaderNum">000</span>
+    <span class="loader__lab mono" id="loaderLab">Dépôt du plan de vol</span>
+  </div>
+  <ul class="loader__list mono">
+    <li>Route</li><li>Météo</li><li>Autorisation</li>
+  </ul>
+</div>
+
+<canvas id="scene" class="scene" aria-hidden="true"></canvas>
+<div id="labels" class="labels" aria-hidden="true"></div>
+
+<!-- ═══ FIXED FURNITURE ══════════════════════════════════════════════════ -->
+<div class="cursor" aria-hidden="true"><i class="cursor__ring"></i><i class="cursor__dot"></i><span class="cursor__text mono"></span></div>
+
+<aside class="hud mono" aria-hidden="true">
+  <div class="hud__row"><span>ALT</span><b id="hudAlt">38,000</b><span id="hudAltU">FT</span></div>
+  <div class="hud__row"><span>GS</span><b id="hudGs">000</b><span>KT</span></div>
+</aside>
+
+<nav class="rail" aria-label="Chapitres"></nav>
+
+<a class="wa" href="https://wa.me/905389867594" target="_blank" rel="noopener" aria-label="Écrivez-nous sur WhatsApp" data-magnetic>
+  <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.800 2 6.800L3 29l6.700-1.900c1.900 1 4 1.500 6.300 1.500 7.200 0 13-5.700 13-12.800S23.200 3 16 3zm0 23.300c-2 0-3.900-.5-5.500-1.500l-.4-.2-4 1.100 1.100-3.800-.3-.4c-1.100-1.700-1.700-3.700-1.700-5.700C5.200 10 10 5.300 16 5.300S26.800 10 26.800 15.800 22 26.300 16 26.300zm5.900-7.800c-.3-.2-1.900-.9-2.200-1-.3-.1-.5-.2-.7.2-.2.300-.8 1-1 1.200-.2.200-.4.200-.7.100-.3-.2-1.400-.5-2.600-1.600-1-.9-1.600-1.900-1.800-2.200-.2-.3 0-.5.100-.7l.500-.6c.200-.2.200-.3.300-.5.100-.2.100-.4 0-.6-.100-.2-.700-1.700-1-2.300-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.100-.9.400-.3.300-1.200 1.100-1.200 2.800 0 1.600 1.200 3.200 1.400 3.400.2.200 2.300 3.600 5.700 5 .8.300 1.400.5 1.900.7.8.200 1.500.200 2.100.100.6-.1 1.900-.8 2.200-1.500.3-.7.300-1.400.2-1.500-.1-.2-.3-.2-.6-.4z"/></svg>
+</a>
+
+<!-- ═══ HEADER ═══════════════════════════════════════════════════════════ -->
+<header class="top" id="top">
+  <div class="ticker mono" aria-label="Actualités">
+    <div class="ticker__track">
+      <span>Division phare · inscriptions ouvertes — Formation de pilote et cours d'aviation en Turquie et en Italie</span><i></i>
+      <span>Tout juste terminée — Global Leadership Conference 2026 · Istanbul · 4–8 août</span><i></i>
+      <span>73 programmes dans 10 domaines</span><i></i>
+      <span>150+ universités partenaires en Turquie</span><i></i>
+      <span>Bureaux à Ankara et Abuja</span><i></i>
+    </div>
+  </div>
+  <div class="bar">
+    <a class="brand" href="#departure" aria-label="Turkey Trainings — accueil">
+      <svg viewBox="0 0 96 74" class="brand__mark" aria-hidden="true"><path class="brand__t" d="M12 6 H42 a16 16 0 0 1 16 16 V52 a16 16 0 0 1 -16 16 H34 V28 H12 Z"/><path class="brand__r" d="M64 6 H94 L79 34 Z"/></svg>
+      <span class="brand__name"><b>Turkey</b><span>Trainings</span></span>
+    </a>
+    <nav class="links" aria-label="Navigation principale">
+      <a class="roll" href="#study"><span data-t="Étudier en Turquie">Étudier en Turquie</span></a>
+      <a class="roll" href="#programmes"><span data-t="Formations professionnelles">Formations professionnelles</span></a>
+      <a class="roll" href="#aviation"><span data-t="Aviation">Aviation</span></a>
+      <a class="roll" href="#origin"><span data-t="À propos">À propos</span></a>
+      <a class="roll" href="#films"><span data-t="Films">Films</span></a>
+      <a class="roll" href="#arrival"><span data-t="Contact">Contact</span></a>
+    </nav>
+    <div class="bar__end">
+      <!-- lang:start --><div class="lang"><button class="lang__btn mono" type="button" aria-expanded="false" aria-controls="langList" aria-label="Langue: Français"><span>FR</span><i aria-hidden="true"></i></button><ul class="lang__list" id="langList"><li><a href="/" lang="en" hreflang="en"><b>EN</b><span>English</span></a></li><li><a href="/tr/" lang="tr" hreflang="tr"><b>TR</b><span>Türkçe</span></a></li><li><a href="/fr/" lang="fr" hreflang="fr" aria-current="true"><b>FR</b><span>Français</span></a></li><li><a href="/ar/" lang="ar" hreflang="ar"><b>AR</b><span>العربية</span></a></li></ul></div><!-- lang:end -->
+      <a class="btn btn--red btn--sm" href="/fr/apply/" data-magnetic><span class="btn__l">Postuler</span><span class="btn__i" aria-hidden="true"></span></a>
+      <button class="menu-btn mono" type="button" aria-expanded="false" aria-controls="menu"><span class="menu-btn__lines" aria-hidden="true"><i></i><i></i></span><span class="menu-btn__t">Menu</span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ MENU OVERLAY ═════════════════════════════════════════════════════ -->
+<div class="menu" id="menu" hidden>
+  <div class="menu__bg"></div>
+  <div class="menu__in">
+    <nav class="menu__nav" aria-label="Toutes les pages">
+      <a href="#study" data-close><i class="mono">01</i><span>Étudier en Turquie</span></a>
+      <a href="#programmes" data-close><i class="mono">02</i><span>Formations professionnelles</span></a>
+      <a href="#aviation" data-close><i class="mono">03</i><span>Aviation et aérospatial</span></a>
+      <a href="#ground" data-close><i class="mono">04</i><span>Sur le terrain</span></a>
+      <a href="#films" data-close><i class="mono">05</i><span>Films</span></a>
+      <a href="#crew" data-close><i class="mono">06</i><span>L'équipe</span></a>
+      <a href="#arrival" data-close><i class="mono">07</i><span>Contact</span></a>
+    </nav>
+    <div class="menu__side">
+      <p class="label">Langue</p>
+      <!-- lang2:start --><p class="langrow"><a href="/" lang="en" hreflang="en">English</a><a href="/tr/" lang="tr" hreflang="tr">Türkçe</a><a href="/fr/" lang="fr" hreflang="fr" aria-current="true">Français</a><a href="/ar/" lang="ar" hreflang="ar">العربية</a></p><!-- lang2:end -->
+      <p class="label">Autres pages</p>
+      <ul class="menu__more">
+        <li><a class="roll" href="/fr/universities/"><span data-t="Universités partenaires">Universités partenaires</span></a></li>
+        <li><a class="roll" href="/fr/open-trainings/"><span data-t="Formations ouvertes">Formations ouvertes</span></a></li>
+        <li><a class="roll" href="/lecturers/"><span data-t="Intervenants">Intervenants</span></a></li>
+        <li><a class="roll" href="/fr/partnership/"><span data-t="Partenariat">Partenariat</span></a></li>
+        <li><a class="roll" href="/blog/"><span data-t="Blog">Blog</span></a></li>
+      </ul>
+      <p class="label">Contactez-nous</p>
+      <ul class="menu__more">
+        <li><a class="roll" href="https://wa.me/905389867594" target="_blank" rel="noopener"><span data-t="WhatsApp +90 538 986 7594">WhatsApp +90 538 986 7594</span></a></li>
+        <li><a class="roll" href="mailto:turkeytrainingstr@gmail.com"><span data-t="turkeytrainingstr@gmail.com">turkeytrainingstr@gmail.com</span></a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ═══ 01 DEPARTURE ═════════════════════════════════════════════════════ -->
+<section id="departure" class="hero" data-chapter="Départ">
+  <div class="hero__globe" aria-hidden="true"></div>
+  <div class="hero__top">
+    <div class="hero__copy">
+      <p class="label" data-decode>01 — Départ</p>
+      <h1 class="display hero__title" data-chars>
+        <span class="ln">Une formation</span>
+        <span class="ln">qui voyage <em>avec vous.</em></span>
+      </h1>
+      <p class="hero__lede" data-rise>Formation, certification et placement universitaire en Turquie — conçus autour de votre groupe, de votre pays jusqu'au campus.</p>
+    </div>
+    <dl class="hero__meta mono" data-rise>
+      <div><dt>Destination</dt><dd>Ankara, Turquie</dd></div>
+      <div><dt>Position</dt><dd>39°55′N 32°51′E</dd></div>
+      <div><dt>Depuis</dt><dd>Avril 2019</dd></div>
+    </dl>
+  </div>
+
+  <div class="doors">
+    <a class="door door--study" href="#study" data-cursor="Explorer">
+      <img class="door__img" src="/assets/img/svc-study.jpg" alt="" loading="eager">
+      <span class="door__n mono">A</span>
+      <span class="door__who mono">Pour les étudiants et les institutions</span>
+      <span class="door__t">Étudier en Turquie</span>
+      <span class="door__d">Placement universitaire, bourses, aide au visa et accompagnement complet.</span>
+      <span class="door__go" aria-hidden="true"></span>
+    </a>
+    <a class="door door--train" href="#programmes" data-cursor="Explorer">
+      <img class="door__img" src="/assets/img/svc-inperson.jpg" alt="" loading="eager">
+      <span class="door__n mono">B</span>
+      <span class="door__who mono">Pour les professionnels et les équipes</span>
+      <span class="door__t">Formations professionnelles</span>
+      <span class="door__d">Cours de courte durée, programmes certifiés et formation intra-entreprise — en Turquie ou à votre porte.</span>
+      <span class="door__go" aria-hidden="true"></span>
+    </a>
+  </div>
+</section>
+
+<div class="band band--dawn" aria-hidden="true"></div>
+
+<!-- ═══ 02 ORIGIN ════════════════════════════════════════════════════════ -->
+<section id="origin" class="sec sec--paper origin" data-chapter="Origine">
+  <div class="origin__l">
+    <p class="label" data-decode>02 — Là où tout a commencé</p>
+    <h2 class="display origin__h" data-chars data-fill>
+      <span class="ln ln--mute">Tout a commencé</span>
+      <span class="ln ln--mute">avec 47 personnes.</span>
+      <span class="ln">Ankara,</span>
+      <span class="ln">avril 2019.</span>
+    </h2>
+  </div>
+  <div class="origin__r">
+    <p class="lead" data-lines>En avril 2019, 47 jeunes professionnels venus du Nigeria ont achevé notre programme d'entrepreneuriat en agrobusiness à Ankara. Ce groupe a marqué le point de départ de cette aventure — et plus de 500 participants d'Afrique, d'Asie et d'Europe ont suivi depuis.</p>
+    <figure class="ph origin__ph" data-unmask>
+      <img src="/assets/img/story-ceremony.jpg" alt="Cérémonie de remise des certificats — les participants reçoivent leur certificat à la fin du programme d&#x27;agrobusiness à Ankara" loading="lazy" width="1366" height="768">
+      <figcaption class="mono">Cérémonie de remise des certificats · Programme d'agrobusiness · Ankara</figcaption>
+    </figure>
+    <ul class="stats">
+      <li><hr data-draw><b class="stat__n" data-count="500" data-suffix="+">500+</b><span>Diplômés dans le monde</span></li>
+      <li><hr data-draw><b class="stat__n" data-count="20" data-suffix="+">20+</b><span>Pays représentés</span></li>
+      <li><hr data-draw><b class="stat__n" data-count="150" data-suffix="+">150+</b><span>Universités partenaires en Turquie</span></li>
+    </ul>
+    <a class="btn btn--line" href="/fr/about/" data-magnetic><span class="btn__l">Lire notre histoire</span><span class="btn__i" aria-hidden="true"></span></a>
+  </div>
+</section>
+
+<!-- ═══ 03 STUDY ═════════════════════════════════════════════════════════ -->
+<!-- deck:start -->
+<section id="deck" class="sec sec--paper deckwrap" data-chapter="Poste de pilotage">
+  <div class="deck" data-theme="night">
+    <div class="deck__wipe" aria-hidden="true"></div>
+    <div class="deck__main">
+      <p class="label deck__eyebrow"><i class="tri"></i><span>Poste de pilotage</span><em><span class="h-fine">Cliquez sur l'emblème pour changer de cap</span><span class="h-touch">Touchez l'emblème pour changer de cap</span></em></p>
+      <button class="deck__emblem" type="button" aria-label="Changer de cap : afficher la destination suivante" data-cursor="Changer de cap">
+        <svg viewBox="0 0 96 74" aria-hidden="true"><path class="deck__svg-t" d="M12 6 H42 a16 16 0 0 1 16 16 V52 a16 16 0 0 1 -16 16 H34 V28 H12 Z"/><path class="deck__svg-r" d="M64 6 H94 L79 34 Z"/></svg>
+        <canvas aria-hidden="true"></canvas>
+      </button>
+      <div class="deck__say" aria-live="polite">
+        <p class="deck__count"><b id="deckNo">01</b><span>/ 06</span><em id="deckLabel">Étudier en Turquie</em></p>
+        <h2 class="deck__h"><span id="deckH">Votre avenir commence en Turquie.</span></h2>
+        <p class="deck__lede" id="deckLede">Nous guidons les étudiants et les institutions à chaque étape des études en Turquie — avec plus de 150 universités partenaires et un accompagnement honnête et bien informé.</p>
+        <a class="btn btn--deck" id="deckGo" href="/fr/study/" data-magnetic><span class="btn__l">Commencer par les études</span><span class="btn__i"></span></a>
+      </div>
+    </div>
+    <div class="deck__pv">
+      <p class="label deck__pv-k"><i class="tri"></i><span id="pvField">Leadership et management</span></p>
+      <div class="deck__pv-img"><img id="pvImg" src="/assets/live/cat/cat-leadership.jpg" alt="" loading="lazy" decoding="async"></div>
+      <div class="deck__pv-in">
+        <h3 class="deck__pv-t" id="pvTitle">Mini MBA en 10 jours</h3>
+        <p class="deck__pv-f" id="pvFacts">10 jours · Ankara / Istanbul · Certificat</p>
+        <p class="deck__pv-d" id="pvDesc">Un tour d'horizon intensif du management moderne : stratégie, finance pour non-financiers, marketing, opérations, leadership des équipes et conduite du changement. Fondé sur des études de cas réels et une présentation finale en groupe.</p>
+        <p class="deck__pv-a"><a class="roll roll--u" id="pvGo" href="/fr/training-programs/#leadership"><span data-t="Détails du programme">Détails du programme</span></a><a class="roll roll--u" href="/fr/apply/training/"><span data-t="Demander ce programme">Demander ce programme</span></a></p>
+      </div>
+    </div>
+    <div class="deck__side">
+      <p class="label deck__side-k"><span>Les 73 programmes</span><em><span class="h-fine">Survolez pour un aperçu</span><span class="h-touch">Touchez pour un aperçu, touchez à nouveau pour ouvrir</span></em></p>
+      <div class="deck__scroll" tabindex="-1">
+        <ul class="deck__list">
+          <li><a class="deck__it" href="/fr/training-programs/#leadership" data-fid="leadership" data-field="Leadership et management" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="10 jours · Ankara / Istanbul · Certificat" data-desc="Un tour d&#x27;horizon intensif du management moderne : stratégie, finance pour non-financiers, marketing, opérations, leadership des équipes et conduite du changement. Fondé sur des études de cas réels et une présentation finale en groupe."><i></i><span>Mini MBA en 10 jours</span></a></li>
+          <li><a class="deck__it" href="/programs/leadership/" data-fid="leadership" data-field="Leadership et management" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="5–10 jours · Certificat" data-desc="Les fondamentaux du leadership pour les nouveaux managers — styles de leadership, délégation, motivation, feedback, conversations difficiles et constitution d&#x27;une équipe de premier plan."><i></i><span>Management et leadership 1</span></a></li>
+          <li><a class="deck__it" href="/programs/leadership/" data-fid="leadership" data-field="Leadership et management" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="5–10 jours · Niveau senior" data-desc="Leadership avancé pour cadres supérieurs — réflexion stratégique, culture d&#x27;organisation, systèmes de performance, management de managers et conduite du changement."><i></i><span>Management et leadership 2</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#leadership" data-fid="leadership" data-field="Leadership et management" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="10 jours · Outils et modèles" data-desc="Planifiez, pilotez et clôturez vos projets en confiance : périmètre et parties prenantes, découpage des tâches, planification et chemin critique, budgets, registres des risques et reporting de projet."><i></i><span>Maîtriser la gestion de projet</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#leadership" data-fid="leadership" data-field="Leadership et management" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="5–10 jours" data-desc="Des compétences managériales concrètes qui font bouger les chiffres — fixation d&#x27;objectifs, indicateurs clés, productivité, orientation client, résolution de problèmes et responsabilisation."><i></i><span>Un management efficace pour la réussite de l'entreprise</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#leadership" data-fid="leadership" data-field="Leadership et management" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="10 jours · Conseil disponible" data-desc="Concevez, rédigez et gérez des projets financés par l&#x27;UE. Logique des programmes et appels à projets, analyse des besoins, cadres logiques, budgétisation, consortiums de partenaires, reporting et préparation aux audits — avec l&#x27;appui de nos consultants experts."><i></i><span>Gestion de projets européens</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#leadership" data-fid="leadership" data-field="Leadership et management" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="5–10 jours · Secteurs public et privé" data-desc="Transformez les principes éthiques en pratique quotidienne : codes de conduite, conflits d&#x27;intérêts, dispositifs d&#x27;alerte, cartographie des risques éthiques et construction d&#x27;une culture de confiance."><i></i><span>Mise en œuvre de l'éthique</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#government" data-fid="government" data-field="Gouvernement et secteur public" data-img="/assets/live/cat/cat-government.jpg" data-facts="10 jours · Visites de sites" data-desc="Comment la Turquie a bâti l&#x27;un des portails nationaux d&#x27;administration en ligne les plus utilisés au monde — architecture, identité, interopérabilité, registres partagés et adoption par les citoyens. Comprend des visites d&#x27;institutions."><i></i><span>E-gouvernement</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#government" data-fid="government" data-field="Gouvernement et secteur public" data-img="/assets/live/cat/cat-government.jpg" data-facts="10 jours" data-desc="Pilotez la transformation numérique au sein d&#x27;une institution publique : conception de services, numérisation des processus, gouvernance des données, bases de la cybersécurité, conduite du changement et mesure de l&#x27;impact."><i></i><span>Le gouvernement numérique au service du public</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#government" data-fid="government" data-field="Gouvernement et secteur public" data-img="/assets/live/cat/cat-government.jpg" data-facts="5–10 jours · Juges et procureurs" data-desc="Renforcez une pratique judiciaire équitable, cohérente et fondée sur les preuves — raisonnement et rédaction des jugements, appréciation des preuves, déontologie judiciaire, gestion des affaires et efficacité des tribunaux."><i></i><span>La prise de décision judiciaire</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#government" data-fid="government" data-field="Gouvernement et secteur public" data-img="/assets/live/cat/cat-government.jpg" data-facts="5–10 jours" data-desc="Des dispositifs d&#x27;intégrité concrets pour les organismes publics : évaluation des risques de corruption, transparence et contrôle des marchés publics, audit interne, mécanismes de signalement et plans d&#x27;intégrité institutionnels."><i></i><span>Lutte contre la corruption et gestion de l'intégrité</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#energy" data-fid="energy" data-field="Énergie, ports et maritime" data-img="/assets/live/cat/cat-energy.jpg" data-facts="10 jours · Niveau direction" data-desc="Dirigez des systèmes complexes de logistique énergétique — stratégie de chaîne d&#x27;approvisionnement, décision en situation d&#x27;incertitude, gestion des sous-traitants, résilience opérationnelle et amélioration continue."><i></i><span>Leadership stratégique et excellence opérationnelle dans la logistique pétrolière et gazière</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#energy" data-fid="energy" data-field="Énergie, ports et maritime" data-img="/assets/live/cat/cat-energy.jpg" data-facts="10 jours · Visites de ports" data-desc="Les pratiques modernes des ports et terminaux — opérations de terminal, exigences réglementaires, gestion des risques maritimes, systèmes HSE, intervention d&#x27;urgence et enquêtes sur les incidents."><i></i><span>Principes avancés de gestion, d'exploitation et de sécurité des ports et terminaux maritimes</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#energy" data-fid="energy" data-field="Énergie, ports et maritime" data-img="/assets/live/cat/cat-energy.jpg" data-facts="10 jours · Technique" data-desc="Criticité des actifs et AMDEC, stratégie de maintenance préventive et prédictive, planification des arrêts, ordonnancement par chemin critique, pièces de rechange et indicateurs de maintenance."><i></i><span>Planification de la maintenance et contrôle des travaux dans les ports et terminaux pétroliers et gaziers</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#energy" data-fid="energy" data-field="Énergie, ports et maritime" data-img="/assets/live/cat/cat-energy.jpg" data-facts="5 semaines · Tuzla, Istanbul · Pratique en chantier naval" data-desc="Cinq semaines au cœur de la capitale turque de la construction navale : bases de la conception des navires, structures de coque, stabilité, procédés de production et d&#x27;armement, qualité et sécurité, avec pratique en chantier naval à Tuzla."><i></i><span>Construction navale et architecture navale — 1 mois intensif</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#energy" data-fid="energy" data-field="Énergie, ports et maritime" data-img="/assets/live/cat/cat-energy.jpg" data-facts="12 semaines · Tuzla, Istanbul · Stage prolongé" data-desc="Un programme avancé de douze semaines associant théorie de l&#x27;architecture navale et stage prolongé en chantier — conception, analyse structurelle, systèmes marins, gestion de projet et de production."><i></i><span>Construction navale et architecture navale — 3 mois avancé</span></a></li>
+          <li><a class="deck__it" href="/programs/agribusiness/" data-fid="agriculture" data-field="Agriculture et agrobusiness" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="10–14 jours · Visites de terrain" data-desc="Santé des sols, efficacité de l&#x27;eau et de l&#x27;irrigation, planification et rotation des cultures, pratiques adaptées au climat, mécanisation et économie de l&#x27;exploitation — avec visites de fermes en activité et de stations de recherche."><i></i><span>Agriculture durable et gestion d'exploitation</span></a></li>
+          <li><a class="deck__it" href="/programs/agribusiness/" data-fid="agriculture" data-field="Agriculture et agrobusiness" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="10 jours" data-desc="Transformez le savoir agricole en entreprise — évaluation des opportunités, modèle d&#x27;affaires, financement et subventions, coopératives, maîtrise des coûts et accès au marché."><i></i><span>Entrepreneuriat agricole</span></a></li>
+          <li><a class="deck__it" href="/programs/agribusiness/" data-fid="agriculture" data-field="Agriculture et agrobusiness" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="13 modules · Certificat" data-desc="Treize modules, de la planification de l&#x27;exploitation et de la gestion des risques à la manutention après récolte, la chaîne du froid, la transformation alimentaire, l&#x27;emballage, la marque et le marketing à l&#x27;export."><i></i><span>Certificat d'entrepreneuriat en agrobusiness</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#agriculture" data-fid="agriculture" data-field="Agriculture et agrobusiness" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="10 jours · Istanbul · Visites d&#x27;entreprises" data-desc="Explorez les technologies qui transforment l&#x27;agriculture — agriculture de précision, capteurs et données, technologie des serres, start-up agricoles — puis évaluez-les, analysez-les et commercialisez-les dans votre propre contexte."><i></i><span>Innovation et marketing AgriTech</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#agriculture" data-fid="agriculture" data-field="Agriculture et agrobusiness" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="10 jours" data-desc="Marchés et prix agricoles, chaînes d&#x27;approvisionnement et de valeur, conception des subventions et des politiques, analyse financière à l&#x27;échelle de l&#x27;exploitation et évaluation des investissements pour les projets agricoles."><i></i><span>Économie agricole</span></a></li>
+          <li><a class="deck__it" href="/programs/poultry/" data-fid="agriculture" data-field="Agriculture et agrobusiness" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="10 jours · Visites de fermes" data-desc="Production de poulets de chair et de pondeuses, bâtiments et équipements, alimentation et nutrition, biosécurité et santé du troupeau, bases du couvoir et économie d&#x27;une exploitation avicole rentable."><i></i><span>Entrepreneuriat en aviculture</span></a></li>
+          <li><a class="deck__it" href="/programs/aquaculture/" data-fid="agriculture" data-field="Agriculture et agrobusiness" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="20 jours · Adana, Turquie · Visites d&#x27;écloseries" data-desc="La pisciculture, du choix du site et de la conception des systèmes à l&#x27;écloserie, l&#x27;alimentation, la qualité de l&#x27;eau, la gestion des maladies, la récolte et la commercialisation — encadrée par des experts universitaires en aquaculture."><i></i><span>Entrepreneuriat en aquaculture</span></a></li>
+          <li><a class="deck__it" href="/programs/heliciculture/" data-fid="agriculture" data-field="Agriculture et agrobusiness" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="7–10 jours · Orientation export" data-desc="Une activité d&#x27;export de niche à forte valeur, expliquée de bout en bout — espèces et reproduction, systèmes en plein champ et sous serre, alimentation, récolte, transformation et accès au marché européen."><i></i><span>Entrepreneuriat en héliciculture (élevage d'escargots)</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#agriculture" data-fid="agriculture" data-field="Agriculture et agrobusiness" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="10 jours + visites de terrain · Lun–jeu 09:00–16:00" data-desc="Dix jours de formation et des visites de terrain : élevage bovin et de petits ruminants, sélection et génétique, aliments et rations, santé du troupeau, traitement du lait et gestion de l&#x27;exploitation."><i></i><span>Élevage et gestion du bétail</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#health" data-fid="health" data-field="Santé et médical" data-img="/assets/live/cat/cat-health.jpg" data-facts="Yüksek İhtisas University · Partenaires cliniques" data-desc="Une certification médicale spécialisée dispensée à la Yüksek İhtisas University avec des partenaires cliniques — adaptée à la spécialité et au niveau d&#x27;expérience de votre équipe médicale."><i></i><span>Programmes de certificats médicaux</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#health" data-fid="health" data-field="Santé et médical" data-img="/assets/live/cat/cat-health.jpg" data-facts="1 000 heures · 13 cours · Certificat de réussite" data-desc="1 000 heures au total : 550 heures de théorie (250 hors ligne, 300 en présentiel) et 450 heures de pratique (150 en simulation/laboratoire, 300 en observation clinique) réparties sur 13 cours — anatomie, pharmacologie, terminologie médicale, services de santé d&#x27;urgence, réanimation, traumatologie, premiers secours et pratique professionnelle."><i></i><span>Technicien médical d'urgence (EMT)</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#health" data-fid="health" data-field="Santé et médical" data-img="/assets/live/cat/cat-health.jpg" data-facts="1 600 heures · 16 cours" data-desc="1 600 heures au total : 600 heures de théorie (250 hors ligne, 350 en présentiel) et 1 000 heures de pratique (200 en simulation/laboratoire, 800 en observation clinique) réparties sur 16 cours. Les diplômés travaillent dans les hôpitaux, les établissements de long séjour et de rééducation, les centres d&#x27;accueil de jour pour adultes et à domicile."><i></i><span>Aide-soignant</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#health" data-fid="health" data-field="Santé et médical" data-img="/assets/live/cat/cat-health.jpg" data-facts="1 600 heures · 21 cours" data-desc="1 600 heures au total : 500 heures de théorie (200 en ligne, 300 en présentiel) et 1 100 heures de pratique (300 en simulation/laboratoire, 800 en observation clinique) réparties sur 21 cours couvrant les soins prénatals, l&#x27;accouchement, les soins postnatals et néonatals."><i></i><span>Maïeutique</span></a></li>
+          <li><a class="deck__it" href="/programs/teachers/" data-fid="education" data-field="Éducation et enseignement" data-img="/assets/live/cat/cat-education.jpg" data-facts="10 jours · Visites d&#x27;écoles" data-desc="Approches pédagogiques contemporaines — Montessori, Reggio Emilia, écoles en forêt, apprentissage par l&#x27;enquête et par projet, gestion de classe, éducation inclusive et évaluation — avec des visites d&#x27;observation en école."><i></i><span>Programme de formation des enseignants</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#education" data-fid="education" data-field="Éducation et enseignement" data-img="/assets/live/cat/cat-education.jpg" data-facts="5–10 jours" data-desc="Pour les chefs d&#x27;établissement, les inspecteurs et le personnel des ministères : leadership pédagogique, plan d&#x27;amélioration de l&#x27;école, supervision et coaching des enseignants, décisions fondées sur les données et lien avec la communauté."><i></i><span>Leadership éducatif et gestion scolaire</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#education" data-fid="education" data-field="Éducation et enseignement" data-img="/assets/live/cat/cat-education.jpg" data-facts="5–10 jours · Universités d&#x27;accueil" data-desc="Pour les universités et les établissements d&#x27;enseignement supérieur : assurance qualité et accréditation, développement des cursus, gestion de la recherche, partenariats internationaux et mobilité étudiante."><i></i><span>Leadership et internationalisation de l'enseignement supérieur</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#ict" data-fid="ict" data-field="TIC et numérique" data-img="/assets/live/cat/cat-ict.jpg" data-facts="KTU, Trabzon · Enseigné en anglais · Laboratoires pratiques" data-desc="Accueilli à la KTU à Trabzon — fondée en 1955, quatrième plus ancienne université de Turquie, avec environ 17 facultés et 55 000 étudiants. Enseigné en anglais, avec des laboratoires informatiques pratiques et un certificat de fin de formation."><i></i><span>Programme de formation TIC à l'Université technique de Karadeniz</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#ict" data-fid="ict" data-field="TIC et numérique" data-img="/assets/live/cat/cat-ict.jpg" data-facts="5–10 jours" data-desc="Une stratégie informatique alignée sur les objectifs de l&#x27;institution — cadres de gouvernance, gestion des services informatiques, gestion de portefeuille de projets, sécurité de l&#x27;information, risques et conformité, gestion des fournisseurs."><i></i><span>Gouvernance des technologies de l'information</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#ict" data-fid="ict" data-field="TIC et numérique" data-img="/assets/live/cat/cat-ict.jpg" data-facts="5 jours" data-desc="Une sécurité concrète pour les équipes publiques et d&#x27;entreprise : panorama des menaces, contrôle d&#x27;accès, hameçonnage et ingénierie sociale, réponse aux incidents, continuité d&#x27;activité et culture de la sécurité."><i></i><span>Sensibilisation à la cybersécurité pour les institutions</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#tourism" data-fid="tourism" data-field="Tourisme et MICE" data-img="/assets/live/cat/cat-tourism.jpg" data-facts="10 jours · Visites d&#x27;hôtels" data-desc="Les fondements du secteur du tourisme — connaissance des destinations et des produits, standards de service, réception et opérations hôtelières, et place du tourisme dans l&#x27;économie nationale."><i></i><span>Cours d'initiation au tourisme</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#tourism" data-fid="tourism" data-field="Tourisme et MICE" data-img="/assets/live/cat/cat-tourism.jpg" data-facts="10 jours · Visites de centres de congrès" data-desc="Réunions, voyages de motivation, conférences et expositions — candidatures et choix des lieux, budget et logistique des événements, sponsoring, gestion des délégués et évaluation après l&#x27;événement."><i></i><span>Programme de gestion M.I.C.E.</span></a></li>
+          <li><a class="deck__it" href="/fr/training-programs/#tourism" data-fid="tourism" data-field="Tourisme et MICE" data-img="/assets/live/cat/cat-tourism.jpg" data-facts="10 jours" data-desc="Agences de voyages et tour-opérateurs — conception et tarification des produits, distribution et bases des GDS, contrats, politique de voyages d&#x27;affaires, marketing numérique et expérience client."><i></i><span>Programme de gestion du voyage</span></a></li>
+          <li><a class="deck__it" href="/programs/gastronomy/" data-fid="gastronomy" data-field="Gastronomie" data-img="/assets/live/cat/cat-gastronomy.jpg" data-facts="6 mois · 960 heures · 4 chefs formateurs · 20 participants maximum" data-desc="Notre programme phare de gastronomie : 6 mois, 24 semaines, 960 heures — cinq jours par semaine, huit heures par jour. Trois mois de cuisine turque suivis de trois mois de cuisine du monde, enseignés par quatre chefs formateurs à un groupe de vingt, avec pratique en restaurant sur place chaque jour."><i></i><span>Programme exécutif culinaire international de niveau Michelin</span></a></li>
+          <li><a class="deck__it" href="/programs/gastronomy/" data-fid="gastronomy" data-field="Gastronomie" data-img="/assets/live/cat/cat-gastronomy.jpg" data-facts="12 semaines · Cuisines régionales turques" data-desc="Douze semaines à travers les cuisines régionales de Turquie — organisation de la cuisine et sécurité alimentaire, techniques de coupe et mise en place, soupes et sauces, plats à l&#x27;huile d&#x27;olive et mezzés, ragoûts et légumineuses, pilafs, börek, pide et lahmacun, kebabs et grillades, desserts au sirop et au lait."><i></i><span>Trimestre de cuisine turque</span></a></li>
+          <li><a class="deck__it" href="/programs/gastronomy/" data-fid="gastronomy" data-field="Gastronomie" data-img="/assets/live/cat/cat-gastronomy.jpg" data-facts="12 semaines · Europe, Asie, Moyen-Orient, Amérique" data-desc="Douze semaines de discipline culinaire internationale — techniques italiennes et françaises, fruits de mer méditerranéens et entrées froides, wok et nouilles d&#x27;Asie, mezzés et tajines du Moyen-Orient et d&#x27;Afrique du Nord, standards américains du burger et du steak, ainsi que dressage et conception du menu final."><i></i><span>Trimestre de cuisine du monde</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/lapl-pilot-training/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie + formation au vol" data-desc="Formation au vol d&#x27;entrée de gamme pour le pilotage de loisir d&#x27;aéronefs légers, associant théorie au sol et instruction pratique en vol."><i></i><span>Licence de pilote d'aéronef léger – LAPL</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/ppl-private-pilot-licence/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie + formation au vol" data-desc="Formation théorique et pratique complète pour les futurs pilotes privés, avec une progression possible vers d&#x27;autres qualifications."><i></i><span>Licence de pilote privé – PPL</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aviation-english/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Phraséologie standard, radiotéléphonie internationale et communication opérationnelle claire entre les pilotes et les services de la circulation aérienne."><i></i><span>Formation à l'anglais aéronautique et à la radiotéléphonie</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aviation-english/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Lieu sur demande · Théorie en salle / en ligne lorsque confirmé" data-desc="Préparation ciblée à l&#x27;évaluation de compétence linguistique en anglais aéronautique — écoute, expression orale, aisance et terminologie aéronautique."><i></i><span>Préparation à la compétence linguistique en anglais aéronautique</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/pilot-hour-building/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie + formation au vol" data-desc="Des vols structurés pour les pilotes licenciés qui doivent accumuler du temps de vol et de l&#x27;expérience en vue de leur prochaine qualification."><i></i><span>Programme de mûrissement des heures de vol</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/pilot-hour-building/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie + formation au vol" data-desc="Théorie et vol de nuit en double commande pour les pilotes licenciés qui remplissent les conditions d&#x27;entrée et souhaitent étendre leurs privilèges aux opérations de nuit."><i></i><span>Formation à la qualification de vol de nuit</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/pilot-hour-building/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie + formation au vol" data-desc="Des modules tels que l&#x27;hélice à pas variable (VP), le train rentrant (RU), l&#x27;EFIS, la commande de puissance à levier unique (SLPC), les moteurs turbocompressés et les différences SEP/MEP — chacun sous réserve de confirmation."><i></i><span>Formation aux différences d'aéronefs</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/pilot-hour-building/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Salle + pratique" data-desc="Prise en main pratique des fonctions de navigation, de communication et de planification de vol du GTN650 utilisées dans les cockpits modernes d&#x27;aviation générale."><i></i><span>Formation aux systèmes de navigation et de radio Garmin GTN650</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/easa-training/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Mises à jour sur la navigation, l&#x27;évolution de la réglementation européenne, les changements opérationnels, les enseignements de sécurité et les procédures de vol pour les pilotes actifs ou qui reprennent."><i></i><span>Remise à niveau des pilotes et mise à jour réglementaire</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/flight-dispatcher-training/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Planification des vols, contrôle opérationnel, procédures de dispatch et prise de décision au sein du centre de contrôle des opérations d&#x27;une compagnie aérienne."><i></i><span>Formation d'agent d'opérations aériennes et de CCO de compagnie</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/cabin-crew-training/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Salle + pratique" data-desc="Préparation professionnelle aux métiers du personnel de cabine — conscience de la sécurité, standards de service, communication et travail d&#x27;équipe à bord."><i></i><span>Formation professionnelle du personnel de cabine</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/airport-ground-operations/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Salle + pratique" data-desc="Des opérations côté piste sûres et efficaces — sécurité sur l&#x27;aire de trafic, escale des avions, circulation des véhicules et coordination entre les équipes au sol."><i></i><span>Opérations côté piste et au sol des aéroports</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/airport-ground-operations/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Salle + pratique" data-desc="Sécurité sur le tarmac, principes de chargement des bagages et du fret, sensibilisation au placement des avions et coordination de l&#x27;escale."><i></i><span>Formation d'agent de piste</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/airport-ground-operations/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Procédures d&#x27;enregistrement et d&#x27;embarquement, sensibilisation aux documents de voyage, passagers nécessitant une assistance particulière et communication avec la clientèle."><i></i><span>Formation d'agent de services aux passagers et d'enregistrement</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/airport-ground-operations/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Gestion des aérodromes régionaux et d&#x27;aviation générale — organisation, supervision de la sécurité, services, ressources et coordination des parties prenantes."><i></i><span>Gestion des opérations des petits aéroports</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aircraft-maintenance-planning/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Planification des tâches de maintenance, des lots de travaux et des enregistrements dans les environnements Part 145, CAMO et CAO."><i></i><span>Planification de la maintenance aéronautique – Part 145 / CAMO / CAO</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aircraft-maintenance-planning/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Approvisionnement, traçabilité, conditions de stockage et gestion des stocks pour les pièces et consommables d&#x27;aéronefs."><i></i><span>Achats aéronautiques et entreposage des pièces de rechange</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/flight-dispatcher-training/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Comment les systèmes d&#x27;information soutiennent les opérations, la maintenance, la planification et la gestion des données dans les organisations aéronautiques."><i></i><span>Technologies de l'information pour les organisations aéronautiques</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aviation-safety-management/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Principes de gestion de la sécurité, identification des dangers, évaluation des risques, comptes rendus, culture de sécurité et suivi des performances."><i></i><span>Système de gestion de la sécurité – SGS et évaluation des risques</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aviation-safety-management/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Sources de corps étrangers, programmes de prévention, inspections et comportements qui maintiennent les aires de trafic et les hangars dégagés."><i></i><span>Prévention des dommages par corps étrangers – FOD</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/dangerous-goods-training/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Reconnaissance, classification, documentation et sensibilisation à la manutention des marchandises dangereuses dans le transport aérien. Formats initial et de recyclage sous réserve de confirmation."><i></i><span>Formation aux marchandises dangereuses – aviation</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/human-factors-training/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Comment la performance humaine, la fatigue, la communication et l&#x27;erreur influent sur la qualité de la maintenance — avec formation de recyclage lorsque disponible."><i></i><span>Facteurs humains en maintenance aéronautique – initial</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/human-factors-training/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Risques d&#x27;inflammation des réservoirs de carburant, contrôle des configurations critiques de conception et précautions de maintenance, avec formation continue lorsque disponible."><i></i><span>Sécurité des réservoirs de carburant d'aéronefs (formation continue incluse)</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/crew-resource-management/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Communication, travail d&#x27;équipe, leadership, conscience de la situation, prise de décision et gestion des erreurs pour les équipages et les équipes opérationnelles."><i></i><span>Gestion des ressources de l'équipage – CRM (initial / continu)</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/ewis-training/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Formation de sensibilisation au câblage structurée par groupe de personnel — groupes 1/2, 3, 4, 5 et 6/7/8 — pour le personnel de maintenance et d&#x27;ingénierie."><i></i><span>EWIS – Système d'interconnexion du câblage électrique</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/easa-training/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="La structure du système réglementaire européen de l&#x27;aviation, le règlement de base et la manière dont les règles de mise en œuvre s&#x27;appliquent aux organismes."><i></i><span>Formation au cadre réglementaire de l'EASA et au règlement de base</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/easa-training/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Connaissances de base des principes de navigabilité et des exigences internationales pour le personnel participant aux activités d&#x27;inspection et de surveillance."><i></i><span>Inspecteur de navigabilité, niveau de base – réglementation internationale et exigences de l'EASA</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/easa-training/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Une introduction aux spécifications de certification des avions de grande capacité et à leur influence sur la conception, la modification et le maintien de la navigabilité."><i></i><span>Formation à la certification des avions de grande capacité CS-25</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/en-9100-aerospace-quality/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Préparation et conduite des audits, collecte des preuves, constats, rapports et suivi des actions correctives dans les processus qualité de l&#x27;aviation."><i></i><span>Auditeur aéronautique – gestion et techniques d'audit (recyclage inclus)</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/en-9100-aerospace-quality/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Exigences et application pratique de la norme de management de la qualité aérospatiale EN 9100."><i></i><span>Système de management de la qualité EN 9100 pour les organisations aérospatiales</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aviation-english/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Lire et utiliser avec assurance la documentation technique, les manuels et les cartes de travail en anglais."><i></i><span>Anglais technique pour l'aviation</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/crew-resource-management/" data-fid="aviation" data-field="Aviation et aérospatial" data-img="/assets/live/aviation/av-hero.webp" data-facts="Italie · Théorie en salle / en ligne lorsque confirmé" data-desc="Principes de la formation des adultes, conception des cours, animation et évaluation pour les professionnels de l&#x27;aviation qui forment leurs collègues."><i></i><span>Techniques pédagogiques en aviation – formation de formateurs</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script type="application/json" id="deckData">[{"route": "/fr/study/", "theme": "night", "label": "Étudier en Turquie", "btn": "Commencer par les études", "h": "Votre avenir commence en Turquie.", "lede": "Nous guidons les étudiants et les institutions à chaque étape des études en Turquie — avec plus de 150 universités partenaires et un accompagnement honnête et bien informé.", "field": ""}, {"route": "/fr/training-programs/", "theme": "paper", "label": "Programmes de formation", "btn": "Voir tous les programmes", "h": "Un programme pour chaque ambition.", "lede": "73 programmes de formation professionnelle dans 10 domaines — dispensés en Turquie, dans votre pays, ou selon une combinaison sur mesure construite autour de votre équipe.", "field": "*"}, {"route": "/fr/training-programs/aviation-aerospace/", "theme": "sky", "label": "Aviation et aérospatial", "btn": "Découvrir l'aviation", "h": "Formation aviation et aérospatial", "lede": "Formation aéronautique professionnelle en Turquie et en Italie pour les pilotes, les compagnies aériennes, les aéroports, les organismes de maintenance, les professionnels de l'aviation et les institutions publiques.", "field": "aviation"}, {"route": "/fr/universities/", "theme": "mist", "label": "Universités partenaires", "btn": "Voir les universités", "h": "Là où vous pourriez étudier.", "lede": "Nous travaillons avec plus de 150 universités et écoles à travers la Turquie — des campus de recherche d'Ankara et d'Istanbul aux universités spécialisées de chaque région.", "field": ""}, {"route": "/fr/in-house-trainings/", "theme": "red", "label": "Formations intra-entreprise", "btn": "Faites venir la formation chez vous", "h": "Une formation de classe mondiale, livrée à votre porte.", "lede": "Nous adaptons nos programmes aux besoins de votre activité et les apportons partout dans le monde — vos bureaux, votre ville, votre calendrier.", "field": "*"}, {"route": "/fr/open-trainings/", "theme": "amber", "label": "Formations ouvertes", "btn": "Voir les formations ouvertes", "h": "Des cours de courte durée, ouverts à tous.", "lede": "Des cours intensifs en anglais en Turquie — sans condition d'admission formelle, seulement l'envie d'apprendre.", "field": "*"}]</script>
+</section>
+<!-- deck:end -->
+
+<section id="study" class="sec sec--paper route" data-chapter="Études">
+  <div class="route__pin">
+    <div class="route__ghost display" aria-hidden="true">Étudier en Turquie</div>
+    <header class="route__head">
+      <p class="label label--amber" data-decode>03 — Étudier en Turquie</p>
+      <h2 class="display route__h" data-chars>
+        <span class="ln ln--mute">De votre pays</span>
+        <span class="ln">jusqu'au campus.</span>
+      </h2>
+    </header>
+    <div class="route__view">
+      <ol class="route__track">
+        <li class="wp wp--intro">
+          <p class="wp__lede">Nous sommes partenaires de plus de 150 universités turques et vous guidons à chaque étape — du choix du programme à l'atterrissage à l'aéroport.</p>
+          <span class="wp__hint mono">Continuez à défiler <i aria-hidden="true">→</i></span>
+        </li>
+        <li class="wp"><span class="wp__n mono">WPT 01</span><h3 class="wp__t">Conseil d'experts</h3><p>Un accompagnement individuel pour choisir l'université, la ville et le programme adaptés à vos objectifs.</p></li>
+        <li class="wp"><span class="wp__n mono">WPT 02</span><h3 class="wp__t">Candidatures en un seul endroit</h3><p>Toutes les informations et tous les documents de candidature nécessaires, organisés et gérés pour vous.</p></li>
+        <li class="wp"><span class="wp__n mono">WPT 03</span><h3 class="wp__t">Connaissance fine des bourses</h3><p>Nous savons où se trouvent les bourses et les aides — et comment vous donner les meilleures chances de les obtenir.</p></li>
+        <li class="wp"><span class="wp__n mono">WPT 04</span><h3 class="wp__t">Aide au visa</h3><p>Un accompagnement pas à pas pour votre visa étudiant, afin que rien ne soit laissé au hasard.</p></li>
+        <li class="wp"><span class="wp__n mono">WPT 05</span><h3 class="wp__t">Plan d'études complet</h3><p>Un plan clair, de bout en bout, de la candidature à l'arrivée et à l'installation.</p></li>
+        <li class="wp wp--end">
+          <figure class="ph wp__ph"><img src="/assets/img/svc-study.jpg" alt="Étudiants internationaux sur le campus d&#x27;une université turque" loading="lazy" width="1500" height="650"></figure>
+          <div class="wp__cta">
+            <a class="btn btn--amber" href="/fr/study/" data-magnetic><span class="btn__l">Découvrir le placement étudiant</span><span class="btn__i" aria-hidden="true"></span></a>
+            <a class="btn btn--line" href="/fr/universities/" data-magnetic><span class="btn__l">Universités partenaires</span><span class="btn__i" aria-hidden="true"></span></a>
+            <a class="btn btn--line" href="/fr/for-institutions/" data-magnetic><span class="btn__l">Pour les institutions</span><span class="btn__i" aria-hidden="true"></span></a>
+          </div>
+        </li>
+      </ol>
+      <svg class="route__line" aria-hidden="true" preserveAspectRatio="none"><line class="route__base" x1="0" y1="1" x2="100%" y2="1"/><line class="route__done" x1="0" y1="1" x2="100%" y2="1"/></svg>
+      <span class="route__craft" aria-hidden="true"><svg viewBox="0 0 48 48" width="34" height="34"><path fill="currentColor" d="M44 24 30 19 20 4h-4l5 14-10 1-4-5H4l3 10-3 10h3l4-5 10 1-5 14h4l10-15 14-5z"/></svg></span>
+    </div>
+    <p class="route__note">À noter : l'admission n'est jamais garantie — les étudiants doivent satisfaire aux exigences académiques de l'université choisie. Nous maximisons vos chances, mais la décision finale appartient à l'établissement.</p>
+  </div>
+</section>
+
+<div class="band band--dusk" aria-hidden="true"></div>
+
+<!-- ═══ 04 AVIATION ══════════════════════════════════════════════════════ -->
+<section id="aviation" class="avi" data-chapter="Phare">
+  <div class="avi__pin">
+    <header class="avi__head">
+      <p class="label label--red" data-decode>04 — Division phare · inscriptions ouvertes</p>
+      <h2 class="display avi__h" data-chars>
+        <span class="ln">Formation de pilote</span>
+        <span class="ln ln--dim">et cours d'aviation</span>
+        <span class="ln ln--dim">en Turquie.</span>
+      </h2>
+    </header>
+    <p class="avi__lede" data-lines>Devenez pilote grâce à une formation au vol tournée vers l'international — licences PPL et LAPL, mûrissement des heures de vol, anglais aéronautique, opérations aériennes et aéroportuaires, maintenance et sécurité aérienne. Une formation pratique dispensée en Turquie et en Italie pour les particuliers, les compagnies aériennes, les aéroports et les institutions.</p>
+    <div class="avi__stage" aria-hidden="true">
+      <span class="avi__tag avi__tag--1 mono">Turquie et Italie</span>
+      <span class="avi__tag avi__tag--2 mono">32 programmes · quatre groupes de formation</span>
+      <span class="avi__tag avi__tag--3 mono">Formation au vol uniquement en présentiel</span>
+    </div>
+    <ol class="avi__list">
+      <li><a class="avc" href="/training-programs/aviation-aerospace/ppl-private-pilot-licence/" data-cursor="Ouvrir"><span class="avc__n mono">01</span><h3>Licence de pilote privé <abbr title="Licence de pilote privé">PPL</abbr></h3><p>Théorie au sol + formation au vol en présentiel vers votre première licence de pilote.</p><i class="avc__bar"></i></a></li>
+      <li><a class="avc" href="/training-programs/aviation-aerospace/lapl-pilot-training/" data-cursor="Ouvrir"><span class="avc__n mono">02</span><h3>Licence de pilote d'aéronef léger <abbr title="Licence de pilote d&#x27;aéronef léger">LAPL</abbr></h3><p>Une voie structurée et accessible vers le pilotage d'aéronefs légers.</p><i class="avc__bar"></i></a></li>
+      <li><a class="avc" href="/training-programs/aviation-aerospace/pilot-hour-building/" data-cursor="Ouvrir"><span class="avc__n mono">03</span><h3>Mûrissement des heures et vol avancé</h3><p>Accumulez des heures de vol, pratiquez le vol de nuit et le pilotage avancé pour votre prochaine qualification.</p><i class="avc__bar"></i></a></li>
+      <li><a class="avc" href="/training-programs/aviation-aerospace/aviation-english/" data-cursor="Ouvrir"><span class="avc__n mono">04</span><h3>Anglais aéronautique et radiotéléphonie</h3><p>Anglais aéronautique et radiotéléphonie orientés OACI pour les équipages.</p><i class="avc__bar"></i></a></li>
+    </ol>
+  </div>
+</section>
+
+<section class="avi2" aria-label="Photographies d&#x27;aviation et autres programmes">
+  <div class="strip" data-strip>
+    <figure class="ph" data-unmask><img src="/assets/img/aviation/av-ppl-2.webp" alt="Élèves pilotes et instructeur réunis autour d&#x27;un avion-école léger sur un aérodrome en herbe" loading="lazy" width="1600" height="900"></figure>
+    <figure class="ph" data-unmask><img src="/assets/img/aviation/av-hour-building-2.webp" alt="Tableau de bord numérique et manches de commande lors d&#x27;un vol d&#x27;entraînement à la navigation" loading="lazy" width="1172" height="659"></figure>
+    <figure class="ph" data-unmask><img src="/assets/img/aviation/av-hero.webp" alt="Avion-école sur l&#x27;aire de trafic en Turquie" loading="lazy" width="1600" height="900"></figure>
+  </div>
+  <div class="avi2__row">
+    <p class="avi2__also mono">Aussi dans les opérations aériennes</p>
+    <a class="roll roll--lg" href="/training-programs/aviation-aerospace/flight-dispatcher-training/"><span data-t="Formation d&#x27;agent d&#x27;opérations aériennes et de CCO de compagnie">Formation d'agent d'opérations aériennes et de CCO de compagnie</span></a>
+    <a class="roll roll--lg" href="/training-programs/aviation-aerospace/cabin-crew-training/"><span data-t="Formation professionnelle du personnel de cabine">Formation professionnelle du personnel de cabine</span></a>
+    <a class="btn btn--red" href="/fr/training-programs/aviation-aerospace/" data-magnetic><span class="btn__l">Découvrir toutes les formations aéronautiques</span><span class="btn__i" aria-hidden="true"></span></a>
+  </div>
+</section>
+
+<div class="band band--dawn band--short" aria-hidden="true"></div>
+
+<!-- ═══ 05 PROGRAMMES ════════════════════════════════════════════════════ -->
+<section id="programmes" class="sec sec--paper prog" data-chapter="Programmes">
+  <header class="prog__head">
+    <div>
+      <p class="label" data-decode>05 — Programmes de formation</p>
+      <h2 class="display prog__h" data-chars data-fill>
+        <span class="ln ln--mute">73 programmes.</span>
+        <span class="ln">10 domaines.</span>
+      </h2>
+    </div>
+    <p class="lead" data-lines>Des programmes sur mesure pour les gouvernements, les institutions, les entreprises et les participants individuels — dispensés en Turquie, dans votre pays, ou selon une combinaison construite autour de votre équipe.</p>
+  </header>
+
+  <div class="board">
+    <div class="board__hd mono"><span>Porte</span><span>Domaine</span><span>Programmes</span><span>Statut</span><span aria-hidden="true"></span></div>
+    <a class="row" href="/fr/training-programs/"><span class="row__g" data-flap>01</span><span class="row__f" data-flap>Leadership et management</span><span class="row__c" data-flap>07</span><span class="row__s" data-flap>Sur demande</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/fr/training-programs/"><span class="row__g" data-flap>02</span><span class="row__f" data-flap>Gouvernement et secteur public</span><span class="row__c" data-flap>04</span><span class="row__s" data-flap>Sur demande</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/fr/training-programs/"><span class="row__g" data-flap>03</span><span class="row__f" data-flap>Énergie, ports et maritime</span><span class="row__c" data-flap>05</span><span class="row__s" data-flap>Sur demande</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/fr/training-programs/"><span class="row__g" data-flap>04</span><span class="row__f" data-flap>Agriculture et agrobusiness</span><span class="row__c" data-flap>09</span><span class="row__s" data-flap>Sur demande</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/fr/training-programs/"><span class="row__g" data-flap>05</span><span class="row__f" data-flap>Santé et médical</span><span class="row__c" data-flap>04</span><span class="row__s" data-flap>Sur demande</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/fr/training-programs/"><span class="row__g" data-flap>06</span><span class="row__f" data-flap>Éducation et enseignement</span><span class="row__c" data-flap>03</span><span class="row__s" data-flap>Sur demande</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/fr/training-programs/"><span class="row__g" data-flap>07</span><span class="row__f" data-flap>TIC et numérique</span><span class="row__c" data-flap>03</span><span class="row__s" data-flap>Sur demande</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/fr/training-programs/"><span class="row__g" data-flap>08</span><span class="row__f" data-flap>Tourisme et MICE</span><span class="row__c" data-flap>03</span><span class="row__s" data-flap>Sur demande</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/fr/training-programs/"><span class="row__g" data-flap>09</span><span class="row__f" data-flap>Gastronomie</span><span class="row__c" data-flap>03</span><span class="row__s" data-flap>Sur demande</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row row--hot" href="/fr/training-programs/aviation-aerospace/"><span class="row__g" data-flap>10</span><span class="row__f" data-flap>Aviation et aérospatial</span><span class="row__c" data-flap>32</span><span class="row__s" data-flap>Inscriptions ouvertes</span><i class="row__go" aria-hidden="true"></i></a>
+  </div>
+
+  <div class="ways">
+    <p class="label" data-decode>Trois façons d'apprendre avec nous</p>
+    <ul class="ways__grid">
+      <li><a class="way" href="/fr/open-trainings/" data-tilt><span class="way__k mono">Ouvert à tous</span><h3>Formations ouvertes</h3><p>Des cours intensifs de courte durée, en anglais, en Turquie — sans condition d'admission formelle. Rencontrez des pairs du monde entier.</p><dl class="way__f mono"><div><dt>Durée</dt><dd>10 jours – 2 semaines</dd></div><div><dt>Groupe</dt><dd>40–60 participants</dd></div></dl><span class="way__go" aria-hidden="true"></span></a></li>
+      <li><a class="way" href="/fr/training-programs/" data-tilt><span class="way__k mono">Conçu pour votre groupe</span><h3>Programmes de formation</h3><p>Du Mini MBA et du leadership à l'agriculture, à l'e-gouvernement et aux certifications médicales — sur mesure pour votre groupe.</p><dl class="way__f mono"><div><dt>Catalogue</dt><dd>73 programmes</dd></div><div><dt>Domaines</dt><dd>10</dd></div></dl><span class="way__go" aria-hidden="true"></span></a></li>
+      <li><a class="way" href="/fr/in-house-trainings/" data-tilt><span class="way__k mono">Dispensé chez vous</span><h3>Formations intra-entreprise</h3><p>Des programmes de classe mondiale adaptés à votre activité et dispensés partout — vos bureaux, votre ville, votre calendrier.</p><dl class="way__f mono"><div><dt>Où</dt><dd>Vos locaux</dd></div><div><dt>Quand</dt><dd>Votre calendrier</dd></div></dl><span class="way__go" aria-hidden="true"></span></a></li>
+    </ul>
+  </div>
+</section>
+
+<div class="band band--dusk band--short" aria-hidden="true"></div>
+
+<!-- ═══ 06 ON THE GROUND ═════════════════════════════════════════════════ -->
+<section id="ground" class="ground" data-chapter="Sur le terrain">
+  <div class="ground__pin">
+    <div class="ground__map" aria-hidden="true"></div>
+    <div class="ground__copy">
+      <p class="label label--red" data-decode>06 — Tout juste terminée</p>
+      <h2 class="display ground__h" data-chars>
+        <span class="ln">Global Leadership</span>
+        <span class="ln ln--dim">Conference 2026</span>
+      </h2>
+      <p class="ground__theme" data-lines>Favoriser la transformation numérique dans l'éducation — tirer parti des technologies émergentes mondiales et des partenariats.</p>
+      <p class="ground__p" data-lines>Turkey Trainings a assuré la direction du programme de la GLC 2026 à Istanbul : conception du programme, sessions institutionnelles, modération, qualité académique et certification pour une délégation de dirigeants d'établissements nigérians.</p>
+      <dl class="facts mono">
+        <div><dt>Quand</dt><dd>4–8 août 2026</dd></div>
+        <div><dt>Où</dt><dd>Istanbul, Turquie</dd></div>
+        <div><dt>Avec</dt><dd>Comité des provosts, Collèges d'éducation du Nigeria</dd></div>
+      </dl>
+      <a class="btn btn--light" href="/fr/contact/" data-magnetic><span class="btn__l">Organiser une conférence ou une délégation</span><span class="btn__i" aria-hidden="true"></span></a>
+    </div>
+  </div>
+</section>
+
+<section class="reel" aria-label="Photographies de la Global Leadership Conference 2026">
+  <div class="reel__track" data-marquee data-cursor="Glisser">
+    <figure><img src="/assets/img/glc/glc-1.jpg" alt="Délégués à la Global Leadership Conference 2026 à Istanbul" loading="lazy" width="1600" height="1066"></figure>
+    <figure><img src="/assets/img/glc/glc-11.jpg" alt="Photo de groupe de la délégation GLC 2026" loading="lazy" width="1600" height="1200"></figure>
+    <figure><img src="/assets/img/glc/glc-8.jpg" alt="Session GLC 2026 dans une salle de conseil avec un écran de présentation" loading="lazy" width="1600" height="1200"></figure>
+    <figure><img src="/assets/img/glc/glc-2.jpg" alt="Délégués de la GLC 2026 sur scène dans un auditorium" loading="lazy" width="1600" height="1066"></figure>
+    <figure><img src="/assets/img/glc/glc-13.jpg" alt="Délégation GLC 2026 dans une salle de réunion" loading="lazy" width="1600" height="1200"></figure>
+    <figure><img src="/assets/img/glc/glc-10.jpg" alt="Session de panel GLC 2026" loading="lazy" width="1600" height="1200"></figure>
+    <figure><img src="/assets/img/glc/glc-12.jpg" alt="Délégation GLC 2026 réunie en extérieur" loading="lazy" width="1600" height="1200"></figure>
+    <figure><img src="/assets/img/glc/glc-7.jpg" alt="Table ronde GLC 2026" loading="lazy" width="1600" height="1200"></figure>
+    <figure><img src="/assets/img/glc/glc-16.jpg" alt="Délégués de la GLC 2026 assis pour une photo de groupe" loading="lazy" width="1600" height="1066"></figure>
+  </div>
+  <p class="reel__cap mono"><span>GLC 2026 · Istanbul</span><span>Glissez, ou continuez à défiler</span></p>
+</section>
+
+<div class="band band--dawn band--short" aria-hidden="true"></div>
+
+<!-- ═══ 07 FILMS ═════════════════════════════════════════════════════════ -->
+<section id="films" class="sec sec--paper films" data-chapter="Films">
+  <header class="films__head">
+    <p class="label" data-decode>07 — Voyez-nous à l'œuvre</p>
+    <h2 class="display films__h" data-chars data-fill>
+      <span class="ln ln--mute">Filmé avec celles et ceux</span>
+      <span class="ln">qui y étaient vraiment.</span>
+    </h2>
+  </header>
+  <ul class="films__grid">
+    <li><button class="film film--lg" type="button" data-film="https://turkeytrainings.com/assets/video/tt-training.mp4" data-title="Turkey Trainings — présentation des programmes" data-cursor="Lecture"><span class="film__ph" data-unmask><img src="/assets/img/video/tt-training.jpg" alt="" loading="lazy" width="1280" height="720"></span><span class="film__meta"><b>Turkey Trainings — présentation des programmes</b><span class="mono">1 min 54</span></span><span class="film__d">Qui nous formons, où se déroulent les sessions et à quoi ressemble un programme sur le terrain — modules en salle, intervenants experts, visites de terrain et d'usines, et certification.</span></button></li>
+    <li><button class="film" type="button" data-film="https://turkeytrainings.com/assets/video/tt-student-placement.mp4" data-title="Étudier en Turquie — comment fonctionne notre placement étudiant" data-cursor="Lecture"><span class="film__ph" data-unmask><img src="/assets/img/video/tt-student-placement.jpg" alt="" loading="lazy" width="800" height="450"></span><span class="film__meta"><b>Étudier en Turquie — comment fonctionne notre placement étudiant</b><span class="mono">1 min 29</span></span></button></li>
+    <li><button class="film" type="button" data-film="https://turkeytrainings.com/assets/video/tt-afgan.mp4" data-title="Au cœur d&#x27;une visite de terrain en aviculture" data-cursor="Lecture"><span class="film__ph" data-unmask><img src="/assets/img/video/tt-afgan.jpg" alt="" loading="lazy" width="800" height="450"></span><span class="film__meta"><b>Au cœur d'une visite de terrain en aviculture</b><span class="mono">30 s</span></span></button></li>
+    <li><button class="film" type="button" data-film="https://turkeytrainings.com/assets/video/tt-plustv.mp4" data-title="Nigeria Plus TV — journée portes ouvertes de Turkey Trainings" data-cursor="Lecture"><span class="film__ph" data-unmask><img src="/assets/img/video/tt-plustv.jpg" alt="" loading="lazy" width="1280" height="720"></span><span class="film__meta"><b>Nigeria Plus TV — journée portes ouvertes de Turkey Trainings</b><span class="mono">Diffusion</span></span></button></li>
+  </ul>
+  <p class="films__foot"><span class="mono">AFROTURK TV — partenaire média officiel</span><a class="roll" href="/fr/videos/"><span data-t="Ouvrir toute la vidéothèque →">Ouvrir toute la vidéothèque →</span></a></p>
+</section>
+
+<!-- ═══ 08 CREW ══════════════════════════════════════════════════════════ -->
+<section id="crew" class="sec sec--paper crew" data-chapter="Équipage">
+  <header class="crew__head">
+    <p class="label" data-decode>08 — Les personnes derrière Turkey Trainings</p>
+    <h2 class="display crew__h" data-chars data-fill>
+      <span class="ln ln--mute">Trois cofondateurs,</span>
+      <span class="ln">personnellement impliqués.</span>
+    </h2>
+  </header>
+  <ul class="crew__list">
+    <li class="person"><hr data-draw><img class="person__ph" src="/assets/img/people/sureyya.jpg" alt="Süreyya Ümran Alınak" loading="lazy" width="400" height="400"><div class="person__id"><h3>Süreyya Ümran Alınak</h3><span class="mono">Cofondatrice et PDG</span></div><p>A géré des milliers d'événements dans le secteur du tourisme et de l'événementiel depuis plus de 26 ans. Elle dirige la vision, les partenariats internationaux et la croissance de Turkey Trainings.</p></li>
+    <li class="person"><hr data-draw><img class="person__ph" src="/assets/img/people/seda.jpg" alt="Seda Diker" loading="lazy" width="400" height="400"><div class="person__id"><h3>Seda Diker</h3><span class="mono">Cofondatrice et associée gérante</span></div><p>Titulaire d'une licence en culture et littérature américaines de l'Université Bilkent, avec près de 20 ans d'expérience dans la gestion de grands projets financés par l'UE.</p></li>
+    <li class="person"><hr data-draw><img class="person__ph" src="/assets/img/people/yavuz.jpg" alt="Dr. Yavuz Selim Sılay" loading="lazy" width="400" height="400"><div class="person__id"><h3>Dr. Yavuz Selim Sılay, MD, MBA</h3><span class="mono">Cofondateur et directeur de l'éducation</span></div><p>Médecin, dirigeant et pédagogue. Il conçoit nos cursus, sélectionne nos partenaires académiques et dirige nos programmes internationaux phares.</p></li>
+  </ul>
+  <p class="crew__foot">
+    <a class="btn btn--line" href="/fr/about/" data-magnetic><span class="btn__l">À propos de nous</span><span class="btn__i" aria-hidden="true"></span></a>
+    <a class="btn btn--line" href="/lecturers/" data-magnetic><span class="btn__l">Intervenants et formateurs</span><span class="btn__i" aria-hidden="true"></span></a>
+  </p>
+</section>
+
+<div class="band band--dusk band--short" aria-hidden="true"></div>
+
+<!-- ═══ 09 ARRIVAL ═══════════════════════════════════════════════════════ -->
+<section id="arrival" class="arr" data-chapter="Arrivée">
+  <div class="arr__radar" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
+  <p class="label label--red" data-decode>09 — Arrivée</p>
+  <h2 class="display arr__h" data-chars>
+    <span class="ln">Chaque programme est</span>
+    <span class="ln">conçu sur mesure</span>
+    <span class="ln ln--dim">pour votre groupe.</span>
+  </h2>
+  <p class="arr__p" data-lines>Pas de prix fixes. Nous concevons le programme idéal selon les besoins et le budget de votre équipe.</p>
+  <div class="arr__cta">
+    <a class="btn btn--red btn--xl" href="/fr/apply/" data-magnetic><span class="btn__l">Obtenir une proposition sur mesure</span><span class="btn__i" aria-hidden="true"></span></a>
+    <a class="btn btn--light btn--xl" href="https://wa.me/905389867594" target="_blank" rel="noopener" data-magnetic><span class="btn__l">Écrivez-nous sur WhatsApp</span><span class="btn__i" aria-hidden="true"></span></a>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══ FOOTER ═══════════════════════════════════════════════════════════ -->
+<footer class="foot">
+  <div class="foot__top">
+    <p class="foot__line">Formation, certification et placement universitaire en Turquie — conçus autour de votre groupe.</p>
+    <a class="foot__up mono" href="#departure" data-magnetic><span>Retour au départ</span><i aria-hidden="true">↑</i></a>
+  </div>
+  <div class="foot__cols">
+    <div>
+      <p class="label">Étudier en Turquie</p>
+      <ul>
+        <li><a class="roll" href="/fr/study/"><span data-t="Vue d&#x27;ensemble">Vue d'ensemble</span></a></li>
+        <li><a class="roll" href="/fr/international-students/"><span data-t="Pour les étudiants">Pour les étudiants</span></a></li>
+        <li><a class="roll" href="/fr/universities/"><span data-t="Universités partenaires">Universités partenaires</span></a></li>
+        <li><a class="roll" href="/fr/for-institutions/"><span data-t="Pour les institutions">Pour les institutions</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="label">Formations professionnelles</p>
+      <ul>
+        <li><a class="roll" href="/fr/training/"><span data-t="Vue d&#x27;ensemble">Vue d'ensemble</span></a></li>
+        <li><a class="roll" href="/fr/open-trainings/"><span data-t="Formations ouvertes">Formations ouvertes</span></a></li>
+        <li><a class="roll" href="/fr/training-programs/"><span data-t="Programmes de formation">Programmes de formation</span></a></li>
+        <li><a class="roll" href="/fr/training-programs/aviation-aerospace/"><span data-t="Aviation et aérospatial">Aviation et aérospatial</span></a></li>
+        <li><a class="roll" href="/fr/in-house-trainings/"><span data-t="Formations intra-entreprise">Formations intra-entreprise</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="label">Nous contacter</p>
+      <ul>
+        <li><a class="roll" href="/fr/about/"><span data-t="À propos">À propos</span></a></li>
+        <li><a class="roll" href="/fr/partnership/"><span data-t="Partenariat">Partenariat</span></a></li>
+        <li><a class="roll" href="/lecturers/"><span data-t="Intervenants">Intervenants</span></a></li>
+        <li><a class="roll" href="/blog/"><span data-t="Blog">Blog</span></a></li>
+        <li><a class="roll" href="/fr/contact/"><span data-t="Contact">Contact</span></a></li>
+        <li><a class="roll" href="/fr/apply/"><span data-t="Postuler">Postuler</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="label">Direct</p>
+      <ul>
+        <li><a class="roll" href="mailto:turkeytrainingstr@gmail.com"><span data-t="turkeytrainingstr@gmail.com">turkeytrainingstr@gmail.com</span></a></li>
+        <li><a class="roll" href="https://wa.me/905389867594" target="_blank" rel="noopener"><span data-t="+90 538 986 7594">+90 538 986 7594</span></a></li>
+        <li><a class="roll" href="tel:+903124180008"><span data-t="+90 312 418 00 08">+90 312 418 00 08</span></a></li>
+        <li><a class="roll" href="https://instagram.com/turkiyetrainings" target="_blank" rel="noopener"><span data-t="@turkiyetrainings">@turkiyetrainings</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot__off">
+    <address><span class="label">Bureau de Turquie</span>Konutkent Mah. 3035 Cad. No:62/B, Suit Tower, Çankaya / Ankara<br><span class="mono">+90 312 418 00 08 · +90 538 986 7594 · +90 850 307 27 37</span></address>
+    <address><span class="label">Bureau du Nigeria</span>No 3 Ontario Crescent, Maitama, Abuja FCT, Nigeria<br><span class="mono">+234 805 556 6742 · +234 706 333 6686</span></address>
+  </div>
+  <div class="foot__legal mono"><span>© 2026 Turkey Trainings Limited Company</span><span>Version d'aperçu · pas le site en ligne</span></div>
+  <div class="foot__mark" aria-label="Turkey Trainings">
+    <canvas id="mark" aria-hidden="true"></canvas>
+    <span class="foot__mark-fallback display" aria-hidden="true">Turkey Trainings</span>
+  </div>
+</footer>
+
+<!-- ═══ FILM LIGHTBOX ════════════════════════════════════════════════════ -->
+<dialog class="box" id="box" aria-label="Film">
+  <div class="box__in">
+    <div class="box__bar mono"><span id="boxTitle"></span><button type="button" class="box__x" id="boxX">Fermer <i aria-hidden="true">×</i></button></div>
+    <video id="boxVideo" controls playsinline preload="none"></video>
+  </div>
+</dialog>
+
+<script src="/vendor/gsap.min.js"></script>
+<script src="/vendor/ScrollTrigger.min.js"></script>
+<script src="/vendor/lenis.min.js"></script>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

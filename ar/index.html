@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turkey Trainings — تدريب الطيارين والبرامج المهنية والقبول الجامعي في تركيا</title>
+<meta name="description" content="تدريب وشهادات وقبول جامعي في تركيا — مصمَّمة حول مجموعتك. رخص طيران، و73 برنامجًا مهنيًا في 10 مجالات، وقبول لدى أكثر من 150 جامعة شريكة.">
+<meta name="theme-color" content="#071426">
+<!-- alt:start --><link rel="alternate" hreflang="en" href="/"><link rel="alternate" hreflang="tr" href="/tr/"><link rel="alternate" hreflang="fr" href="/fr/"><link rel="alternate" hreflang="ar" href="/ar/"><!-- alt:end -->
+<link rel="preload" href="/assets/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/ibm-plex-mono-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/styles.css">
+<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__tt)document.documentElement.classList.add('loader-gone')},9000);</script>
+<script type="importmap">{"imports":{"three":"/vendor/three.module.min.js"}}</script>
+<script>window.__i18n={"Filing flight plan": "جارٍ إيداع خطة الرحلة", "Checking weather": "جارٍ التحقق من الطقس", "Awaiting clearance": "بانتظار الإذن", "Cleared for departure": "مصرَّح بالإقلاع", "Menu": "القائمة", "Close": "إغلاق", "ANKARA": "أنقرة", "TÜRKİYE": "تركيا", "NIGERIA": "نيجيريا", "GHANA": "غانا", "UGANDA": "أوغندا", "AZERBAIJAN": "أذربيجان", "ITALY": "إيطاليا", "HEAD OFFICE": "المقر الرئيسي", "ISTANBUL": "إسطنبول", "ADANA": "أضنة", "AQUACULTURE PROGRAMME": "برنامج الاستزراع المائي"}</script>
+</head>
+<body>
+
+<a class="skip" href="#main">انتقل إلى المحتوى</a>
+
+<!-- ═══ LOADER ═══════════════════════════════════════════════════════════ -->
+<div id="loader" class="loader" aria-hidden="true">
+  <svg class="loader__ring" viewBox="0 0 400 400">
+    <circle class="loader__c loader__c--1" cx="200" cy="200" r="196"/>
+    <circle class="loader__c loader__c--2" cx="200" cy="200" r="164"/>
+    <circle class="loader__c loader__c--3" cx="200" cy="200" r="132"/>
+    <g class="loader__ticks"></g>
+    <circle class="loader__prog" cx="200" cy="200" r="164" pathLength="100"/>
+    <path class="loader__needle" d="M200 44 L206 74 L194 74 Z"/>
+  </svg>
+  <div class="loader__read">
+    <span class="loader__num mono" id="loaderNum">000</span>
+    <span class="loader__lab mono" id="loaderLab">جارٍ إيداع خطة الرحلة</span>
+  </div>
+  <ul class="loader__list mono">
+    <li>المسار</li><li>الطقس</li><li>الإذن</li>
+  </ul>
+</div>
+
+<canvas id="scene" class="scene" aria-hidden="true"></canvas>
+<div id="labels" class="labels" aria-hidden="true"></div>
+
+<!-- ═══ FIXED FURNITURE ══════════════════════════════════════════════════ -->
+<div class="cursor" aria-hidden="true"><i class="cursor__ring"></i><i class="cursor__dot"></i><span class="cursor__text mono"></span></div>
+
+<aside class="hud mono" aria-hidden="true">
+  <div class="hud__row"><span>ALT</span><b id="hudAlt">38,000</b><span id="hudAltU">FT</span></div>
+  <div class="hud__row"><span>GS</span><b id="hudGs">000</b><span>KT</span></div>
+</aside>
+
+<nav class="rail" aria-label="الفصول"></nav>
+
+<a class="wa" href="https://wa.me/905389867594" target="_blank" rel="noopener" aria-label="راسلنا على واتساب" data-magnetic>
+  <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.800 2 6.800L3 29l6.700-1.900c1.900 1 4 1.500 6.300 1.500 7.200 0 13-5.700 13-12.800S23.200 3 16 3zm0 23.300c-2 0-3.900-.5-5.500-1.500l-.4-.2-4 1.100 1.100-3.800-.3-.4c-1.100-1.700-1.700-3.700-1.700-5.700C5.200 10 10 5.300 16 5.300S26.800 10 26.800 15.800 22 26.300 16 26.300zm5.900-7.800c-.3-.2-1.900-.9-2.200-1-.3-.1-.5-.2-.7.2-.2.300-.8 1-1 1.200-.2.200-.4.200-.7.100-.3-.2-1.400-.5-2.600-1.600-1-.9-1.600-1.900-1.800-2.200-.2-.3 0-.5.100-.7l.500-.6c.200-.2.200-.3.300-.5.100-.2.100-.4 0-.6-.100-.2-.700-1.700-1-2.300-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.100-.9.400-.3.300-1.200 1.100-1.200 2.800 0 1.600 1.200 3.200 1.400 3.400.2.200 2.300 3.600 5.700 5 .8.300 1.400.5 1.900.7.8.200 1.500.200 2.100.100.6-.1 1.900-.8 2.200-1.500.3-.7.300-1.400.2-1.500-.1-.2-.3-.2-.6-.4z"/></svg>
+</a>
+
+<!-- ═══ HEADER ═══════════════════════════════════════════════════════════ -->
+<header class="top" id="top">
+  <div class="ticker mono" aria-label="أحدث الأخبار">
+    <div class="ticker__track">
+      <span>القسم الأبرز · التسجيل مفتوح الآن — تدريب الطيارين ودورات الطيران في تركيا وإيطاليا</span><i></i>
+      <span>اختُتم للتو — مؤتمر القيادة العالمي 2026 · إسطنبول · 4–8 أغسطس</span><i></i>
+      <span>73 برنامجًا في 10 مجالات</span><i></i>
+      <span>أكثر من 150 جامعة شريكة في تركيا</span><i></i>
+      <span>مكاتب في أنقرة وأبوجا</span><i></i>
+    </div>
+  </div>
+  <div class="bar">
+    <a class="brand" href="#departure" aria-label="Turkey Trainings — الرئيسية">
+      <svg viewBox="0 0 96 74" class="brand__mark" aria-hidden="true"><path class="brand__t" d="M12 6 H42 a16 16 0 0 1 16 16 V52 a16 16 0 0 1 -16 16 H34 V28 H12 Z"/><path class="brand__r" d="M64 6 H94 L79 34 Z"/></svg>
+      <span class="brand__name"><b>Turkey</b><span>Trainings</span></span>
+    </a>
+    <nav class="links" aria-label="القائمة الرئيسية">
+      <a class="roll" href="#study"><span data-t="الدراسة في تركيا">الدراسة في تركيا</span></a>
+      <a class="roll" href="#programmes"><span data-t="التدريب المهني">التدريب المهني</span></a>
+      <a class="roll" href="#aviation"><span data-t="الطيران">الطيران</span></a>
+      <a class="roll" href="#origin"><span data-t="من نحن">من نحن</span></a>
+      <a class="roll" href="#films"><span data-t="أفلام">أفلام</span></a>
+      <a class="roll" href="#arrival"><span data-t="اتصل بنا">اتصل بنا</span></a>
+    </nav>
+    <div class="bar__end">
+      <!-- lang:start --><div class="lang"><button class="lang__btn mono" type="button" aria-expanded="false" aria-controls="langList" aria-label="اللغة: العربية"><span>AR</span><i aria-hidden="true"></i></button><ul class="lang__list" id="langList"><li><a href="/" lang="en" hreflang="en"><b>EN</b><span>English</span></a></li><li><a href="/tr/" lang="tr" hreflang="tr"><b>TR</b><span>Türkçe</span></a></li><li><a href="/fr/" lang="fr" hreflang="fr"><b>FR</b><span>Français</span></a></li><li><a href="/ar/" lang="ar" hreflang="ar" aria-current="true"><b>AR</b><span>العربية</span></a></li></ul></div><!-- lang:end -->
+      <a class="btn btn--red btn--sm" href="/ar/apply/" data-magnetic><span class="btn__l">قدّم الآن</span><span class="btn__i" aria-hidden="true"></span></a>
+      <button class="menu-btn mono" type="button" aria-expanded="false" aria-controls="menu"><span class="menu-btn__lines" aria-hidden="true"><i></i><i></i></span><span class="menu-btn__t">القائمة</span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ MENU OVERLAY ═════════════════════════════════════════════════════ -->
+<div class="menu" id="menu" hidden>
+  <div class="menu__bg"></div>
+  <div class="menu__in">
+    <nav class="menu__nav" aria-label="جميع الصفحات">
+      <a href="#study" data-close><i class="mono">01</i><span>الدراسة في تركيا</span></a>
+      <a href="#programmes" data-close><i class="mono">02</i><span>التدريب المهني</span></a>
+      <a href="#aviation" data-close><i class="mono">03</i><span>الطيران والفضاء</span></a>
+      <a href="#ground" data-close><i class="mono">04</i><span>على أرض الواقع</span></a>
+      <a href="#films" data-close><i class="mono">05</i><span>أفلام</span></a>
+      <a href="#crew" data-close><i class="mono">06</i><span>الفريق</span></a>
+      <a href="#arrival" data-close><i class="mono">07</i><span>اتصل بنا</span></a>
+    </nav>
+    <div class="menu__side">
+      <p class="label">اللغة</p>
+      <!-- lang2:start --><p class="langrow"><a href="/" lang="en" hreflang="en">English</a><a href="/tr/" lang="tr" hreflang="tr">Türkçe</a><a href="/fr/" lang="fr" hreflang="fr">Français</a><a href="/ar/" lang="ar" hreflang="ar" aria-current="true">العربية</a></p><!-- lang2:end -->
+      <p class="label">صفحات أخرى</p>
+      <ul class="menu__more">
+        <li><a class="roll" href="/ar/universities/"><span data-t="الجامعات الشريكة">الجامعات الشريكة</span></a></li>
+        <li><a class="roll" href="/ar/open-trainings/"><span data-t="الدورات المفتوحة">الدورات المفتوحة</span></a></li>
+        <li><a class="roll" href="/lecturers/"><span data-t="المحاضرون">المحاضرون</span></a></li>
+        <li><a class="roll" href="/ar/partnership/"><span data-t="الشراكة">الشراكة</span></a></li>
+        <li><a class="roll" href="/blog/"><span data-t="المدونة">المدونة</span></a></li>
+      </ul>
+      <p class="label">تحدث إلينا</p>
+      <ul class="menu__more">
+        <li><a class="roll" href="https://wa.me/905389867594" target="_blank" rel="noopener"><span data-t="WhatsApp +90 538 986 7594">⁦WhatsApp +90 538 986 7594⁩</span></a></li>
+        <li><a class="roll" href="mailto:turkeytrainingstr@gmail.com"><span data-t="turkeytrainingstr@gmail.com">turkeytrainingstr@gmail.com</span></a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ═══ 01 DEPARTURE ═════════════════════════════════════════════════════ -->
+<section id="departure" class="hero" data-chapter="الإقلاع">
+  <div class="hero__globe" aria-hidden="true"></div>
+  <div class="hero__top">
+    <div class="hero__copy">
+      <p class="label" data-decode>01 — الإقلاع</p>
+      <h1 class="display hero__title" data-chars>
+        <span class="ln">تعليمٌ</span>
+        <span class="ln">يسافر <em>معك.</em></span>
+      </h1>
+      <p class="hero__lede" data-rise>تدريب وشهادات وقبول جامعي في تركيا — مصمَّمة حول مجموعتك، من بلدك حتى الحرم الجامعي.</p>
+    </div>
+    <dl class="hero__meta mono" data-rise>
+      <div><dt>الوجهة</dt><dd>أنقرة، تركيا</dd></div>
+      <div><dt>الموقع</dt><dd>⁦39°55′N 32°51′E⁩</dd></div>
+      <div><dt>منذ</dt><dd>أبريل 2019</dd></div>
+    </dl>
+  </div>
+
+  <div class="doors">
+    <a class="door door--study" href="#study" data-cursor="استكشف">
+      <img class="door__img" src="/assets/img/svc-study.jpg" alt="" loading="eager">
+      <span class="door__n mono">A</span>
+      <span class="door__who mono">للطلاب والمؤسسات</span>
+      <span class="door__t">الدراسة في تركيا</span>
+      <span class="door__d">قبول جامعي ومنح دراسية ودعم التأشيرة وإرشاد متكامل.</span>
+      <span class="door__go" aria-hidden="true"></span>
+    </a>
+    <a class="door door--train" href="#programmes" data-cursor="استكشف">
+      <img class="door__img" src="/assets/img/svc-inperson.jpg" alt="" loading="eager">
+      <span class="door__n mono">B</span>
+      <span class="door__who mono">للمهنيين والفرق</span>
+      <span class="door__t">التدريب المهني</span>
+      <span class="door__d">دورات قصيرة وبرامج معتمدة وتدريب داخل المؤسسات — في تركيا أو عند بابك.</span>
+      <span class="door__go" aria-hidden="true"></span>
+    </a>
+  </div>
+</section>
+
+<div class="band band--dawn" aria-hidden="true"></div>
+
+<!-- ═══ 02 ORIGIN ════════════════════════════════════════════════════════ -->
+<section id="origin" class="sec sec--paper origin" data-chapter="البداية">
+  <div class="origin__l">
+    <p class="label" data-decode>02 — حيث بدأ كل شيء</p>
+    <h2 class="display origin__h" data-chars data-fill>
+      <span class="ln ln--mute">بدأ كل شيء</span>
+      <span class="ln ln--mute">مع 47 شخصًا.</span>
+      <span class="ln">أنقرة،</span>
+      <span class="ln">أبريل 2019.</span>
+    </h2>
+  </div>
+  <div class="origin__r">
+    <p class="lead" data-lines>في أبريل 2019، أكمل 47 من المهنيين الشباب من نيجيريا برنامجنا لريادة الأعمال الزراعية في أنقرة. كانت تلك المجموعة نقطة التحول التي بدأت بها هذه الرحلة — وتبعهم منذ ذلك الحين أكثر من 500 مشارك من إفريقيا وآسيا وأوروبا.</p>
+    <figure class="ph origin__ph" data-unmask>
+      <img src="/assets/img/story-ceremony.jpg" alt="حفل توزيع الشهادات — المشاركون يتسلمون شهاداتهم في ختام برنامج الأعمال الزراعية في أنقرة" loading="lazy" width="1366" height="768">
+      <figcaption class="mono">حفل توزيع الشهادات · برنامج الأعمال الزراعية · أنقرة</figcaption>
+    </figure>
+    <ul class="stats">
+      <li><hr data-draw><b class="stat__n" data-count="500" data-suffix="+">500+</b><span>خريجون حول العالم</span></li>
+      <li><hr data-draw><b class="stat__n" data-count="20" data-suffix="+">20+</b><span>الدول الممثَّلة</span></li>
+      <li><hr data-draw><b class="stat__n" data-count="150" data-suffix="+">150+</b><span>جامعات شريكة في تركيا</span></li>
+    </ul>
+    <a class="btn btn--line" href="/ar/about/" data-magnetic><span class="btn__l">اقرأ قصتنا</span><span class="btn__i" aria-hidden="true"></span></a>
+  </div>
+</section>
+
+<!-- ═══ 03 STUDY ═════════════════════════════════════════════════════════ -->
+<!-- deck:start -->
+<section id="deck" class="sec sec--paper deckwrap" data-chapter="قمرة القيادة">
+  <div class="deck" data-theme="night">
+    <div class="deck__wipe" aria-hidden="true"></div>
+    <div class="deck__main">
+      <p class="label deck__eyebrow"><i class="tri"></i><span>قمرة القيادة</span><em><span class="h-fine">انقر على الشعار لتغيير المسار</span><span class="h-touch">اضغط على الشعار لتغيير المسار</span></em></p>
+      <button class="deck__emblem" type="button" aria-label="تغيير المسار: عرض الوجهة التالية" data-cursor="تغيير المسار">
+        <svg viewBox="0 0 96 74" aria-hidden="true"><path class="deck__svg-t" d="M12 6 H42 a16 16 0 0 1 16 16 V52 a16 16 0 0 1 -16 16 H34 V28 H12 Z"/><path class="deck__svg-r" d="M64 6 H94 L79 34 Z"/></svg>
+        <canvas aria-hidden="true"></canvas>
+      </button>
+      <div class="deck__say" aria-live="polite">
+        <p class="deck__count"><b id="deckNo">01</b><span>⁦/ 06⁩</span><em id="deckLabel">الدراسة في تركيا</em></p>
+        <h2 class="deck__h"><span id="deckH">مستقبلك يبدأ في تركيا.</span></h2>
+        <p class="deck__lede" id="deckLede">نرشد الطلاب والمؤسسات في كل خطوة من الدراسة في تركيا — مع أكثر من 150 جامعة شريكة ودعم صادق من أهل الخبرة.</p>
+        <a class="btn btn--deck" id="deckGo" href="/ar/study/" data-magnetic><span class="btn__l">ابدأ بالدراسة</span><span class="btn__i"></span></a>
+      </div>
+    </div>
+    <div class="deck__pv">
+      <p class="label deck__pv-k"><i class="tri"></i><span id="pvField">القيادة والإدارة</span></p>
+      <div class="deck__pv-img"><img id="pvImg" src="/assets/live/cat/cat-leadership.jpg" alt="" loading="lazy" decoding="async"></div>
+      <div class="deck__pv-in">
+        <h3 class="deck__pv-t" id="pvTitle">ماجستير إدارة الأعمال المصغَّر في 10 أيام</h3>
+        <p class="deck__pv-f" id="pvFacts">10 أيام · أنقرة / إسطنبول · شهادة</p>
+        <p class="deck__pv-d" id="pvDesc">جولة مكثفة في الإدارة الحديثة: الاستراتيجية، والمالية لغير الماليين، والتسويق، والعمليات، وقيادة الأفراد، وإدارة التغيير. يقوم على دراسات حالة واقعية وعرض جماعي ختامي.</p>
+        <p class="deck__pv-a"><a class="roll roll--u" id="pvGo" href="/ar/training-programs/#leadership"><span data-t="تفاصيل البرنامج">تفاصيل البرنامج</span></a><a class="roll roll--u" href="/ar/apply/training/"><span data-t="اطلب هذا البرنامج">اطلب هذا البرنامج</span></a></p>
+      </div>
+    </div>
+    <div class="deck__side">
+      <p class="label deck__side-k"><span>جميع البرامج الـ73</span><em><span class="h-fine">مرّر المؤشر للمعاينة</span><span class="h-touch">اضغط للمعاينة، واضغط مرة أخرى للفتح</span></em></p>
+      <div class="deck__scroll" tabindex="-1">
+        <ul class="deck__list">
+          <li><a class="deck__it" href="/ar/training-programs/#leadership" data-fid="leadership" data-field="القيادة والإدارة" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="10 أيام · أنقرة / إسطنبول · شهادة" data-desc="جولة مكثفة في الإدارة الحديثة: الاستراتيجية، والمالية لغير الماليين، والتسويق، والعمليات، وقيادة الأفراد، وإدارة التغيير. يقوم على دراسات حالة واقعية وعرض جماعي ختامي."><i></i><span>ماجستير إدارة الأعمال المصغَّر في 10 أيام</span></a></li>
+          <li><a class="deck__it" href="/programs/leadership/" data-fid="leadership" data-field="القيادة والإدارة" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="5–10 أيام · شهادة" data-desc="أساسيات القيادة للمديرين الجدد والصاعدين — أنماط القيادة، والتفويض، والتحفيز، والتغذية الراجعة، والمحادثات الصعبة، وبناء فريق من الطراز الأول."><i></i><span>الإدارة والقيادة 1</span></a></li>
+          <li><a class="deck__it" href="/programs/leadership/" data-fid="leadership" data-field="القيادة والإدارة" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="5–10 أيام · مستوى الإدارة العليا" data-desc="قيادة متقدمة لكبار المديرين — التفكير الاستراتيجي، وثقافة المؤسسة، وأنظمة الأداء، وإدارة المديرين، والقيادة في أوقات التغيير."><i></i><span>الإدارة والقيادة 2</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#leadership" data-fid="leadership" data-field="القيادة والإدارة" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="10 أيام · أدوات ونماذج" data-desc="خطّط لمشاريعك ونفّذها وأغلقها بثقة: إدارة النطاق وأصحاب المصلحة، وتجزئة العمل، والجدولة والمسار الحرج، والميزانيات، وسجلات المخاطر، وتقارير المشروع."><i></i><span>إتقان إدارة المشاريع</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#leadership" data-fid="leadership" data-field="القيادة والإدارة" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="5–10 أيام" data-desc="مهارات إدارية عملية تحرّك الأرقام — تحديد الأهداف، ومؤشرات الأداء الرئيسية، والإنتاجية، والتركيز على العميل، وحل المشكلات، والمساءلة."><i></i><span>الإدارة الناجحة لتحقيق إنجازات الأعمال</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#leadership" data-fid="leadership" data-field="القيادة والإدارة" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="10 أيام · الاستشارات متاحة" data-desc="صمّم المشاريع الممولة من الاتحاد الأوروبي واكتبها وأدِرها. منطق البرامج والدعوات، وتحليل الاحتياجات، والإطار المنطقي، وإعداد الميزانية، وتحالفات الشركاء، والتقارير، والاستعداد للتدقيق — بدعم من مستشارينا الخبراء."><i></i><span>إدارة مشاريع الاتحاد الأوروبي</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#leadership" data-fid="leadership" data-field="القيادة والإدارة" data-img="/assets/live/cat/cat-leadership.jpg" data-facts="5–10 أيام · القطاعان العام والخاص" data-desc="حوّل المبادئ الأخلاقية إلى ممارسة يومية: مدونات السلوك، وتضارب المصالح، وقنوات الإبلاغ، وخرائط المخاطر الأخلاقية، وبناء ثقافة يثق بها الناس."><i></i><span>تطبيق الأخلاقيات</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#government" data-fid="government" data-field="الحكومة والقطاع العام" data-img="/assets/live/cat/cat-government.jpg" data-facts="10 أيام · زيارات ميدانية للمؤسسات" data-desc="كيف بنت تركيا واحدة من أكثر بوابات الحكومة الإلكترونية الوطنية استخدامًا في العالم — البنية، والهوية، والتشغيل البيني، والسجلات المشتركة، وإقبال المواطنين. يتضمن زيارات لمؤسسات."><i></i><span>الحكومة الإلكترونية</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#government" data-fid="government" data-field="الحكومة والقطاع العام" data-img="/assets/live/cat/cat-government.jpg" data-facts="10 أيام" data-desc="قُد التحول الرقمي داخل مؤسسة عامة: تصميم الخدمات، ورقمنة سير العمل، وحوكمة البيانات، وأساسيات الأمن السيبراني، وإدارة التغيير، وقياس الأثر."><i></i><span>الحكومة الرقمية في الخدمة العامة</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#government" data-fid="government" data-field="الحكومة والقطاع العام" data-img="/assets/live/cat/cat-government.jpg" data-facts="5–10 أيام · القضاة وأعضاء النيابة" data-desc="عزّز ممارسة قضائية عادلة ومتسقة وقائمة على الأدلة — التسبيب وصياغة الأحكام، وتقييم الأدلة، وأخلاقيات القضاء، وإدارة القضايا، وكفاءة المحاكم."><i></i><span>صنع القرار القضائي</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#government" data-fid="government" data-field="الحكومة والقطاع العام" data-img="/assets/live/cat/cat-government.jpg" data-facts="5–10 أيام" data-desc="أنظمة نزاهة عملية للجهات العامة: تقييم مخاطر الفساد، والشفافية وضوابط المشتريات، والتدقيق الداخلي، وآليات الإبلاغ، وخطط النزاهة المؤسسية."><i></i><span>مكافحة الفساد وإدارة النزاهة</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#energy" data-fid="energy" data-field="الطاقة والموانئ والملاحة البحرية" data-img="/assets/live/cat/cat-energy.jpg" data-facts="10 أيام · مستوى الإدارة التنفيذية" data-desc="قُد أنظمة معقدة للوجستيات الطاقة — استراتيجية سلسلة الإمداد، واتخاذ القرار في ظل عدم اليقين، وإدارة المقاولين، والمرونة التشغيلية، والتحسين المستمر."><i></i><span>القيادة الاستراتيجية والتميز التشغيلي في لوجستيات النفط والغاز</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#energy" data-fid="energy" data-field="الطاقة والموانئ والملاحة البحرية" data-img="/assets/live/cat/cat-energy.jpg" data-facts="10 أيام · زيارات للموانئ" data-desc="الممارسات الحديثة في الموانئ والمحطات — عمليات المحطات، والمتطلبات التنظيمية، وإدارة المخاطر البحرية، وأنظمة الصحة والسلامة والبيئة، والاستجابة للطوارئ، والتحقيق في الحوادث."><i></i><span>مبادئ متقدمة في إدارة وتشغيل وسلامة الموانئ والمحطات البحرية</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#energy" data-fid="energy" data-field="الطاقة والموانئ والملاحة البحرية" data-img="/assets/live/cat/cat-energy.jpg" data-facts="10 أيام · تقني" data-desc="أهمية الأصول وتحليل FMECA، واستراتيجية الصيانة الوقائية والتنبؤية، وتخطيط التوقفات والعمرات، وجدولة المسار الحرج، وقطع الغيار، ومؤشرات أداء الصيانة."><i></i><span>تخطيط الصيانة وضبط الأعمال في موانئ ومحطات النفط والغاز</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#energy" data-fid="energy" data-field="الطاقة والموانئ والملاحة البحرية" data-img="/assets/live/cat/cat-energy.jpg" data-facts="5 أسابيع · توزلا، إسطنبول · تطبيق عملي في حوض بناء السفن" data-desc="خمسة أسابيع في عاصمة بناء السفن في تركيا: أساسيات تصميم السفن، وهياكل البدن، والاتزان، وعمليات الإنتاج والتجهيز، والجودة والسلامة، مع تطبيق عملي في أحواض توزلا."><i></i><span>بناء السفن والهندسة البحرية — برنامج مكثف لشهر واحد</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#energy" data-fid="energy" data-field="الطاقة والموانئ والملاحة البحرية" data-img="/assets/live/cat/cat-energy.jpg" data-facts="12 أسبوعًا · توزلا، إسطنبول · تدريب ميداني ممتد" data-desc="برنامج متقدم مدته اثنا عشر أسبوعًا يجمع بين نظرية الهندسة البحرية وتدريب ميداني ممتد في حوض بناء السفن — التصميم، والتحليل الإنشائي، والأنظمة البحرية، وإدارة المشاريع والإنتاج."><i></i><span>بناء السفن والهندسة البحرية — برنامج متقدم لثلاثة أشهر</span></a></li>
+          <li><a class="deck__it" href="/programs/agribusiness/" data-fid="agriculture" data-field="الزراعة والأعمال الزراعية" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="10–14 يومًا · زيارات ميدانية" data-desc="صحة التربة، وكفاءة المياه والري، وتخطيط المحاصيل وتعاقبها، والممارسات الذكية مناخيًا، والميكنة، واقتصاديات المزرعة — مع زيارات لمزارع عاملة ومحطات بحثية."><i></i><span>الزراعة المستدامة وإدارة المزارع</span></a></li>
+          <li><a class="deck__it" href="/programs/agribusiness/" data-fid="agriculture" data-field="الزراعة والأعمال الزراعية" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="10 أيام" data-desc="حوّل المعرفة الزراعية إلى مشروع — تقييم الفرص، ونموذج العمل، والتمويل والمنح، والتعاونيات، وضبط التكاليف، والوصول إلى الأسواق."><i></i><span>ريادة الأعمال الزراعية</span></a></li>
+          <li><a class="deck__it" href="/programs/agribusiness/" data-fid="agriculture" data-field="الزراعة والأعمال الزراعية" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="13 وحدة · شهادة" data-desc="ثلاث عشرة وحدة تبدأ من تخطيط أعمال المزرعة وإدارة المخاطر وصولًا إلى معاملات ما بعد الحصاد، وسلسلة التبريد، وتصنيع الأغذية، والتعبئة، وبناء العلامة التجارية، والتسويق للتصدير."><i></i><span>شهادة ريادة الأعمال في قطاع الأعمال الزراعية</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#agriculture" data-fid="agriculture" data-field="الزراعة والأعمال الزراعية" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="10 أيام · إسطنبول · زيارات للشركات" data-desc="استكشف التقنيات التي تعيد تشكيل الزراعة — الزراعة الدقيقة، والمستشعرات والبيانات، وتقنيات البيوت المحمية، والشركات الزراعية الناشئة — ثم قيّمها وحلّلها وسوّقها بما يناسب سياقك."><i></i><span>الابتكار والتسويق في التقنيات الزراعية</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#agriculture" data-fid="agriculture" data-field="الزراعة والأعمال الزراعية" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="10 أيام" data-desc="الأسواق الزراعية والتسعير، وسلاسل الإمداد والقيمة، وتصميم الدعم والسياسات، والتحليل المالي على مستوى المزرعة، وتقييم الاستثمار في المشاريع الزراعية."><i></i><span>الاقتصاد الزراعي</span></a></li>
+          <li><a class="deck__it" href="/programs/poultry/" data-fid="agriculture" data-field="الزراعة والأعمال الزراعية" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="10 أيام · زيارات للمزارع" data-desc="إنتاج دجاج اللحم والدجاج البيّاض، والحظائر والمعدات، والأعلاف والتغذية، والأمن الحيوي وصحة القطيع، وأساسيات التفريخ، واقتصاديات مشروع دواجن مربح."><i></i><span>ريادة الأعمال في تربية الدواجن</span></a></li>
+          <li><a class="deck__it" href="/programs/aquaculture/" data-fid="agriculture" data-field="الزراعة والأعمال الزراعية" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="20 يومًا · أضنة، تركيا · زيارات للمفرخات" data-desc="الاستزراع السمكي من اختيار الموقع وتصميم الأنظمة إلى التفريخ، والتغذية، وجودة المياه، وإدارة الأمراض، والحصاد، والتسويق — بإشراف خبراء جامعيين في الاستزراع المائي."><i></i><span>ريادة الأعمال في الاستزراع المائي</span></a></li>
+          <li><a class="deck__it" href="/programs/heliciculture/" data-fid="agriculture" data-field="الزراعة والأعمال الزراعية" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="7–10 أيام · تركيز على التصدير" data-desc="مشروع تصديري متخصص عالي القيمة مشروح من البداية إلى النهاية — الأنواع والتكاثر، وأنظمة الحقول المفتوحة والبيوت المحمية، والتغذية، والحصاد، والتصنيع، والوصول إلى السوق الأوروبية."><i></i><span>ريادة الأعمال في تربية الحلزون</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#agriculture" data-fid="agriculture" data-field="الزراعة والأعمال الزراعية" data-img="/assets/live/cat/cat-agriculture.jpg" data-facts="10 أيام + زيارات ميدانية · الإثنين–الخميس 09:00–16:00" data-desc="عشرة أيام تدريبية مع زيارات ميدانية: إنتاج الأبقار والمجترات الصغيرة، والتربية والوراثة، والأعلاف والعلائق، وصحة القطيع، ومعاملة الألبان، وإدارة أعمال المزرعة."><i></i><span>تربية الحيوانات وإدارة الثروة الحيوانية</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#health" data-fid="health" data-field="الصحة والطب" data-img="/assets/live/cat/cat-health.jpg" data-facts="Yüksek İhtisas University · شركاء سريريون" data-desc="شهادات طبية تخصصية تُقدَّم في Yüksek İhtisas University مع شركاء سريريين — مصمَّمة وفق تخصص فريقك الطبي ومستوى خبرته."><i></i><span>برامج الشهادات الطبية</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#health" data-fid="health" data-field="الصحة والطب" data-img="/assets/live/cat/cat-health.jpg" data-facts="1,000 ساعة · 13 مقررًا · شهادة إنجاز" data-desc="1,000 ساعة إجمالًا: 550 ساعة نظرية (250 غير متصلة، 300 حضورية) و450 ساعة عملية (150 محاكاة/مختبر، 300 ملاحظة سريرية) موزعة على 13 مقررًا — التشريح، وعلم الأدوية، والمصطلحات الطبية، وخدمات الطوارئ الصحية، والإنعاش، والإصابات، والإسعافات الأولية، والممارسة المهنية."><i></i><span>فني طب الطوارئ (EMT)</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#health" data-fid="health" data-field="الصحة والطب" data-img="/assets/live/cat/cat-health.jpg" data-facts="1,600 ساعة · 16 مقررًا" data-desc="1,600 ساعة إجمالًا: 600 ساعة نظرية (250 غير متصلة، 350 حضورية) و1,000 ساعة عملية (200 محاكاة/مختبر، 800 ملاحظة سريرية) موزعة على 16 مقررًا. يعمل الخريجون في المستشفيات، ومراكز الإقامة الطويلة والتأهيل، ومراكز الرعاية النهارية للبالغين، والرعاية المنزلية."><i></i><span>مساعد تمريض</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#health" data-fid="health" data-field="الصحة والطب" data-img="/assets/live/cat/cat-health.jpg" data-facts="1,600 ساعة · 21 مقررًا" data-desc="1,600 ساعة إجمالًا: 500 ساعة نظرية (200 عبر الإنترنت، 300 حضورية) و1,100 ساعة عملية (300 محاكاة/مختبر، 800 ملاحظة سريرية) موزعة على 21 مقررًا تغطي رعاية ما قبل الولادة وأثناءها وبعدها ورعاية حديثي الولادة."><i></i><span>القبالة</span></a></li>
+          <li><a class="deck__it" href="/programs/teachers/" data-fid="education" data-field="التعليم والتدريس" data-img="/assets/live/cat/cat-education.jpg" data-facts="10 أيام · زيارات للمدارس" data-desc="مناهج تدريس معاصرة — مونتيسوري، وريجيو إميليا، ومدارس الغابة، والتعلم القائم على الاستقصاء والمشاريع، وإدارة الصف، والتعليم الشامل، والتقييم — مع زيارات مشاهدة في المدارس."><i></i><span>برنامج تدريب المعلمين</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#education" data-fid="education" data-field="التعليم والتدريس" data-img="/assets/live/cat/cat-education.jpg" data-facts="5–10 أيام" data-desc="لمديري المدارس والمفتشين وموظفي الوزارات: القيادة التعليمية، وتخطيط تطوير المدرسة، والإشراف على المعلمين وتوجيههم، والقرارات المبنية على البيانات، والتواصل مع المجتمع."><i></i><span>القيادة التربوية وإدارة المدارس</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#education" data-fid="education" data-field="التعليم والتدريس" data-img="/assets/live/cat/cat-education.jpg" data-facts="5–10 أيام · جامعات مستضيفة" data-desc="للجامعات والكليات: ضمان الجودة والاعتماد، وتطوير المناهج، وإدارة البحث العلمي، والشراكات الدولية، وتنقّل الطلاب."><i></i><span>القيادة والتدويل في التعليم العالي</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#ict" data-fid="ict" data-field="تقنية المعلومات والرقمنة" data-img="/assets/live/cat/cat-ict.jpg" data-facts="جامعة KTU، طرابزون · التدريس بالإنجليزية · مختبرات تطبيقية" data-desc="تستضيفه جامعة KTU في طرابزون — تأسست عام 1955، وهي رابع أقدم جامعة في تركيا، وتضم نحو 17 كلية و55,000 طالب. يُدرَّس بالإنجليزية مع مختبرات حاسوب تطبيقية وشهادة إتمام."><i></i><span>برنامج تدريب تقنية المعلومات والاتصالات في جامعة كارادينيز التقنية</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#ict" data-fid="ict" data-field="تقنية المعلومات والرقمنة" data-img="/assets/live/cat/cat-ict.jpg" data-facts="5–10 أيام" data-desc="استراتيجية تقنية معلومات متوافقة مع أهداف المؤسسة — أطر الحوكمة، وإدارة خدمات تقنية المعلومات، وإدارة محافظ المشاريع، وأمن المعلومات، والمخاطر والامتثال، وإدارة المورّدين."><i></i><span>حوكمة تقنية المعلومات</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#ict" data-fid="ict" data-field="تقنية المعلومات والرقمنة" data-img="/assets/live/cat/cat-ict.jpg" data-facts="5 أيام" data-desc="أمن عملي للفرق الحكومية والمؤسسية: مشهد التهديدات، والتحكم في الوصول، والتصيّد والهندسة الاجتماعية، والاستجابة للحوادث، واستمرارية الأعمال، وبناء ثقافة أمنية."><i></i><span>التوعية بالأمن السيبراني للمؤسسات</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#tourism" data-fid="tourism" data-field="السياحة وفعاليات الأعمال" data-img="/assets/live/cat/cat-tourism.jpg" data-facts="10 أيام · زيارات للفنادق" data-desc="أسس صناعة السياحة — معرفة الوجهات والمنتجات، ومعايير خدمة الضيوف، والمكاتب الأمامية وعمليات الضيافة، ومكانة السياحة في الاقتصاد الوطني."><i></i><span>دورة السياحة للمبتدئين</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#tourism" data-fid="tourism" data-field="السياحة وفعاليات الأعمال" data-img="/assets/live/cat/cat-tourism.jpg" data-facts="10 أيام · زيارات لمراكز المؤتمرات" data-desc="الاجتماعات، ورحلات الحوافز، والمؤتمرات، والمعارض — تقديم العروض واختيار المكان، وميزانية الفعالية ولوجستياتها، والرعاية، وإدارة المندوبين، والتقييم بعد الفعالية."><i></i><span>برنامج إدارة فعاليات الأعمال (M.I.C.E.)</span></a></li>
+          <li><a class="deck__it" href="/ar/training-programs/#tourism" data-fid="tourism" data-field="السياحة وفعاليات الأعمال" data-img="/assets/live/cat/cat-tourism.jpg" data-facts="10 أيام" data-desc="وكالات السفر وعمليات منظمي الرحلات — تصميم المنتجات وتسعيرها، والتوزيع وأساسيات أنظمة GDS، والتعاقد، وسياسة سفر الشركات، والتسويق الرقمي، وتجربة العميل."><i></i><span>برنامج إدارة السفر</span></a></li>
+          <li><a class="deck__it" href="/programs/gastronomy/" data-fid="gastronomy" data-field="فنون الطهي" data-img="/assets/live/cat/cat-gastronomy.jpg" data-facts="6 أشهر · 960 ساعة · 4 طهاة مدرّبين · 20 مشاركًا كحد أقصى" data-desc="برنامجنا الأبرز في فنون الطهي: 6 أشهر، 24 أسبوعًا، 960 ساعة — خمسة أيام في الأسبوع، ثماني ساعات يوميًا. ثلاثة أشهر من المطبخ التركي تليها ثلاثة أشهر من مطابخ العالم، يقدّمها أربعة طهاة مدرّبين لمجموعة من عشرين مشاركًا، مع تطبيق عملي يومي في مطعم داخل الموقع."><i></i><span>البرنامج التنفيذي الدولي لفنون الطهي بمستوى ميشلان</span></a></li>
+          <li><a class="deck__it" href="/programs/gastronomy/" data-fid="gastronomy" data-field="فنون الطهي" data-img="/assets/live/cat/cat-gastronomy.jpg" data-facts="12 أسبوعًا · المطابخ الإقليمية التركية" data-desc="اثنا عشر أسبوعًا عبر المطابخ الإقليمية في تركيا — تنظيم المطبخ وسلامة الغذاء، ومهارات السكين والتحضير المسبق، والشوربات والصلصات، وأطباق زيت الزيتون والمقبلات، واليخنات والبقوليات، والأرز، والبوريك والبيده واللحم بعجين، والكباب والمشاوي، والحلويات بالقطر وبالحليب."><i></i><span>فصل المطبخ التركي</span></a></li>
+          <li><a class="deck__it" href="/programs/gastronomy/" data-fid="gastronomy" data-field="فنون الطهي" data-img="/assets/live/cat/cat-gastronomy.jpg" data-facts="12 أسبوعًا · أوروبي، آسيوي، شرق أوسطي، أمريكي" data-desc="اثنا عشر أسبوعًا من انضباط المطبخ العالمي — التقنيات الإيطالية والفرنسية، ومأكولات البحر المتوسطية والمقبلات الباردة، وأطباق الووك والنودلز الآسيوية، ومقبلات وطواجن الشرق الأوسط وشمال إفريقيا، ومعايير البرغر والستيك الأمريكية، إضافة إلى تقديم الأطباق وتصميم قائمة الطعام الختامية."><i></i><span>فصل مطابخ العالم</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/lapl-pilot-training/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية + تدريب طيران" data-desc="تدريب طيران للمبتدئين لأغراض الطيران الترفيهي بالطائرات الخفيفة، يجمع بين الدروس النظرية الأرضية والتدريب العملي على الطيران."><i></i><span>رخصة طيار الطائرات الخفيفة – LAPL</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/ppl-private-pilot-licence/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية + تدريب طيران" data-desc="تدريب نظري وعملي شامل للطامحين إلى رخصة الطيار الخاص، مع إمكانية التقدم نحو مؤهلات أخرى."><i></i><span>رخصة الطيار الخاص – PPL</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aviation-english/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="العبارات القياسية، والاتصالات اللاسلكية الدولية، والتواصل التشغيلي الواضح بين الطيارين وخدمات الحركة الجوية."><i></i><span>تدريب إنجليزية الطيران والاتصالات اللاسلكية</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aviation-english/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="المكان عند الطلب · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="إعداد مركّز لتقييم الكفاءة اللغوية في إنجليزية الطيران — الاستماع، والتحدث، والطلاقة، ومصطلحات الطيران."><i></i><span>الإعداد لاختبار الكفاءة اللغوية في إنجليزية الطيران</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/pilot-hour-building/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية + تدريب طيران" data-desc="طيران منظَّم للطيارين المرخَّصين الذين يحتاجون إلى بناء ساعات الطيران والخبرة نحو مؤهلهم التالي."><i></i><span>برنامج بناء ساعات الطيران</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/pilot-hour-building/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية + تدريب طيران" data-desc="دروس نظرية وطيران ليلي مزدوج للطيارين المرخَّصين الذين يستوفون شروط القبول ويرغبون في توسيع صلاحياتهم لتشمل العمليات الليلية."><i></i><span>تدريب أهلية الطيران الليلي</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/pilot-hour-building/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية + تدريب طيران" data-desc="وحدات مثل المروحة متغيرة الخطوة (VP)، وعجلات الهبوط القابلة للسحب (RU)، ونظام EFIS، والتحكم في القدرة بذراع واحدة (SLPC)، والمحركات ذات الشاحن التوربيني، والفروق بين SEP و MEP — وكل منها رهن التأكيد."><i></i><span>تدريب الفروق بين الطائرات</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/pilot-hour-building/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · صفّي + عملي" data-desc="تعرّف عملي على وظائف الملاحة والاتصالات وتخطيط الرحلات في نظام GTN650 المستخدم في قمرات الطيران العام الحديثة."><i></i><span>تدريب أنظمة الملاحة والراديو Garmin GTN650</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/easa-training/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="تحديثات في الملاحة، وتطورات الأنظمة الأوروبية، والتغييرات التشغيلية، ودروس السلامة، وإجراءات الطيران للطيارين العائدين أو الممارسين."><i></i><span>تدريب تجديد المعلومات والتحديثات التنظيمية للطيارين</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/flight-dispatcher-training/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="تخطيط الرحلات، والتحكم التشغيلي، وإجراءات الترحيل الجوي، واتخاذ القرار داخل مركز التحكم بالعمليات في شركة الطيران."><i></i><span>تدريب المرحِّل الجوي ومركز التحكم بالعمليات (OCC)</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/cabin-crew-training/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · صفّي + عملي" data-desc="إعداد مهني لوظائف طاقم المقصورة — الوعي بالسلامة، ومعايير الخدمة، والتواصل، والعمل الجماعي على متن الطائرة."><i></i><span>التدريب المهني لطاقم المقصورة</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/airport-ground-operations/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · صفّي + عملي" data-desc="عمليات آمنة وفعّالة في الجانب الجوي — سلامة ساحة الوقوف، وخدمة الطائرة بين الرحلات، وحركة المركبات، والتنسيق بين الفرق الأرضية."><i></i><span>عمليات الجانب الجوي والعمليات الأرضية في المطارات</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/airport-ground-operations/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · صفّي + عملي" data-desc="سلامة ساحة الوقوف، ومبادئ تحميل الأمتعة والبضائع، والتوعية بتوجيه الطائرات، وتنسيق خدمة الطائرة بين الرحلات."><i></i><span>تدريب موظف ساحة المطار</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/airport-ground-operations/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="إجراءات تسجيل الوصول والصعود إلى الطائرة، والتوعية بوثائق السفر، والمسافرون ذوو الاحتياجات الخاصة، والتواصل مع العملاء."><i></i><span>تدريب موظف خدمات المسافرين وتسجيل الوصول</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/airport-ground-operations/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="إدارة المطارات الإقليمية ومطارات الطيران العام — التنظيم، والإشراف على السلامة، والخدمات، والموارد، وتنسيق أصحاب المصلحة."><i></i><span>إدارة عمليات المطارات الصغيرة</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aircraft-maintenance-planning/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="تخطيط مهام الصيانة وحزم العمل والسجلات ضمن بيئات مؤسسات Part 145 و CAMO و CAO."><i></i><span>تخطيط صيانة الطائرات – Part 145 / CAMO / CAO</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aircraft-maintenance-planning/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="التوريد، وإمكانية التتبع، وظروف التخزين، وضبط المخزون لقطع الطائرات ومستهلكاتها."><i></i><span>المشتريات في الطيران وتخزين قطع الغيار</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/flight-dispatcher-training/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="كيف تدعم نظم المعلومات العمليات والصيانة والتخطيط وإدارة البيانات في مؤسسات الطيران."><i></i><span>تقنية المعلومات لمؤسسات الطيران</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aviation-safety-management/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="مبادئ إدارة السلامة، وتحديد المخاطر، وتقييمها، والإبلاغ، وثقافة السلامة، ومراقبة الأداء."><i></i><span>نظام إدارة السلامة – SMS وتقييم المخاطر</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aviation-safety-management/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="مصادر الأجسام الغريبة، وبرامج الوقاية، وعمليات التفتيش، والسلوكيات التي تُبقي ساحات الوقوف والحظائر نظيفة."><i></i><span>الوقاية من أضرار الأجسام الغريبة – FOD</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/dangerous-goods-training/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="التعرّف على البضائع الخطرة في النقل الجوي وتصنيفها وتوثيقها والتوعية بمناولتها. الصيغتان الأولية والدورية رهن التأكيد."><i></i><span>تدريب البضائع الخطرة – الطيران</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/human-factors-training/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="كيف يؤثر الأداء البشري والإجهاد والتواصل والخطأ في جودة الصيانة — مع تدريب دوري حيثما توفّر."><i></i><span>العوامل البشرية في صيانة الطائرات – أولي</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/human-factors-training/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="مخاطر اشتعال خزانات الوقود، وضبط تكوين التصميم الحرج، واحتياطات الصيانة، مع تدريب مستمر حيثما توفّر."><i></i><span>سلامة خزانات وقود الطائرات (يشمل التدريب المستمر)</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/crew-resource-management/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="التواصل، والعمل الجماعي، والقيادة، والوعي بالموقف، واتخاذ القرار، وإدارة الأخطاء للأطقم والفرق التشغيلية."><i></i><span>إدارة موارد الطاقم – CRM (أولي / مستمر)</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/ewis-training/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="تدريب توعوي بالتمديدات الكهربائية منظَّم حسب فئات العاملين — المجموعات 1/2 و3 و4 و5 و6/7/8 — لموظفي الصيانة والهندسة."><i></i><span>EWIS – نظام التوصيلات والتمديدات الكهربائية</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/easa-training/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="بنية النظام التنظيمي الأوروبي للطيران، واللائحة الأساسية، وكيف تنطبق القواعد التنفيذية على المؤسسات."><i></i><span>تدريب الإطار التنظيمي لـEASA واللائحة الأساسية</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/easa-training/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="معرفة أساسية بمبادئ صلاحية الطيران والمتطلبات الدولية للعاملين في أنشطة التفتيش والرقابة."><i></i><span>مفتش صلاحية الطيران (أساسي) – الأنظمة الدولية ومتطلبات EASA</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/easa-training/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="مقدمة في مواصفات اعتماد الطائرات الكبيرة وكيف تحدد التصميم والتعديل واستمرار صلاحية الطيران."><i></i><span>تدريب اعتماد الطائرات الكبيرة CS-25</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/en-9100-aerospace-quality/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="التحضير للتدقيق وتنفيذه، وجمع الأدلة، والملاحظات، وإعداد التقارير، ومتابعة الإجراءات التصحيحية ضمن عمليات الجودة في الطيران."><i></i><span>مدقق الطيران – إدارة التدقيق وتقنياته (يشمل التدريب الدوري)</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/en-9100-aerospace-quality/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="متطلبات معيار إدارة الجودة لصناعة الطيران والفضاء EN 9100 وتطبيقه العملي."><i></i><span>نظام إدارة الجودة EN 9100 لمؤسسات الطيران والفضاء</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/aviation-english/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="قراءة الوثائق الفنية والأدلة وبطاقات المهام بالإنجليزية واستخدامها بثقة."><i></i><span>الإنجليزية التقنية للطيران</span></a></li>
+          <li><a class="deck__it" href="/training-programs/aviation-aerospace/crew-resource-management/" data-fid="aviation" data-field="الطيران والفضاء" data-img="/assets/live/aviation/av-hero.webp" data-facts="إيطاليا · دروس نظرية صفّية / عبر الإنترنت حيثما تأكّد ذلك" data-desc="مبادئ تعليم الكبار، وتصميم الدروس، وتقديمها، والتقييم لمهنيي الطيران الذين يدرّبون زملاءهم."><i></i><span>أساليب التدريس في الطيران – تدريب المدرّبين</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script type="application/json" id="deckData">[{"route": "/ar/study/", "theme": "night", "label": "الدراسة في تركيا", "btn": "ابدأ بالدراسة", "h": "مستقبلك يبدأ في تركيا.", "lede": "نرشد الطلاب والمؤسسات في كل خطوة من الدراسة في تركيا — مع أكثر من 150 جامعة شريكة ودعم صادق من أهل الخبرة.", "field": ""}, {"route": "/ar/training-programs/", "theme": "paper", "label": "البرامج التدريبية", "btn": "شاهد جميع البرامج", "h": "برنامج لكل طموح.", "lede": "73 برنامج تدريب مهني في 10 مجالات — تُقدَّم في تركيا، أو في بلدك، أو بصيغة مخصَّصة تجمع بينهما حسب فريقك.", "field": "*"}, {"route": "/ar/training-programs/aviation-aerospace/", "theme": "sky", "label": "الطيران والفضاء", "btn": "استكشف الطيران", "h": "تدريب الطيران والفضاء", "lede": "تدريب طيران مهني في تركيا وإيطاليا للطيارين وشركات الطيران والمطارات ومؤسسات الصيانة ومهنيي الطيران والجهات الحكومية.", "field": "aviation"}, {"route": "/ar/universities/", "theme": "mist", "label": "الجامعات الشريكة", "btn": "شاهد الجامعات", "h": "هنا قد تدرس.", "lede": "نعمل مع أكثر من 150 جامعة ومدرسة في أنحاء تركيا — من الجامعات البحثية في أنقرة وإسطنبول إلى الجامعات المتخصصة في كل منطقة.", "field": ""}, {"route": "/ar/in-house-trainings/", "theme": "red", "label": "التدريب داخل المؤسسات", "btn": "اجلب التدريب إلى مؤسستك", "h": "تدريب بمستوى عالمي يصل إلى بابك.", "lede": "نكيّف برامجنا مع احتياجات عملك ونأتي بها إلى أي مكان في العالم — مكاتبك، مدينتك، جدولك.", "field": "*"}, {"route": "/ar/open-trainings/", "theme": "amber", "label": "الدورات المفتوحة", "btn": "شاهد الدورات المفتوحة", "h": "دورات قصيرة، مفتوحة للجميع.", "lede": "دورات مكثفة باللغة الإنجليزية في تركيا — دون شروط قبول رسمية، فقط الرغبة في التعلّم.", "field": "*"}]</script>
+</section>
+<!-- deck:end -->
+
+<section id="study" class="sec sec--paper route" data-chapter="الدراسة">
+  <div class="route__pin">
+    <div class="route__ghost display" aria-hidden="true">الدراسة في تركيا</div>
+    <header class="route__head">
+      <p class="label label--amber" data-decode>03 — الدراسة في تركيا</p>
+      <h2 class="display route__h" data-chars>
+        <span class="ln ln--mute">من بلدك</span>
+        <span class="ln">حتى الحرم الجامعي.</span>
+      </h2>
+    </header>
+    <div class="route__view">
+      <ol class="route__track">
+        <li class="wp wp--intro">
+          <p class="wp__lede">نتعاون مع أكثر من 150 جامعة تركية ونرشدك في كل خطوة — من اختيار البرنامج حتى الهبوط في المطار.</p>
+          <span class="wp__hint mono">واصل التمرير <i aria-hidden="true">→</i></span>
+        </li>
+        <li class="wp"><span class="wp__n mono">⁦WPT 01⁩</span><h3 class="wp__t">استشارات الخبراء</h3><p>إرشاد فردي لاختيار الجامعة والمدينة والبرنامج المناسبة لأهدافك.</p></li>
+        <li class="wp"><span class="wp__n mono">⁦WPT 02⁩</span><h3 class="wp__t">الطلبات في مكان واحد</h3><p>كل ما تحتاجه من معلومات وأوراق التقديم، منظَّمة ومُدارة من أجلك.</p></li>
+        <li class="wp"><span class="wp__n mono">⁦WPT 03⁩</span><h3 class="wp__t">معرفة دقيقة بالمنح</h3><p>نعرف أين توجد المنح الدراسية والإعانات — وكيف نمنحك أفضل فرصة للحصول عليها.</p></li>
+        <li class="wp"><span class="wp__n mono">⁦WPT 04⁩</span><h3 class="wp__t">المساعدة في التأشيرة</h3><p>دعم خطوة بخطوة في تأشيرة الطالب حتى لا يُترك شيء للصدفة.</p></li>
+        <li class="wp"><span class="wp__n mono">⁦WPT 05⁩</span><h3 class="wp__t">خطة دراسية متكاملة</h3><p>خطة واضحة وشاملة من التقديم حتى الوصول والاستقرار.</p></li>
+        <li class="wp wp--end">
+          <figure class="ph wp__ph"><img src="/assets/img/svc-study.jpg" alt="طلاب دوليون في حرم جامعة تركية" loading="lazy" width="1500" height="650"></figure>
+          <div class="wp__cta">
+            <a class="btn btn--amber" href="/ar/study/" data-magnetic><span class="btn__l">استكشف خدمة قبول الطلاب</span><span class="btn__i" aria-hidden="true"></span></a>
+            <a class="btn btn--line" href="/ar/universities/" data-magnetic><span class="btn__l">الجامعات الشريكة</span><span class="btn__i" aria-hidden="true"></span></a>
+            <a class="btn btn--line" href="/ar/for-institutions/" data-magnetic><span class="btn__l">للمؤسسات</span><span class="btn__i" aria-hidden="true"></span></a>
+          </div>
+        </li>
+      </ol>
+      <svg class="route__line" aria-hidden="true" preserveAspectRatio="none"><line class="route__base" x1="0" y1="1" x2="100%" y2="1"/><line class="route__done" x1="0" y1="1" x2="100%" y2="1"/></svg>
+      <span class="route__craft" aria-hidden="true"><svg viewBox="0 0 48 48" width="34" height="34"><path fill="currentColor" d="M44 24 30 19 20 4h-4l5 14-10 1-4-5H4l3 10-3 10h3l4-5 10 1-5 14h4l10-15 14-5z"/></svg></span>
+    </div>
+    <p class="route__note">يُرجى الانتباه: القبول غير مضمون أبدًا — يجب أن يستوفي الطلاب الشروط الأكاديمية للجامعة التي يختارونها. نزيد فرصك إلى أقصى حد، لكن القرار النهائي يعود للمؤسسة.</p>
+  </div>
+</section>
+
+<div class="band band--dusk" aria-hidden="true"></div>
+
+<!-- ═══ 04 AVIATION ══════════════════════════════════════════════════════ -->
+<section id="aviation" class="avi" data-chapter="الأبرز">
+  <div class="avi__pin">
+    <header class="avi__head">
+      <p class="label label--red" data-decode>04 — القسم الأبرز · التسجيل مفتوح الآن</p>
+      <h2 class="display avi__h" data-chars>
+        <span class="ln">تدريب الطيارين</span>
+        <span class="ln ln--dim">ودورات الطيران</span>
+        <span class="ln ln--dim">في تركيا.</span>
+      </h2>
+    </header>
+    <p class="avi__lede" data-lines>طريقك إلى قمرة القيادة عبر تدريب طيران ذي توجه دولي — رخصتا PPL و LAPL، وبناء ساعات الطيران، وإنجليزية الطيران، وعمليات شركات الطيران والمطارات، والصيانة وسلامة الطيران. تدريب عملي يُقدَّم في تركيا وإيطاليا للأفراد وشركات الطيران والمطارات والمؤسسات.</p>
+    <div class="avi__stage" aria-hidden="true">
+      <span class="avi__tag avi__tag--1 mono">تركيا وإيطاليا</span>
+      <span class="avi__tag avi__tag--2 mono">32 برنامجًا · أربع مجموعات تدريبية</span>
+      <span class="avi__tag avi__tag--3 mono">تدريب الطيران حضوريًا فقط</span>
+    </div>
+    <ol class="avi__list">
+      <li><a class="avc" href="/training-programs/aviation-aerospace/ppl-private-pilot-licence/" data-cursor="فتح"><span class="avc__n mono">01</span><h3>رخصة طيار خاص <abbr title="رخصة طيار خاص">PPL</abbr></h3><p>دروس نظرية أرضية + تدريب طيران حضوري نحو أول رخصة طيران لك.</p><i class="avc__bar"></i></a></li>
+      <li><a class="avc" href="/training-programs/aviation-aerospace/lapl-pilot-training/" data-cursor="فتح"><span class="avc__n mono">02</span><h3>رخصة طيار الطائرات الخفيفة <abbr title="رخصة طيار الطائرات الخفيفة">LAPL</abbr></h3><p>مسار منظَّم وميسَّر نحو قيادة الطائرات الخفيفة.</p><i class="avc__bar"></i></a></li>
+      <li><a class="avc" href="/training-programs/aviation-aerospace/pilot-hour-building/" data-cursor="فتح"><span class="avc__n mono">03</span><h3>بناء الساعات والطيران المتقدم</h3><p>راكم ساعات الطيران وتدرّب على الطيران الليلي والمهارات المتقدمة استعدادًا لتأهيلك التالي.</p><i class="avc__bar"></i></a></li>
+      <li><a class="avc" href="/training-programs/aviation-aerospace/aviation-english/" data-cursor="فتح"><span class="avc__n mono">04</span><h3>إنجليزية الطيران والاتصالات اللاسلكية</h3><p>إنجليزية الطيران والاتصالات اللاسلكية وفق معايير الإيكاو لأطقم الطيران.</p><i class="avc__bar"></i></a></li>
+    </ol>
+  </div>
+</section>
+
+<section class="avi2" aria-label="صور الطيران وبرامج أخرى">
+  <div class="strip" data-strip>
+    <figure class="ph" data-unmask><img src="/assets/img/aviation/av-ppl-2.webp" alt="طيارون متدربون ومدرّب مجتمعون حول طائرة تدريب خفيفة في مطار عشبي" loading="lazy" width="1600" height="900"></figure>
+    <figure class="ph" data-unmask><img src="/assets/img/aviation/av-hour-building-2.webp" alt="لوحة عدادات رقمية وأذرع التحكم خلال رحلة تدريب على الملاحة" loading="lazy" width="1172" height="659"></figure>
+    <figure class="ph" data-unmask><img src="/assets/img/aviation/av-hero.webp" alt="طائرة تدريب على ساحة وقوف الطائرات في تركيا" loading="lazy" width="1600" height="900"></figure>
+  </div>
+  <div class="avi2__row">
+    <p class="avi2__also mono">أيضًا في عمليات شركات الطيران</p>
+    <a class="roll roll--lg" href="/training-programs/aviation-aerospace/flight-dispatcher-training/"><span data-t="تدريب المرحِّل الجوي ومركز التحكم بالعمليات (OCC)">تدريب المرحِّل الجوي ومركز التحكم بالعمليات (OCC)</span></a>
+    <a class="roll roll--lg" href="/training-programs/aviation-aerospace/cabin-crew-training/"><span data-t="التدريب المهني لطاقم المقصورة">التدريب المهني لطاقم المقصورة</span></a>
+    <a class="btn btn--red" href="/ar/training-programs/aviation-aerospace/" data-magnetic><span class="btn__l">استكشف جميع برامج تدريب الطيران</span><span class="btn__i" aria-hidden="true"></span></a>
+  </div>
+</section>
+
+<div class="band band--dawn band--short" aria-hidden="true"></div>
+
+<!-- ═══ 05 PROGRAMMES ════════════════════════════════════════════════════ -->
+<section id="programmes" class="sec sec--paper prog" data-chapter="البرامج">
+  <header class="prog__head">
+    <div>
+      <p class="label" data-decode>05 — البرامج التدريبية</p>
+      <h2 class="display prog__h" data-chars data-fill>
+        <span class="ln ln--mute">73 برنامجًا.</span>
+        <span class="ln">10 مجالات.</span>
+      </h2>
+    </div>
+    <p class="lead" data-lines>برامج مصمَّمة خصيصًا للحكومات والمؤسسات والشركات والمشاركين الأفراد — تُقدَّم في تركيا، أو في بلدك، أو بصيغة تجمع بينهما حسب فريقك.</p>
+  </header>
+
+  <div class="board">
+    <div class="board__hd mono"><span>البوابة</span><span>المجال</span><span>البرامج</span><span>الحالة</span><span aria-hidden="true"></span></div>
+    <a class="row" href="/ar/training-programs/"><span class="row__g" data-flap>01</span><span class="row__f" data-flap>القيادة والإدارة</span><span class="row__c" data-flap>07</span><span class="row__s" data-flap>عند الطلب</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/ar/training-programs/"><span class="row__g" data-flap>02</span><span class="row__f" data-flap>الحكومة والقطاع العام</span><span class="row__c" data-flap>04</span><span class="row__s" data-flap>عند الطلب</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/ar/training-programs/"><span class="row__g" data-flap>03</span><span class="row__f" data-flap>الطاقة والموانئ والملاحة البحرية</span><span class="row__c" data-flap>05</span><span class="row__s" data-flap>عند الطلب</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/ar/training-programs/"><span class="row__g" data-flap>04</span><span class="row__f" data-flap>الزراعة والأعمال الزراعية</span><span class="row__c" data-flap>09</span><span class="row__s" data-flap>عند الطلب</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/ar/training-programs/"><span class="row__g" data-flap>05</span><span class="row__f" data-flap>الصحة والطب</span><span class="row__c" data-flap>04</span><span class="row__s" data-flap>عند الطلب</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/ar/training-programs/"><span class="row__g" data-flap>06</span><span class="row__f" data-flap>التعليم والتدريس</span><span class="row__c" data-flap>03</span><span class="row__s" data-flap>عند الطلب</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/ar/training-programs/"><span class="row__g" data-flap>07</span><span class="row__f" data-flap>تقنية المعلومات والرقمنة</span><span class="row__c" data-flap>03</span><span class="row__s" data-flap>عند الطلب</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/ar/training-programs/"><span class="row__g" data-flap>08</span><span class="row__f" data-flap>السياحة وفعاليات الأعمال</span><span class="row__c" data-flap>03</span><span class="row__s" data-flap>عند الطلب</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row" href="/ar/training-programs/"><span class="row__g" data-flap>09</span><span class="row__f" data-flap>فنون الطهي</span><span class="row__c" data-flap>03</span><span class="row__s" data-flap>عند الطلب</span><i class="row__go" aria-hidden="true"></i></a>
+    <a class="row row--hot" href="/ar/training-programs/aviation-aerospace/"><span class="row__g" data-flap>10</span><span class="row__f" data-flap>الطيران والفضاء</span><span class="row__c" data-flap>32</span><span class="row__s" data-flap>التسجيل مفتوح</span><i class="row__go" aria-hidden="true"></i></a>
+  </div>
+
+  <div class="ways">
+    <p class="label" data-decode>ثلاث طرق للتعلم معنا</p>
+    <ul class="ways__grid">
+      <li><a class="way" href="/ar/open-trainings/" data-tilt><span class="way__k mono">مفتوح للجميع</span><h3>الدورات المفتوحة</h3><p>دورات قصيرة مكثفة باللغة الإنجليزية في تركيا — دون شروط قبول رسمية. تعرّف على زملاء من مختلف أنحاء العالم.</p><dl class="way__f mono"><div><dt>المدة</dt><dd>10 أيام – أسبوعان</dd></div><div><dt>المجموعة</dt><dd>40–60 مشاركًا</dd></div></dl><span class="way__go" aria-hidden="true"></span></a></li>
+      <li><a class="way" href="/ar/training-programs/" data-tilt><span class="way__k mono">مصمَّم لمجموعتك</span><h3>البرامج التدريبية</h3><p>من الماجستير المصغَّر (Mini MBA) والقيادة إلى الزراعة والحكومة الإلكترونية والشهادات الطبية — مصمَّمة خصيصًا لمجموعتك.</p><dl class="way__f mono"><div><dt>الدليل</dt><dd>73 برنامجًا</dd></div><div><dt>المجالات</dt><dd>10</dd></div></dl><span class="way__go" aria-hidden="true"></span></a></li>
+      <li><a class="way" href="/ar/in-house-trainings/" data-tilt><span class="way__k mono">نأتي به إليك</span><h3>التدريب داخل المؤسسات</h3><p>برامج بمستوى عالمي مكيَّفة مع عملك وتُقدَّم في أي مكان — مكاتبك، مدينتك، جدولك.</p><dl class="way__f mono"><div><dt>المكان</dt><dd>مقرّك</dd></div><div><dt>الموعد</dt><dd>جدولك</dd></div></dl><span class="way__go" aria-hidden="true"></span></a></li>
+    </ul>
+  </div>
+</section>
+
+<div class="band band--dusk band--short" aria-hidden="true"></div>
+
+<!-- ═══ 06 ON THE GROUND ═════════════════════════════════════════════════ -->
+<section id="ground" class="ground" data-chapter="على أرض الواقع">
+  <div class="ground__pin">
+    <div class="ground__map" aria-hidden="true"></div>
+    <div class="ground__copy">
+      <p class="label label--red" data-decode>06 — اختُتم للتو</p>
+      <h2 class="display ground__h" data-chars>
+        <span class="ln">مؤتمر القيادة</span>
+        <span class="ln ln--dim">العالمي 2026</span>
+      </h2>
+      <p class="ground__theme" data-lines>تمكين التحول الرقمي في التعليم — الاستفادة من التقنيات الناشئة عالميًا ومن الشراكات.</p>
+      <p class="ground__p" data-lines>تولّت Turkey Trainings إدارة برنامج مؤتمر GLC 2026 في إسطنبول، فقادت تصميم البرنامج والجلسات المؤسسية وإدارة الحوار والجودة الأكاديمية ومنح الشهادات لوفد من قيادات الكليات النيجيرية.</p>
+      <dl class="facts mono">
+        <div><dt>الموعد</dt><dd>4–8 أغسطس 2026</dd></div>
+        <div><dt>المكان</dt><dd>إسطنبول، تركيا</dd></div>
+        <div><dt>مع</dt><dd>لجنة عمداء كليات التربية في نيجيريا</dd></div>
+      </dl>
+      <a class="btn btn--light" href="/ar/contact/" data-magnetic><span class="btn__l">خطّط لمؤتمر أو وفد</span><span class="btn__i" aria-hidden="true"></span></a>
+    </div>
+  </div>
+</section>
+
+<section class="reel" aria-label="صور من مؤتمر القيادة العالمي 2026">
+  <div class="reel__track" data-marquee data-cursor="اسحب">
+    <figure><img src="/assets/img/glc/glc-1.jpg" alt="مندوبون في مؤتمر القيادة العالمي 2026 في إسطنبول" loading="lazy" width="1600" height="1066"></figure>
+    <figure><img src="/assets/img/glc/glc-11.jpg" alt="صورة جماعية لوفد GLC 2026" loading="lazy" width="1600" height="1200"></figure>
+    <figure><img src="/assets/img/glc/glc-8.jpg" alt="جلسة GLC 2026 في قاعة اجتماعات مع شاشة عرض" loading="lazy" width="1600" height="1200"></figure>
+    <figure><img src="/assets/img/glc/glc-2.jpg" alt="مندوبو GLC 2026 على المنصة في قاعة محاضرات" loading="lazy" width="1600" height="1066"></figure>
+    <figure><img src="/assets/img/glc/glc-13.jpg" alt="وفد GLC 2026 في غرفة اجتماعات" loading="lazy" width="1600" height="1200"></figure>
+    <figure><img src="/assets/img/glc/glc-10.jpg" alt="جلسة نقاشية في GLC 2026" loading="lazy" width="1600" height="1200"></figure>
+    <figure><img src="/assets/img/glc/glc-12.jpg" alt="وفد GLC 2026 مجتمعًا في الهواء الطلق" loading="lazy" width="1600" height="1200"></figure>
+    <figure><img src="/assets/img/glc/glc-7.jpg" alt="نقاش مائدة مستديرة في GLC 2026" loading="lazy" width="1600" height="1200"></figure>
+    <figure><img src="/assets/img/glc/glc-16.jpg" alt="مندوبو GLC 2026 جالسون لالتقاط صورة جماعية" loading="lazy" width="1600" height="1066"></figure>
+  </div>
+  <p class="reel__cap mono"><span>GLC 2026 · إسطنبول</span><span>اسحب، أو واصل التمرير</span></p>
+</section>
+
+<div class="band band--dawn band--short" aria-hidden="true"></div>
+
+<!-- ═══ 07 FILMS ═════════════════════════════════════════════════════════ -->
+<section id="films" class="sec sec--paper films" data-chapter="أفلام">
+  <header class="films__head">
+    <p class="label" data-decode>07 — شاهدنا في الميدان</p>
+    <h2 class="display films__h" data-chars data-fill>
+      <span class="ln ln--mute">صُوِّر مع الأشخاص</span>
+      <span class="ln">الذين كانوا هناك فعلًا.</span>
+    </h2>
+  </header>
+  <ul class="films__grid">
+    <li><button class="film film--lg" type="button" data-film="https://turkeytrainings.com/assets/video/tt-training.mp4" data-title="Turkey Trainings — عرض تعريفي بالبرامج" data-cursor="تشغيل"><span class="film__ph" data-unmask><img src="/assets/img/video/tt-training.jpg" alt="" loading="lazy" width="1280" height="720"></span><span class="film__meta"><b>Turkey Trainings — عرض تعريفي بالبرامج</b><span class="mono">دقيقة و54 ثانية</span></span><span class="film__d">مَن ندرّب، وأين تُعقد الجلسات، وكيف يبدو البرنامج على أرض الواقع — وحدات صفّية، ومحاضرون خبراء، وزيارات ميدانية وللمصانع، وشهادات.</span></button></li>
+    <li><button class="film" type="button" data-film="https://turkeytrainings.com/assets/video/tt-student-placement.mp4" data-title="الدراسة في تركيا — كيف تعمل خدمتنا لقبول الطلاب" data-cursor="تشغيل"><span class="film__ph" data-unmask><img src="/assets/img/video/tt-student-placement.jpg" alt="" loading="lazy" width="800" height="450"></span><span class="film__meta"><b>الدراسة في تركيا — كيف تعمل خدمتنا لقبول الطلاب</b><span class="mono">دقيقة و29 ثانية</span></span></button></li>
+    <li><button class="film" type="button" data-film="https://turkeytrainings.com/assets/video/tt-afgan.mp4" data-title="من داخل زيارة ميدانية لمزرعة دواجن" data-cursor="تشغيل"><span class="film__ph" data-unmask><img src="/assets/img/video/tt-afgan.jpg" alt="" loading="lazy" width="800" height="450"></span><span class="film__meta"><b>من داخل زيارة ميدانية لمزرعة دواجن</b><span class="mono">30 ثانية</span></span></button></li>
+    <li><button class="film" type="button" data-film="https://turkeytrainings.com/assets/video/tt-plustv.mp4" data-title="Nigeria Plus TV — اليوم المفتوح لدى Turkey Trainings" data-cursor="تشغيل"><span class="film__ph" data-unmask><img src="/assets/img/video/tt-plustv.jpg" alt="" loading="lazy" width="1280" height="720"></span><span class="film__meta"><b>Nigeria Plus TV — اليوم المفتوح لدى Turkey Trainings</b><span class="mono">بثّ</span></span></button></li>
+  </ul>
+  <p class="films__foot"><span class="mono">AFROTURK TV — الشريك الإعلامي الرسمي</span><a class="roll" href="/ar/videos/"><span data-t="افتح مكتبة الفيديو الكاملة ←">افتح مكتبة الفيديو الكاملة ←</span></a></p>
+</section>
+
+<!-- ═══ 08 CREW ══════════════════════════════════════════════════════════ -->
+<section id="crew" class="sec sec--paper crew" data-chapter="الطاقم">
+  <header class="crew__head">
+    <p class="label" data-decode>08 — الأشخاص وراء Turkey Trainings</p>
+    <h2 class="display crew__h" data-chars data-fill>
+      <span class="ln ln--mute">ثلاثة شركاء مؤسسين،</span>
+      <span class="ln">حاضرون بأنفسهم.</span>
+    </h2>
+  </header>
+  <ul class="crew__list">
+    <li class="person"><hr data-draw><img class="person__ph" src="/assets/img/people/sureyya.jpg" alt="Süreyya Ümran Alınak" loading="lazy" width="400" height="400"><div class="person__id"><h3>⁦Süreyya Ümran Alınak⁩</h3><span class="mono">الشريكة المؤسِّسة والرئيسة التنفيذية</span></div><p>أدارت آلاف الفعاليات في قطاع السياحة وإدارة الفعاليات على مدى أكثر من 26 عامًا. تقود رؤية Turkey Trainings وشراكاتها الدولية ونموّها.</p></li>
+    <li class="person"><hr data-draw><img class="person__ph" src="/assets/img/people/seda.jpg" alt="Seda Diker" loading="lazy" width="400" height="400"><div class="person__id"><h3>⁦Seda Diker⁩</h3><span class="mono">الشريكة المؤسِّسة والشريكة الإدارية</span></div><p>حاصلة على بكالوريوس في الثقافة والأدب الأمريكي من جامعة بيلكنت، ولديها خبرة تقارب 20 عامًا في إدارة مشاريع كبرى ممولة من الاتحاد الأوروبي.</p></li>
+    <li class="person"><hr data-draw><img class="person__ph" src="/assets/img/people/yavuz.jpg" alt="Dr. Yavuz Selim Sılay" loading="lazy" width="400" height="400"><div class="person__id"><h3>⁦Dr. Yavuz Selim Sılay, MD, MBA⁩</h3><span class="mono">الشريك المؤسِّس ومدير التعليم</span></div><p>طبيب ومدير تنفيذي ومعلّم. يصمّم مناهجنا، ويختار شركاءنا الأكاديميين، ويقود برامجنا الدولية الأبرز.</p></li>
+  </ul>
+  <p class="crew__foot">
+    <a class="btn btn--line" href="/ar/about/" data-magnetic><span class="btn__l">من نحن</span><span class="btn__i" aria-hidden="true"></span></a>
+    <a class="btn btn--line" href="/lecturers/" data-magnetic><span class="btn__l">المحاضرون والمدرّبون</span><span class="btn__i" aria-hidden="true"></span></a>
+  </p>
+</section>
+
+<div class="band band--dusk band--short" aria-hidden="true"></div>
+
+<!-- ═══ 09 ARRIVAL ═══════════════════════════════════════════════════════ -->
+<section id="arrival" class="arr" data-chapter="الوصول">
+  <div class="arr__radar" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
+  <p class="label label--red" data-decode>09 — الوصول</p>
+  <h2 class="display arr__h" data-chars>
+    <span class="ln">كل برنامج</span>
+    <span class="ln">مصمَّم خصيصًا</span>
+    <span class="ln ln--dim">لمجموعتك.</span>
+  </h2>
+  <p class="arr__p" data-lines>لا أسعار ثابتة. نصمّم البرنامج الأمثل لاحتياجات فريقك وميزانيته.</p>
+  <div class="arr__cta">
+    <a class="btn btn--red btn--xl" href="/ar/apply/" data-magnetic><span class="btn__l">احصل على عرض مخصَّص</span><span class="btn__i" aria-hidden="true"></span></a>
+    <a class="btn btn--light btn--xl" href="https://wa.me/905389867594" target="_blank" rel="noopener" data-magnetic><span class="btn__l">راسلنا على واتساب</span><span class="btn__i" aria-hidden="true"></span></a>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══ FOOTER ═══════════════════════════════════════════════════════════ -->
+<footer class="foot">
+  <div class="foot__top">
+    <p class="foot__line">تدريب وشهادات وقبول جامعي في تركيا — مصمَّمة حول مجموعتك.</p>
+    <a class="foot__up mono" href="#departure" data-magnetic><span>العودة إلى الإقلاع</span><i aria-hidden="true">↑</i></a>
+  </div>
+  <div class="foot__cols">
+    <div>
+      <p class="label">الدراسة في تركيا</p>
+      <ul>
+        <li><a class="roll" href="/ar/study/"><span data-t="نظرة عامة">نظرة عامة</span></a></li>
+        <li><a class="roll" href="/ar/international-students/"><span data-t="للطلاب">للطلاب</span></a></li>
+        <li><a class="roll" href="/ar/universities/"><span data-t="الجامعات الشريكة">الجامعات الشريكة</span></a></li>
+        <li><a class="roll" href="/ar/for-institutions/"><span data-t="للمؤسسات">للمؤسسات</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="label">التدريب المهني</p>
+      <ul>
+        <li><a class="roll" href="/ar/training/"><span data-t="نظرة عامة">نظرة عامة</span></a></li>
+        <li><a class="roll" href="/ar/open-trainings/"><span data-t="الدورات المفتوحة">الدورات المفتوحة</span></a></li>
+        <li><a class="roll" href="/ar/training-programs/"><span data-t="البرامج التدريبية">البرامج التدريبية</span></a></li>
+        <li><a class="roll" href="/ar/training-programs/aviation-aerospace/"><span data-t="الطيران والفضاء">الطيران والفضاء</span></a></li>
+        <li><a class="roll" href="/ar/in-house-trainings/"><span data-t="التدريب داخل المؤسسات">التدريب داخل المؤسسات</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="label">تواصل معنا</p>
+      <ul>
+        <li><a class="roll" href="/ar/about/"><span data-t="من نحن">من نحن</span></a></li>
+        <li><a class="roll" href="/ar/partnership/"><span data-t="الشراكة">الشراكة</span></a></li>
+        <li><a class="roll" href="/lecturers/"><span data-t="المحاضرون">المحاضرون</span></a></li>
+        <li><a class="roll" href="/blog/"><span data-t="المدونة">المدونة</span></a></li>
+        <li><a class="roll" href="/ar/contact/"><span data-t="اتصل بنا">اتصل بنا</span></a></li>
+        <li><a class="roll" href="/ar/apply/"><span data-t="قدّم طلبك">قدّم طلبك</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="label">مباشرة</p>
+      <ul>
+        <li><a class="roll" href="mailto:turkeytrainingstr@gmail.com"><span data-t="turkeytrainingstr@gmail.com">turkeytrainingstr@gmail.com</span></a></li>
+        <li><a class="roll" href="https://wa.me/905389867594" target="_blank" rel="noopener"><span data-t="+90 538 986 7594">⁦+90 538 986 7594⁩</span></a></li>
+        <li><a class="roll" href="tel:+903124180008"><span data-t="+90 312 418 00 08">⁦+90 312 418 00 08⁩</span></a></li>
+        <li><a class="roll" href="https://instagram.com/turkiyetrainings" target="_blank" rel="noopener"><span data-t="@turkiyetrainings">⁦@turkiyetrainings⁩</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot__off">
+    <address><span class="label">مكتب تركيا</span>⁦Konutkent Mah. 3035 Cad. No:62/B, Suit Tower, Çankaya / Ankara⁩<br><span class="mono">⁦+90 312 418 00 08 · +90 538 986 7594 · +90 850 307 27 37⁩</span></address>
+    <address><span class="label">مكتب نيجيريا</span>⁦No 3 Ontario Crescent, Maitama, Abuja FCT, Nigeria⁩<br><span class="mono">⁦+234 805 556 6742 · +234 706 333 6686⁩</span></address>
+  </div>
+  <div class="foot__legal mono"><span>⁦© 2026 Turkey Trainings Limited Company⁩</span><span>نسخة معاينة · ليست الموقع الفعلي</span></div>
+  <div class="foot__mark" aria-label="Turkey Trainings">
+    <canvas id="mark" aria-hidden="true"></canvas>
+    <span class="foot__mark-fallback display" aria-hidden="true">⁦Turkey Trainings⁩</span>
+  </div>
+</footer>
+
+<!-- ═══ FILM LIGHTBOX ════════════════════════════════════════════════════ -->
+<dialog class="box" id="box" aria-label="فيلم">
+  <div class="box__in">
+    <div class="box__bar mono"><span id="boxTitle"></span><button type="button" class="box__x" id="boxX">إغلاق <i aria-hidden="true">×</i></button></div>
+    <video id="boxVideo" controls playsinline preload="none"></video>
+  </div>
+</dialog>
+
+<script src="/vendor/gsap.min.js"></script>
+<script src="/vendor/ScrollTrigger.min.js"></script>
+<script src="/vendor/lenis.min.js"></script>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>
